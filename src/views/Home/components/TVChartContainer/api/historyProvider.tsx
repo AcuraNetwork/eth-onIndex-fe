@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { DEX_API_BASE_URL } from 'config/constants/endpoints';
 import { UNITOKEN } from '../../../../../constants';
 
 const history = {};
@@ -34,7 +35,7 @@ export default {
 
         const address = selectedCurrency ? selectedCurrency.address : UNITOKEN;
         try {
-            const result = await axios.get(`https://dapp-backend-bsc.vercel.app/ohlc?until=${new Date(to * 1000).toISOString()}&window=${window}&limit=${Math.round(tempLimit)+50}&baseToken=${address}&quoteCurrency=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2&network=ethereum&exchange=Uniswap`, {
+            const result = await axios.get(`${DEX_API_BASE_URL}?until=${new Date(to * 1000).toISOString()}&window=${window}&limit=${Math.round(tempLimit)+50}&baseToken=${address}&quoteCurrency=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2&network=ethereum&exchange=Uniswap`, {
                 headers: {
                     token: jwtToken.jwtToken
                 }

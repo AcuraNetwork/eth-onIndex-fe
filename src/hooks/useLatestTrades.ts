@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
-import useRefresh from './useRefresh'
+// import { DEX_API_BASE_URL } from 'config/constants/endpoints';
+import useRefresh from './useRefresh';
 
 const useLatestTrades = (tokenAddress, jwtToken) => {
   const [latestTrades, setLatestTrades] = useState([])
@@ -9,7 +10,7 @@ const useLatestTrades = (tokenAddress, jwtToken) => {
   useEffect(() => {
     const fetchLatestTrades = async () => {
       try {
-        const result = await axios.get(`https://dapp-backend-bsc.vercel.app/lastTrades?token=${tokenAddress}&exchange=UniSwap%20v2&network=ethereum`, {
+        const result = await axios.get(`https://dapp-backend-bsc.vercel.app/lastTrades?token=${tokenAddress}&exchange=UniSwap&network=ethereum`, {
           headers: {
             token: jwtToken.jwtToken
           }

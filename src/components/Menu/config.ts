@@ -2,17 +2,17 @@ import { MenuEntry } from '@evercreative/onidex-uikit'
 
 const config: MenuEntry[] = [
   {
-    label: "Charts",
+    label: "Home",
     icon: "InfoIcon",
     href: "/",
   },
-  // {
-  //   label: "Swap",
-  //   icon: 'SyncAltIcon',
-  //   href: '/swap'
-  // },
   {
-    label: "Stake",
+    label: "Swap",
+    icon: 'SyncAltIcon',
+    href: '/swap'
+  },
+  {
+    label: "Pools",
     icon: "PoolIcon",
     href: "/polystake",
   },

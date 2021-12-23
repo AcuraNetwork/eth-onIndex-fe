@@ -2680,19 +2680,6 @@
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
-"@evercreative/bakery-polygon-uikit@^1.0.13":
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/@evercreative/bakery-polygon-uikit/-/bakery-polygon-uikit-1.0.13.tgz#197576a69b93d9a8f06d1dd9bdbbc50671911ade"
-  integrity sha512-f7YdHs7QSwX92ZjKNvHvos3EBhFDYskIz3kz3fhuY5esCx83YYhticCouJODMyg29s/hQqthg44hxk2qfv8OJQ==
-  dependencies:
-    "@types/lodash" "^4.14.162"
-    "@types/styled-system" "^5.1.10"
-    bignumber.js "^9.0.1"
-    lodash "^4.17.20"
-    react-countup "^4.4.0"
-    react-transition-group "^4.4.1"
-    styled-system "^5.1.5"
-
 "@evercreative/onidex-uikit@^1.0.8":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@evercreative/onidex-uikit/-/onidex-uikit-1.0.8.tgz#edba7008ba94155cfafcad8b9156748a98b730bb"
@@ -3400,32 +3387,6 @@
     truffle "^5.1.41"
     truffle-flattener "^1.4.4"
     truffle-hdwallet-provider "^1.0.17"
-
-"@pancakeswap-libs/sdk-v2@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@pancakeswap-libs/sdk-v2/-/sdk-v2-2.2.0.tgz#fc1d048325c6bb114eeb0ce92e4f07a6c6d17657"
-  integrity sha512-FZ6Z6Ro9yMaUfb+fIzn2HB+qqQzipxpflmOZZ3JRUDW09mOqfimgloils78ZhNr3mh70MKNYFmy1AUXJIUNqkQ==
-  dependencies:
-    "@pancakeswap-libs/pancake-swap-core" "^0.1.0"
-    big.js "^5.2.2"
-    decimal.js-light "^2.5.0"
-    jsbi "^3.1.1"
-    tiny-invariant "^1.1.0"
-    tiny-warning "^1.0.3"
-    toformat "^2.0.0"
-
-"@pancakeswap-libs/sdk@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@pancakeswap-libs/sdk/-/sdk-1.0.1.tgz#602e6da34fd5bde0f3c869f9abe63bb5f4aaf063"
-  integrity sha512-N4EZlAD0PD7lgVEE8jOufUPRNBvcR3STSjBC9QVwoKmmH1czEY9lu8/SySecKchZtSi66qAfsrghkdXo8tnJsg==
-  dependencies:
-    "@uniswap/v2-core" "^1.0.0"
-    big.js "^5.2.2"
-    decimal.js-light "^2.5.0"
-    jsbi "^3.1.1"
-    tiny-invariant "^1.1.0"
-    tiny-warning "^1.0.3"
-    toformat "^2.0.0"
 
 "@pedrouid/iso-crypto@^1.0.0":
   version "1.0.0"

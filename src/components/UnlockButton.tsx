@@ -9,7 +9,7 @@ const StyledButton = styled(Button)`
 `;
 
 const UnlockButton = (props) => {
-  const { connect, reset, account } = useWallet()
+  const { connect, reset } = useWallet()
   const { onPresentConnectModal } = useWalletModal(connect, reset)
 
   // console.log("account ::", account)

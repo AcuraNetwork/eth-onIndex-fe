@@ -20,6 +20,7 @@ import TVChartContainer from './components/TVChartContainer';
 import PolySwap from './components/PolySwap/PolySwap';
 import OrderBook from './components/OrderBook/OrderBook';
 import { UNITOKEN } from '../../constants';
+import PairInfo from './components/PairInfo';
 
 const StyledPage = styled(Page)`
   padding: 8px;
@@ -111,7 +112,8 @@ const Home: React.FC = () => {
   const address = params.tokenAddress ? params.tokenAddress : UNITOKEN;
   const [jwtToken, setJwtToken] = useLocalStorageState('jwtToken');
   const latestTrades = useLatestTrades(address, jwtToken);
-  const selectedTokenInfo = useTokenInfo(address);
+  const selectedTokenInfo = useTokenInfo(address, jwtToken);
+
   // const bnbPriceUsd = new BigNumber(0);
   // usePriceBnbBusd();
   const ethPriceUsd = useEthPrices();
@@ -174,7 +176,8 @@ const Home: React.FC = () => {
       {selectedCurrency && 
         <>
           <PageFlex>
-            <PolySwap />
+            {/* <PolySwap /> */}
+            <OrderBook selectedTokenInfo={selectedTokenInfo} />
             <ChartContent flexDirection='column'>
               <div className='header'>
                 <TransactionHeader 
@@ -206,7 +209,7 @@ const Home: React.FC = () => {
                     }
                   </Flex>
                 </TokenDetails>
-                <OrderBook selectedTokenInfo={selectedTokenInfo} />
+                <PairInfo selectedTokenInfo={selectedTokenInfo} />
               </ChartFlex>
             </ChartContent>
           </PageFlex>
