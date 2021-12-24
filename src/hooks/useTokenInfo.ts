@@ -35,9 +35,10 @@ const useTokenInfo = (tokenAddress, jwtToken) => {
       } catch (error) {
       }
     };
-
-    fetchTokenInfo()
-  }, [tokenAddress, slowRefresh, jwtToken.jwtToken])
+    if (jwtToken !== undefined) {
+      fetchTokenInfo()
+    }
+  }, [tokenAddress, slowRefresh, jwtToken])
 
   return tokenInfo
 }

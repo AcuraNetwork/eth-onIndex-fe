@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React, { useState } from 'react';
 import styled from 'styled-components'
-import { Flex, Text, ArrowDownIcon, ButtonMenu } from '@evercreative/onidex-uikit'
+import { ButtonMenu } from '@evercreative/onidex-uikit'
 import { useEthPrices } from 'hooks/useEthPrices'
 import { useUniUsdPrice } from 'hooks/useUSDCPrice'
 import RedStarIcon from 'assets/images/redStar.svg'
