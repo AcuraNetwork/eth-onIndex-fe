@@ -21,6 +21,7 @@ import PolySwap from './components/PolySwap/PolySwap';
 import OrderBook from './components/OrderBook/OrderBook';
 import { UNITOKEN } from '../../constants';
 import PairInfo from './components/PairInfo';
+import TradingCard from './components/TradingCard';
 
 const StyledPage = styled(Page)`
   padding: 8px;
@@ -204,9 +205,10 @@ const Home: React.FC = () => {
                   </div>
                   {/* <HomeBgContainer /> */}
                   <Flex mt='8px' justifyContent='space-between'>
-                    {transactions.length > 0 && 
+                    {/* {transactions.length > 0 && 
                       <TransactionsTable _columns={columns} _data={transactions} />
-                    }
+                    } */}
+                    <TradingCard />
                   </Flex>
                 </TokenDetails>
                 <PairInfo selectedTokenInfo={selectedTokenInfo} />

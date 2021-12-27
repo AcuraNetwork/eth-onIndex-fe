@@ -21,7 +21,7 @@ const useTokenInfo = (tokenAddress, jwtToken) => {
         //   }
         // });
 
-        const result = await axios.get(
+        const result = await axios.get( 
           `https://dapp-backend-bsc.vercel.app/tokenInfo?token=${tokenAddress}&exchange=Uniswap&network=ethereum`, 
           {
             headers: {

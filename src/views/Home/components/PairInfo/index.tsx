@@ -224,7 +224,7 @@ const myTrades = [
 ]
 
 const PairInfo = ({ selectedTokenInfo }) => {
-  const uniPriceUsd = useUniUsdPrice();
+  // const uniPriceUsd = useUniUsdPrice();
   const [tradeType, setTradeType] = useState(0)
   const ethPriceUsd = useEthPrices();
   const ethCurrentPriceUsd = ethPriceUsd !== undefined ? ethPriceUsd.current : 0

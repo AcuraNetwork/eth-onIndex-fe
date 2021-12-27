@@ -4,8 +4,10 @@ import { Button, useWalletModal } from '@evercreative/onidex-uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 
 const StyledButton = styled(Button)`
+  background: linear-gradient(83.26deg, #FA5368 -15.09%, #CF203C 31.7%);
   color: ${({ theme }) => !theme.isDark ? theme.colors.primary : 'white' };
-  margin-top: 20px;
+  border: none;
+  border-radius: 12px;
 `;
 
 const UnlockButton = (props) => {
