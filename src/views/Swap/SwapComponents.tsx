@@ -284,5 +284,20 @@ export const BanaceWrapper = styled.div`
 `
 
 export const SwapDetailsContainer = styled.div<{ bkColor: string }>`
-  background-color: ${({theme, bkColor}) =>theme.isDark ? 'bkColor' : '#FFF'};
+  background-color: ${({theme, bkColor}) =>theme.isDark ? bkColor : '#FFF'};
+  height: 100%;
+  width: calc(30% - 10px);
+  border-radius: 15px;
+  padding: 20px 15px;
+  margin-right: 10px;
+`
+export const TransactionContainer = styled.div<{ bkColor: string }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: ${({theme, bkColor}) =>theme.isDark ? bkColor : '#FFF'};
+  height: 100%;
+  width: 30%;
+  border-radius: 15px;
+  padding: 20px 15px;
 `
