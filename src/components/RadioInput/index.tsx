@@ -14,12 +14,12 @@ const Radio = styled.div<{ selected }>`
   margin-right: 4px;
   margin-top: 3px;
   border-radius: 14px;
-  border: 2px solid #54C9EF;
-  background: ${({ selected }) => selected ? '#02698A' : '#121212'};
+  border: 2px solid ${({ theme }) => theme.isDark ? '#FFF' : '#EF5350'};
+  background: ${({ selected }) => selected ? '#EF5350' : '#121212'};
 `
 
 const RadioLabel = styled(Text)<{ selected }>`
-  color: ${({ selected }) => selected ? '#54C9EF' : '#C4C4C4'};
+  color: ${({ selected }) => selected ? '#EF5350' : '#C4C4C4'};
 `;
 
 const RadioDescription = styled(Text)`

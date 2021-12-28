@@ -166,7 +166,7 @@ export const SearchInput = styled.input`
   border-radius: 12px;
   color: ${({ theme }) => theme.colors.text};
   border-style: solid;
-  border: 1px solid ${({ theme }) => theme.colors.primary};
+  border: 1px solid ${({ theme }) => theme.isDark ? '#EF5350' : '#EF5350'};
   background-color: ${({ theme }) => theme.isDark ? 'rgba(143,90,255,.05)' : 'white' };
   -webkit-appearance: none;
   height: 44px;
@@ -185,7 +185,7 @@ export const SearchInput = styled.input`
 
   transition: border 100ms;
   :focus {
-    border: 1px solid ${({ theme }) => theme.colors.primary};
+    border: 1px solid ${({ theme }) => theme.isDark ? '#EF5350' : '#EF5350'};
     outline: none;
   }
 `
@@ -194,7 +194,7 @@ const SearchInputWrapper = styled.div<{ isMobile: boolean }>`
   position: relative;
   width: 100%;
   margin-top: ${props => props.isMobile && '8px'};
-
+  z-index: 10;
   input {
     padding-right: 44px;
   }
@@ -208,7 +208,8 @@ const SearchInputWrapper = styled.div<{ isMobile: boolean }>`
     padding: 12px;
     width: 100%;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    border: 1px solid #54C9EF;
+    border: 1px solid ${({ theme }) => theme.isDark ? '#EF5350' : '#EF5350'};
+    z-index: 99;
   }
 
   .token-list {
@@ -218,7 +219,7 @@ const SearchInputWrapper = styled.div<{ isMobile: boolean }>`
 `;
 
 const TokenWrapper = styled(Flex)`
-  border: 2px solid ${({ theme }) => theme.colors.primary};
+  border: 2px solid ${({ theme }) => theme.isDark ? '#EF5350' : '#EF5350'};
   padding: 8px 16px;
   border-radius: 15px;
   cursor: pointer;

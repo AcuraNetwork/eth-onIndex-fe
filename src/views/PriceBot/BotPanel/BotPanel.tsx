@@ -6,7 +6,7 @@ import axios from 'axios';
 import { PRICE_BOT_URL } from 'config';
 
 const Panel = styled.div`
-  background: linear-gradient(0deg, #1D1D1D, #1D1D1D), linear-gradient(0deg, #000000, #000000), linear-gradient(0deg, #000000, #000000), #000000;
+  background: linear-gradient(0deg, rgba(29,29,29,.4),rgba(29,29,29,.4)), linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,.4)), linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,.4)), rgba(0,0,0,.4);
   border-radius: 16px;
   padding: 16px;
   width: 100%;
@@ -18,11 +18,16 @@ const Panel = styled.div`
 `;
 const PreviewPanel = styled(Panel)`
   min-width: 247px;
+  background: linear-gradient(0deg, rgba(29,29,29,.4),rgba(29,29,29,.4)), linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,.4)), linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,.4)), rgba(0,0,0,.4);
+
 `
 const StyledButton = styled(Button)`
   font-size: 24px;
   font-weight: 400;
   width: 100%;
+  background-color: rgba(21,21,21,.85);
+  color: #CF203C;
+  border-color: #CF203C;
 `;
 
 const Label = styled(Text)`
@@ -44,7 +49,7 @@ const Wrapper = styled.div`
 
     .container {
       width: 100%;
-      background: linear-gradient(0deg, #1D1D1D, #1D1D1D), linear-gradient(0deg, #000000, #000000), linear-gradient(0deg, #000000, #000000), #000000;
+      background: linear-gradient(0deg, rgba(29,29,29,.4),rgba(29,29,29,.4)), linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,.4)), linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,.4)), rgba(0,0,0,.4);
       border-radius: 16px;
       padding: 32px 24px;
       margin-right: 20px;
@@ -77,6 +82,7 @@ const TextArea = styled.textarea`
   border-radius: 16px;
   padding: 16px;
   outline: none;
+  opacity: .8;
 `;
 
 const ChatText = styled(Text)`

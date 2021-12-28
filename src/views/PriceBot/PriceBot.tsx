@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useToken } from 'hooks/useTokens';
+import swapLeft from 'assets/images/swapleft.svg';
+import swapRight from 'assets/images/swapright.svg';
 import BotPanel from './BotPanel/BotPanel';
 import DexPanel from './DexPanel/DexPanel';
 import TokenSelector from './TokenSelector';
@@ -8,15 +10,16 @@ import { UNITOKEN } from '../../constants';
 
 const Page = styled.div`
   padding: 16px;
+  background-color: linear-gradient(180deg, #000000 100%, #FFFFFF 100%, #464646 100%);
 `;
 
 const PriceBotContainer = styled.div`
   margin-top: 16px;
   display: flex;
   flex-wrap: wrap;
-
   .dex-container {
     width: 100%;
+    z-index: 9;
 
     ${({ theme }) => theme.mediaQueries.lg} {
       width: 50%;
@@ -26,12 +29,26 @@ const PriceBotContainer = styled.div`
 
   .bot-container {
     width: 100%;
+    z-index: 9;
 
     ${({ theme }) => theme.mediaQueries.lg} {
       width: 50%;
     }
   }
 `;
+
+const MarkLeft = styled.img`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  /* z-index: -1; */
+`
+const MarkRight = styled.img`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  /* z-index: -1; */
+`
 
 const MESSAGE_OPTIONS = [
   { label: 'Symbol', value: 'symbol' },
@@ -87,6 +104,8 @@ const PriceBot = () => {
 
   return (
     <Page>
+      <MarkLeft src={swapLeft} alt="swap" />
+      <MarkRight src={swapRight} alt="swap" />
       <TokenSelector 
         selectedCurrency={selectedCurrency} 
         isMobile 

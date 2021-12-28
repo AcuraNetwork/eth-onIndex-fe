@@ -4,7 +4,7 @@ import { Text, Flex, ButtonMenu, ButtonMenuItem } from '@evercreative/onidex-uik
 import RadioInput from 'components/RadioInput';
 
 const Panel = styled.div`
-  background: linear-gradient(0deg, #1D1D1D, #1D1D1D), linear-gradient(0deg, #000000, #000000), linear-gradient(0deg, #000000, #000000), #000000;
+  background: linear-gradient(0deg, rgba(29,29,29,.4),rgba(29,29,29,.4)), linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,.4)), linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,.4)), rgba(0,0,0,.4);
   border-radius: 16px;
   padding: 16px;
   width: 100%;
@@ -159,7 +159,7 @@ const ButtonMenuWrapper = styled(Flex)`
     border-radius: 32px;
     width: 100%;
     background: linear-gradient(0deg,#1D1D1D,#1D1D1D),linear-gradient(0deg,#000000,#000000),linear-gradient(0deg,#000000,#000000),#000000;
-    border: 2px solid #54C9EF;
+    border: 2px solid #EF5350;
   }
 `;
 
@@ -175,15 +175,15 @@ const StyledButtonMenuItem = styled(ButtonMenuItem)<{ active?: boolean }>`
   font-weight: 400;
   border-radius: 32px;
   background: transparent;
-  border: ${({ active }) => active && '2px solid #54C9EF'};
+  border: ${({ active }) => active && '2px solid #EF5350'};
   min-width: 100px;
   width: 50%;
-  color: ${({ theme }) => !theme.isDark && 'white'};
+  color: ${({ theme }) => !theme.isDark && '#EF5350'};
   margin-left: -2px;
   margin-top: -2px;
 
   &:hover:not(:disabled):not(.button--disabled):not(:active) {  
-    border-color: #54C9EF;
+    border-color: #EF5350;
     background: transparent;
   }
 
