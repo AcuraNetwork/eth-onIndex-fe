@@ -63,7 +63,7 @@ export const TradeTypeItem = styled(ButtonMenuItem)<{ active?: boolean, bigPanel
   background-color: #111111;
   padding: 0 10px;  
   font-weight: 300;
-  /* width: 50%; */
+  width: 100%;
   min-width: ${({ bigPanel }) => bigPanel ? '80px' : 'auto'};
   :hover:not(:disabled):not(.button--disabled):not(:active) {
     color: ${({ active }) => active && '#CF203C'};

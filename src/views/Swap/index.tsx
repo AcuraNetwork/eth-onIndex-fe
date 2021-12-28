@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Flex, ButtonMenu, ButtonMenuItem } from '@evercreative/onidex-uikit';
-import backImage from 'assets/images/swapback.png';
+import redDots from 'assets/images/reddots.svg';
+import blackDots from 'assets/images/blackdots.svg';
+import swapLeft from 'assets/images/swapleft.svg';
+import swapRight from 'assets/images/swapright.svg';
 import SwapPanel from './SwapPanel';
 import AdvancedSwapDetailsInfo from './AdvancedSwapDetailsInfo';
 
@@ -13,7 +16,13 @@ const Swap = () => {
 
   return (
     <Wrapper>
-      <Mask src={backImage} alt="back"/>
+      <Mask />
+      <RedDotsLeft src={redDots} alt="red" />
+      <RedDotsRight src={redDots} alt="red" />
+      <BlackDotsLeft src={blackDots} alt="black" />
+      <BlackDotsRight src={blackDots} alt="black" />
+      <MarkLeft src={swapLeft} alt="swap" />
+      <MarkRight src={swapRight} alt="swap" />
       <Container>
         <TabTypesWrapper>
           <ButtonMenu activeIndex={tabIndex} variant="primary" onClick={handleChangeTabType}>
@@ -45,7 +54,7 @@ const Swap = () => {
 const Wrapper = styled(Flex)`
   background-color: #FFF;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 72px);
   justify-content: center;
 `
 const Container = styled.div`
@@ -68,13 +77,13 @@ const Container = styled.div`
     margin-top: 30px;
   }
 `
-const Mask = styled.img`
+const Mask = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100% - 60px);
-  /* background-color: rgb(61,61,61,.5); */
+  height: 100%;
+  background-color: rgb(61,61,61,.5);
 `
 const Content = styled(Flex)`
   width: 100%;
@@ -115,5 +124,35 @@ const TabTypeItem = styled(ButtonMenuItem)<{ active?: boolean }>`
 const CardsFlex = styled.div`
   display: flex;
   width: 100%;
+`
+const RedDotsLeft = styled.img`
+  position: absolute;
+  top: calc(5% + 45px);
+  left: 5%;
+`
+const RedDotsRight = styled.img`
+  position: absolute;
+  top: calc(5% + 45px);
+  right: 5%;
+`
+const BlackDotsLeft = styled.img`
+  position: absolute;
+  top: calc(5% + 100px);
+  left: 5%;
+`
+const BlackDotsRight = styled.img`
+  position: absolute;
+  top: calc(5% + 100px);
+  right: 5%;
+`
+const MarkLeft = styled.img`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+`
+const MarkRight = styled.img`
+  position: absolute;
+  right: 0;
+  bottom: 0;
 `
 export default Swap
