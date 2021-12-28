@@ -1,25 +1,31 @@
-import React, { useState } from 'react'
+/* eslint-disable no-nested-ternary */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/react-in-jsx-scope */
+// @ts-nocheck
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Flex, ButtonMenu, ButtonMenuItem, Text } from '@evercreative/onidex-uikit'
 import { SwapDetailsContainer } from './SwapComponents'
 import OTCPanel from './Components/OTCPanel'
 
-const AdvancedSwapDetailsInfo = () => {
+const AdvancedSwapDetailsInfo: FC<{bigPanel?: boolean}> = ({ bigPanel }) => {
   const [tabIndex, setTabIndex] = useState(2)
   const handleChangeTabIndex = (type) => {
     setTabIndex(type)
   }
+
   return (
-    <SwapDetailsContainer bkColor="#111111">
+    <SwapDetailsContainer bkColor={bigPanel ? '#474747': '#111111'} bigPanel={bigPanel}>
       <OrderTypesWrapper>
         <ButtonMenu activeIndex={tabIndex} variant="primary" onClick={handleChangeTabIndex}>
-          <TradeTypeItem active={tabIndex === 0}>
+          <TradeTypeItem active={tabIndex === 0} bigPanel={bigPanel}>
             Max return
           </TradeTypeItem>
-          <TradeTypeItem active={tabIndex === 1}>
+          <TradeTypeItem active={tabIndex === 1} bigPanel={bigPanel}>
             Lowest gas
           </TradeTypeItem>
-          <TradeTypeItem active={tabIndex === 2}>
+          <TradeTypeItem active={tabIndex === 2} bigPanel={bigPanel}>
             OTC
           </TradeTypeItem>
         </ButtonMenu>
@@ -34,28 +40,31 @@ const AdvancedSwapDetailsInfo = () => {
 
 export const OrderTypesWrapper = styled(Flex)`
   padding: 8px 0px;
+
   div {
     height: 32px;
-    border-radius: 0px;
-    background: transparent;
+    border-radius: 16px;
+    background: #111111;
     border: none;
     width: 100%;
+    justify-content: space-between;
+    border: 1px solid rgba(255,0,41,.1);
   }
 `;
 
-export const TradeTypeItem = styled(ButtonMenuItem)<{ active?: boolean }>`
-  height: 32px;
+export const TradeTypeItem = styled(ButtonMenuItem)<{ active?: boolean, bigPanel?: boolean }>`
+  height: 30px;
   font-size: 14px;
   border-radius: 16px;
   border: none;
   color: ${({ active }) => active ? '#FFF' : '#FFF'};
   /* border-bottom: ${({ active }) => active && '2px solid #90E0EF'}; */
-  background: ${({ active }) => active ? 'linear-gradient(220.75deg, #2E0006 -16.91%, #CF203C 126.67%)': 'transparent'};
-  background-color: transparent;
+  background: ${({ active }) => active ? 'linear-gradient(220.75deg, #2E0006 -16.91%, #CF203C 126.67%)': '#111111'};
+  background-color: #111111;
   padding: 0 10px;  
   font-weight: 300;
   /* width: 50%; */
-
+  min-width: ${({ bigPanel }) => bigPanel ? '80px' : 'auto'};
   :hover:not(:disabled):not(.button--disabled):not(:active) {
     color: ${({ active }) => active && '#CF203C'};
     /* border-bottom: ${({ active }) => active && '2px solid #90E0EF'}; */
@@ -70,4 +79,5 @@ const Label = styled(Text)<{ saved?: boolean }>`
   font-size: 12px;
   line-height: 14.06px;
 `;
+
 export default AdvancedSwapDetailsInfo

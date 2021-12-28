@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ButtonMenu, Flex } from '@evercreative/onidex-uikit'
-import Swap from 'views/Swap';
+import SwapPanel from 'views/Swap/SwapPanel';
 import AdvancedSwapDetailsInfo from 'views/Swap/AdvancedSwapDetailsInfo';
 import TransactionCard from 'views/Swap/TransactionCard';
 import { OrderTypesWrapper, TradeTypeItem } from './AutoHistoryStyles';
@@ -34,7 +34,7 @@ const TradingCard = () => {
         {
           tradeType === 0 &&
           <CardsFlex>
-            <Swap />
+            <SwapPanel />
             <AdvancedSwapDetailsInfo />
             <TransactionCard />
           </CardsFlex>

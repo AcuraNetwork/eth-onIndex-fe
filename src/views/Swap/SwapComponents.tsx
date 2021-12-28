@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { Text, Button, Flex, ButtonMenuItem } from '@evercreative/onidex-uikit';
 import UnlockButton from 'components/UnlockButton';
 
-export const FCard = styled.div<{ isMobile?: boolean }>`
+export const FCard = styled.div<{ isMobile?: boolean, bigPanel?: boolean }>`
   /* background: ${({ theme }) => theme.isDark ? 'rgba(92, 103, 125, 0.27)' : '#fff'}; */
   border-radius: 12px;
   margin-right: 10px;
-  width: calc(40% - 10px);
+  width: ${({ bigPanel }) => bigPanel ? '50%' : 'calc(40% - 10px)'};
   min-width: 280px;
   align-items: ${props => props.isMobile ? 'flex-start' : 'center'};
   margin-top: ${props => props.isMobile && '16px'};
@@ -283,13 +283,13 @@ export const BanaceWrapper = styled.div`
   font-size: 12px;
 `
 
-export const SwapDetailsContainer = styled.div<{ bkColor: string }>`
+export const SwapDetailsContainer = styled.div<{ bkColor: string, bigPanel?: boolean}>`
   background-color: ${({theme, bkColor}) =>theme.isDark ? bkColor : '#FFF'};
   height: 100%;
-  width: calc(30% - 10px);
+  width: ${({ bigPanel }) => bigPanel ? 'calc(50% - 10px)' : 'calc(30% - 10px)'};
   border-radius: 15px;
   padding: 20px 15px;
-  margin-right: 10px;
+  margin-right: ${({ bigPanel }) => bigPanel ? '0px' : '10px'};
 `
 export const TransactionContainer = styled.div<{ bkColor: string }>`
   display: flex;

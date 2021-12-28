@@ -132,12 +132,12 @@ function useSwapCallArguments(
         })
       )
     }
-    console.log(
-      'swapMethods',
-      allowedSlippage,
-      swapMethods,
-      new Percent(JSBI.BigInt(Math.floor(allowedSlippage)), BIPS_BASE)
-    )
+    // console.log(
+    //   'swapMethods',
+    //   allowedSlippage,
+    //   swapMethods,
+    //   new Percent(JSBI.BigInt(Math.floor(allowedSlippage)), BIPS_BASE)
+    // )
     return swapMethods.map((parameters) => ({ parameters, contract }))
   }, [account, allowedSlippage, chainId, deadline, library, recipient, trade])
 }
