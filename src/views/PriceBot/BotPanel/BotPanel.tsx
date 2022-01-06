@@ -166,7 +166,7 @@ const BotPanel = ({ apiParams }) => {
             <ChatText fontSize='14px'>Chart:</ChatText>
             <ChatText fontSize='14px'>{`Symbol: ${symbol}`}</ChatText>
             <ChatText fontSize='14px'>{`(Token) Price: ${maticPrice}`}</ChatText>
-            <ChatText fontSize='14px'>{`(Token)/BNB: $${bogBnb}`}</ChatText>
+            <ChatText fontSize='14px'>{`(Token)/ETH: $${bogBnb}`}</ChatText>
             <ChatText fontSize='14px'>{`Circulating Supply:  $${supply}`}</ChatText>
             <ChatText fontSize='14px'>{`Marketcap:  ${marketcap}`}</ChatText>
             <ChatText fontSize='14px'>{`Liquidity:  ${liquidity}`}</ChatText>
@@ -175,7 +175,7 @@ const BotPanel = ({ apiParams }) => {
             <ChatText fontSize='14px'>{`24Hr Volume: ${volume}`}</ChatText>
             <ChatText fontSize='14px'>Total Value Locked🔒: $</ChatText>
             <ChatText fontSize='14px'>-----------------------------------</ChatText>
-            <ChatText fontSize='14px'>{`BNB: ${price}`}</ChatText>
+            <ChatText fontSize='14px'>{`ETH: ${price}`}</ChatText>
             <ChatText fontSize='14px'>ONI: $ | Powered by Onidex Network.</ChatText>
           </PreviewPanel>
         </Flex>
