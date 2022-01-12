@@ -2680,10 +2680,10 @@
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
-"@evercreative/onidex-uikit@^1.0.14":
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/@evercreative/onidex-uikit/-/onidex-uikit-1.0.14.tgz#08c5db74b4b0641ef961d4875fc0b39631cd2e3e"
-  integrity sha512-JbKwDuuwXBI6A+hwweawUzPLOz6n/o7APT0YeLV1CK1eHneAlpr1gt0BdPtXLKwvM4akG5VtJv3t9yatrrXeAg==
+"@evercreative/onidex-uikit@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@evercreative/onidex-uikit/-/onidex-uikit-1.0.15.tgz#17dc36cf7e11bf34e7ac9f9af965a661f1185e0d"
+  integrity sha512-6SMZPmUQ1FEg03UBpadZRSI6vKEujlHqP0k86RgPWjFos1D2OpnnmfXAagaA+ddy2JFSvql35ZCnQ+3nhprhSQ==
   dependencies:
     "@types/lodash" "^4.14.162"
     "@types/styled-system" "^5.1.10"
