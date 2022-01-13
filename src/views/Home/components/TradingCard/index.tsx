@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ButtonMenu, Flex } from '@evercreative/onidex-uikit'
 import SwapPanel from 'views/Swap/SwapPanel';
+import LimitOrderPanel from 'views/Swap/LimitOrders/LimitOrders';
 import AdvancedSwapDetailsInfo from 'views/Swap/AdvancedSwapDetailsInfo';
 import TransactionCard from 'views/Swap/TransactionCard';
 import { OrderTypesWrapper, TradeTypeItem } from './AutoHistoryStyles';
@@ -35,6 +36,13 @@ const TradingCard = () => {
           tradeType === 0 &&
           <CardsFlex>
             <SwapPanel />
+            <AdvancedSwapDetailsInfo />
+            <TransactionCard />
+          </CardsFlex>
+        }
+        {tradeType === 1 && 
+          <CardsFlex>
+            <LimitOrderPanel />
             <AdvancedSwapDetailsInfo />
             <TransactionCard />
           </CardsFlex>

@@ -32,7 +32,7 @@ import confirmPriceImpactWithoutFee from './confirmPriceImpactWithoutFee';
 import { SwapButton, SwitchTokenHandler, FCard, Label, CopyRightLabel, PriceListCard, PlaceOrderButton, OrderCard, Form, ButtonMenuWrapper, StyledButtonMenuItem, OrderTypesWrapper, OrderTypeItem, Dropdown, InputWrapper, StyledUnlockButton, SocialLinks, HeaderText } from '../SwapComponents';
 // import AutoHistory from './AutoHistory';
 
-const LimitOrders = () => {
+const LimitOrders: FC<{bigPanel?: boolean}> = ({ bigPanel}) => {
   // swap
   const loadedUrlParams = useDefaultsFromURLSearch()
 
@@ -301,84 +301,139 @@ const LimitOrders = () => {
   ,[inputFocused, formattedAmounts, outputMinAmount])
 
 	return (
-    <div>
+    // <div>
+    <FCard bigPanel={bigPanel}>
+    <Form>
       <div className="polyswap_input">
-        <Label fontSize='14px'>{`Pay ${independentField === Field.OUTPUT && !showWrap && trade ? '(estimated)' : ''}`}</Label>
-        {/* <input type="number" placeholder="100.08" step="0.01" /> */}
+        <Flex justifyContent='space-between' alignItems="center">
+          <Label fontSize="12px">
+            {`From ${
+              independentField === Field.OUTPUT && !showWrap && trade ? '(estimated)' : ''
+            }`}
+          </Label>
+          <Dropdown onClick={onPayPresetSearchModal}>
+            <button className="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+              {currencies[Field.INPUT] ? (
+                <>
+                  {currencies[Field.INPUT].symbol === 'ETH' ? (
+                    <img src="/images/swap/eth_trans.png" alt="eth" />
+                  ) : (
+                    <CurrencyLogo currency={currencies[Field.INPUT]} size="18px" />
+                  )}
+                  <span>
+                    {`${
+                      (currencies[Field.INPUT] &&
+                      currencies[Field.INPUT].symbol &&
+                      currencies[Field.INPUT].symbol.length > 20
+                        ? `${currencies[Field.INPUT].symbol.slice(0, 4)}...${currencies[
+                            Field.INPUT
+                          ].symbol.slice(
+                            currencies[Field.INPUT].symbol.length - 5,
+                            currencies[Field.INPUT].symbol.length,
+                          )}`
+                        : currencies[Field.INPUT]?.symbol) || t('selectToken')
+                    }`}{' '}
+                    <i className="arrow down" />
+                  </span>
+                </>
+              ) : (
+                <span>
+                  <Label fontSize="10px">Select a token</Label>
+                  <i className="arrow down" />
+                </span>
+              )}
+            </button>
+          </Dropdown>
+        </Flex>
         <InputWrapper>
           <Input
-            type='number'
-            placeholder='Price'
-            className='balance-input'
+            placeholder="0.00"
+            className="balance-input"
             value={formattedAmounts[Field.INPUT]}
             // onChange={handleInputChange}
             onChange={event => handleTypeInput(event.target.value)}
-            endAdornment= {
-              <Dropdown onClick={onPayPresetSearchModal}>
-                <button className="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
-                {currencies[Field.INPUT] ?
-                  <>
-                    {currencies[Field.INPUT].symbol === 'MATIC' ? <img src='/images/swap/matic.svg' alt="matic" />
-                        : <CurrencyLogo currency={currencies[Field.INPUT]} size='18px' />
-                    }
-                    {/* <img src='/images/swap/matic.svg' alt="matic" /> */}
-                    <span>
-                    {`${(currencies[Field.INPUT] && currencies[Field.INPUT].symbol && currencies[Field.INPUT].symbol.length > 20
-                        ? `${currencies[Field.INPUT].symbol.slice(0, 4)  }...${  currencies[Field.INPUT].symbol.slice(currencies[Field.INPUT].symbol.length - 5, currencies[Field.INPUT].symbol.length)}`
-                        : currencies[Field.INPUT]?.symbol) || t('selectToken')}`} <i className="arrow down" />
-                    </span>
-                  </>
-                    :
-                  <span>
-                    <Label fontSize='10px'>Select a token</Label>
-                    <i className="arrow down" />
-                  </span>
-                }
-                </button>
-              </Dropdown>
+            endAdornment={
+              <p>~$4,817</p>
             }
           />
         </InputWrapper>
       </div>
-      <div className="polyswap_input">
-        <Label fontSize='14px' mt='16px'>Rate</Label>
-          <InputWrapper>
-            <Input
-              type='number'
-              placeholder='0.00'
-              className='balance-input'
-              value={realPriceValue}
-              // value={formattedAmounts[Field.OUTPUT]}
-              onChange={event => onLimitOrderValuesChange('price', event.target.value)}
-              // onChange={handleRateChange}
-              // endAdornment= { 
-              //   <Dropdown onClick={onReceivePresetSearchModal}>
-              //       <button className="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
-              //       {currencies[Field.OUTPUT] ?
-              //           <>
-              //           {currencies[Field.OUTPUT].symbol === 'USDC' ? <img src='https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png' width={18} height={18} alt="usdc" />
-              //               : <CurrencyLogo currency={currencies[Field.OUTPUT]} size='18px' />}
-              //           {/* <img src='/images/swap/matic.svg' alt="matic" /> */}
-              //           <span>
-              //           {`${(currencies[Field.OUTPUT] && currencies[Field.OUTPUT].symbol && currencies[Field.OUTPUT].symbol.length > 20
-              //               ? `${currencies[Field.OUTPUT].symbol.slice(0, 4)  }...${  currencies[Field.OUTPUT].symbol.slice(currencies[Field.OUTPUT].symbol.length - 5, currencies[Field.OUTPUT].symbol.length)}`
-              //               : currencies[Field.OUTPUT]?.symbol) || t('selectToken')}`} <i className="arrow down" />
-              //           </span>
-              //           </>
-              //           : 
-              //           <span>
-              //           <Label fontSize='10px'>Select a token</Label>
-              //           <i className="arrow down" />
-              //           </span>
-              //       }
-              //       </button>
-              //   </Dropdown>
-              // }
-            />
-          </InputWrapper>
-      </div>
-      <div className="polyswap_input">
-        <Label fontSize='14px' mt='16px'>{`Receive ${independentField === Field.INPUT && !showWrap && trade ? '(estimated)' : ''}`}</Label>
+    </Form>
+    {/* <div className="polyswap_input">
+      <Label fontSize='14px'>{`Pay ${independentField === Field.OUTPUT && !showWrap && trade ? '(estimated)' : ''}`}</Label>
+      <InputWrapper>
+        <Input
+          type='number'
+          placeholder='Price'
+          className='balance-input'
+          value={formattedAmounts[Field.INPUT]}
+          onChange={event => handleTypeInput(event.target.value)}
+          endAdornment= {
+            <Dropdown onClick={onPayPresetSearchModal}>
+              <button className="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+              {currencies[Field.INPUT] ?
+                <>
+                  {currencies[Field.INPUT].symbol === 'MATIC' ? <img src='/images/swap/matic.svg' alt="matic" />
+                      : <CurrencyLogo currency={currencies[Field.INPUT]} size='18px' />
+                  }
+                  <span>
+                  {`${(currencies[Field.INPUT] && currencies[Field.INPUT].symbol && currencies[Field.INPUT].symbol.length > 20
+                      ? `${currencies[Field.INPUT].symbol.slice(0, 4)  }...${  currencies[Field.INPUT].symbol.slice(currencies[Field.INPUT].symbol.length - 5, currencies[Field.INPUT].symbol.length)}`
+                      : currencies[Field.INPUT]?.symbol) || t('selectToken')}`} <i className="arrow down" />
+                  </span>
+                </>
+                  :
+                <span>
+                  <Label fontSize='10px'>Select a token</Label>
+                  <i className="arrow down" />
+                </span>
+              }
+              </button>
+            </Dropdown>
+          }
+        />
+      </InputWrapper>
+    </div> */}
+    <div className="polyswap_input" style={{ margin: '16px 0'}}>
+      <Label fontSize='12px'>Rate</Label>
+        <InputWrapper>
+          <Input
+            type='number'
+            placeholder='0.00'
+            className='balance-input'
+            value={realPriceValue}
+            // value={formattedAmounts[Field.OUTPUT]}
+            onChange={event => onLimitOrderValuesChange('price', event.target.value)}
+            // onChange={handleRateChange}
+            // endAdornment= { 
+            //   <Dropdown onClick={onReceivePresetSearchModal}>
+            //       <button className="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+            //       {currencies[Field.OUTPUT] ?
+            //           <>
+            //           {currencies[Field.OUTPUT].symbol === 'USDC' ? <img src='https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png' width={18} height={18} alt="usdc" />
+            //               : <CurrencyLogo currency={currencies[Field.OUTPUT]} size='18px' />}
+            //           {/* <img src='/images/swap/matic.svg' alt="matic" /> */}
+            //           <span>
+            //           {`${(currencies[Field.OUTPUT] && currencies[Field.OUTPUT].symbol && currencies[Field.OUTPUT].symbol.length > 20
+            //               ? `${currencies[Field.OUTPUT].symbol.slice(0, 4)  }...${  currencies[Field.OUTPUT].symbol.slice(currencies[Field.OUTPUT].symbol.length - 5, currencies[Field.OUTPUT].symbol.length)}`
+            //               : currencies[Field.OUTPUT]?.symbol) || t('selectToken')}`} <i className="arrow down" />
+            //           </span>
+            //           </>
+            //           : 
+            //           <span>
+            //           <Label fontSize='10px'>Select a token</Label>
+            //           <i className="arrow down" />
+            //           </span>
+            //       }
+            //       </button>
+            //   </Dropdown>
+            // }
+          />
+        </InputWrapper>
+    </div>
+    <div className="receive_token_wrapper">
+      <div className="input_wrapper_to">
+        <Label fontSize='12px'>{`Receive ${independentField === Field.INPUT && !showWrap && trade ? '(estimated)' : ''}`}</Label>
         <InputWrapper>
           <Input
             placeholder='Amount'
@@ -414,65 +469,47 @@ const LimitOrders = () => {
           />
         </InputWrapper>
       </div>
-      <Flex mt='24px' mb='24px'>
-          {account ? 
-              noRoute && userHasSpecifiedInputOutput ? (
-                  <SwapButton 
-                  disabled 
-                  variant='secondary' 
-                  size='sm'>
-                  Insufficient liquidity for this trade.
-                  </SwapButton>
-              )
-          : 
-          showApproveFlow ? (
-              <div style={{width: '100%'}}>
-                  <SwapButton
-                      variant='secondary' 
-                      size='sm'
-                      onClick={approveCallback}
-                      disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
-                      // variant={approval === ApprovalState.APPROVED ? 'success' : 'primary'}
-                  >
-                      {approval === ApprovalState.PENDING ? (
-                      <Flex gap="6px" justify="center">
-                          Approving <Loader stroke="white" />
-                      </Flex>
-                      ) : approvalSubmitted && approval === ApprovalState.APPROVED ? (
-                      'Approved'
-                      ) : (
-                      `Approve ${currencies[Field.INPUT]?.symbol}`
-                      )}
-                  </SwapButton>
-                  <SwapButton
-                      variant='secondary' 
-                      size='sm'
-                      onClick={() => {
-                      if (isExpertMode) {
-                          handleSwap()
-                      } else {
-                          setSwapState({
-                          tradeToConfirm: trade,
-                          attemptingTxn: false,
-                          swapErrorMessage: undefined,
-                          showConfirm: true,
-                          txHash: undefined,
-                          })
-                        }
-                      }}
-                      id="swap-button"
-                      disabled={
-                      !isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode)
-                      }
-                      // variant={isValid && priceImpactSeverity > 2 ? 'danger' : 'primary'}
-                  >
-                      {priceImpactSeverity > 3 && !isExpertMode
-                      ? `Price Impact High`
-                      : `Place Limit Order${priceImpactSeverity > 2 ? ' Anyway' : ''}`}
-                  </SwapButton>
-              </div>
-          )
-          : 
+      <div className="token_info_wrapper">
+        <Flex justifyContent='space-between'>
+          <p className="name_text">Onidex</p>
+          <p className="price_text">160.025</p>
+        </Flex>
+        <Flex justifyContent='space-between'>
+          <p className="name_text">Tx cost 0.0318(~$105.88)</p>
+          <p className="name_text">~$4,817</p>
+        </Flex>
+      </div>
+    </div>
+    <Flex mt='24px' mb='0' style={{ width: '100%' }}>
+      {account ? 
+        noRoute && userHasSpecifiedInputOutput ? (
+          <SwapButton 
+            disabled 
+            variant='secondary' 
+            size='sm'>
+            Insufficient liquidity for this trade.
+          </SwapButton>
+        )
+      : 
+      showApproveFlow ? (
+        <div style={{width: '100%'}}>
+          <SwapButton
+              variant='secondary' 
+              size='sm'
+              onClick={approveCallback}
+              disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
+              // variant={approval === ApprovalState.APPROVED ? 'success' : 'primary'}
+          >
+              {approval === ApprovalState.PENDING ? (
+              <Flex gap="6px" justify="center">
+                  Approving <Loader stroke="white" />
+              </Flex>
+              ) : approvalSubmitted && approval === ApprovalState.APPROVED ? (
+              'Approved'
+              ) : (
+              `Approve ${currencies[Field.INPUT]?.symbol}`
+              )}
+          </SwapButton>
           <SwapButton
               variant='secondary' 
               size='sm'
@@ -487,27 +524,62 @@ const LimitOrders = () => {
                   showConfirm: true,
                   txHash: undefined,
                   })
-              }
+                }
               }}
               id="swap-button"
-              disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
-              // variant={isValid && priceImpactSeverity > 2 && !swapCallbackError ? 'danger' : 'primary'}
+              disabled={
+              !isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode)
+              }
+              // variant={isValid && priceImpactSeverity > 2 ? 'danger' : 'primary'}
           >
-              {swapInputError ||
-              (priceImpactSeverity > 3 && !isExpertMode
-                  ? `Price Impact Too High`
-                  : `Place Limit Order${priceImpactSeverity > 2 ? ' Anyway' : ''}`)}
+              {priceImpactSeverity > 3 && !isExpertMode
+              ? `Price Impact High`
+              : `Place Limit Order${priceImpactSeverity > 2 ? ' Anyway' : ''}`}
           </SwapButton>
-          :
-          <StyledUnlockButton variant='secondary' size='sm' />
+        </div>
+      )
+      : 
+      <SwapButton
+          variant='secondary' 
+          size='sm'
+          onClick={() => {
+          if (isExpertMode) {
+              handleSwap()
+          } else {
+              setSwapState({
+              tradeToConfirm: trade,
+              attemptingTxn: false,
+              swapErrorMessage: undefined,
+              showConfirm: true,
+              txHash: undefined,
+              })
           }
-      </Flex>
-      {/* <AutoHistory type="Limit" /> */}
-      {/* <AdvancedSwapDetails 
-          showWrap={showWrap}
-          trade={trade} /> */}
-    </div>
+          }}
+          id="swap-button"
+          disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
+          // variant={isValid && priceImpactSeverity > 2 && !swapCallbackError ? 'danger' : 'primary'}
+      >
+          {swapInputError ||
+          (priceImpactSeverity > 3 && !isExpertMode
+              ? `Price Impact Too High`
+              : `Place Limit Order${priceImpactSeverity > 2 ? ' Anyway' : ''}`)}
+      </SwapButton>
+      :
+      <StyledUnlockButton variant='secondary' size='sm' />
+    }
+    </Flex>
+    {/* <AutoHistory type="Limit" /> */}
+    {/* <AdvancedSwapDetails 
+        showWrap={showWrap}
+        trade={trade} /> */}
+  </FCard>
 	)
 }
 
 export default LimitOrders;
+
+    //   {/* <AutoHistory type="Limit" /> */}
+    //   {/* <AdvancedSwapDetails 
+    //       showWrap={showWrap}
+    //       trade={trade} /> */}
+    // </div>
