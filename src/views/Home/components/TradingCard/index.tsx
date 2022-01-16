@@ -69,15 +69,22 @@ const Container = styled.div`
     width: calc(100% - 16px);
     margin-top: 30px;
   }
+  @media screen and (max-width: 990px) {
+    width: 100%;
+  }
 `
 ;
 const Content = styled(Flex)`
   width: 100%;
   padding: 20px 20px 5px 20px;
+
 `
 const CardsFlex = styled.div`
   display: flex;
   width: 100%;
+  @media screen and (max-width: 990px) {
+    flex-direction: column;
+  }
 `
 
 export default TradingCard;

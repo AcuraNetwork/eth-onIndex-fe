@@ -32,7 +32,7 @@ import confirmPriceImpactWithoutFee from './confirmPriceImpactWithoutFee';
 import { SwapButton, SwitchTokenHandler, FCard, Label, CopyRightLabel, PriceListCard, PlaceOrderButton, OrderCard, Form, ButtonMenuWrapper, StyledButtonMenuItem, OrderTypesWrapper, OrderTypeItem, Dropdown, InputWrapper, StyledUnlockButton, SocialLinks, HeaderText } from '../SwapComponents';
 // import AutoHistory from './AutoHistory';
 
-const LimitOrders: FC<{bigPanel?: boolean}> = ({ bigPanel}) => {
+const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, swapPage}) => {
   // swap
   const loadedUrlParams = useDefaultsFromURLSearch()
 
@@ -42,6 +42,7 @@ const LimitOrders: FC<{bigPanel?: boolean}> = ({ bigPanel}) => {
     useCurrency(loadedUrlParams?.outputCurrencyId)
   ]
   const [dismissTokenWarning, setDismissTokenWarning] = useState<boolean>(false)
+  
   const urlLoadedTokens: Token[] = useMemo(
     () => [loadedInputCurrency, loadedOutputCurrency]?.filter((c): c is Token => c instanceof Token) ?? [],
     [loadedInputCurrency, loadedOutputCurrency]
@@ -302,7 +303,7 @@ const LimitOrders: FC<{bigPanel?: boolean}> = ({ bigPanel}) => {
 
 	return (
     // <div>
-    <FCard bigPanel={bigPanel}>
+    <FCard bigPanel={bigPanel} swapPage={swapPage}>
     <Form>
       <div className="polyswap_input">
         <Flex justifyContent='space-between' alignItems="center">
@@ -459,8 +460,8 @@ const LimitOrders: FC<{bigPanel?: boolean}> = ({ bigPanel}) => {
                       </>
                       : 
                       <span>
-                      <Label fontSize='10px'>Select a token</Label>
-                      <i className="arrow down" />
+                        <Label fontSize='10px'>Select a token</Label>
+                        <i className="arrow down" />
                       </span>
                   }
                   </button>
@@ -518,11 +519,11 @@ const LimitOrders: FC<{bigPanel?: boolean}> = ({ bigPanel}) => {
                   handleSwap()
               } else {
                   setSwapState({
-                  tradeToConfirm: trade,
-                  attemptingTxn: false,
-                  swapErrorMessage: undefined,
-                  showConfirm: true,
-                  txHash: undefined,
+                    tradeToConfirm: trade,
+                    attemptingTxn: false,
+                    swapErrorMessage: undefined,
+                    showConfirm: true,
+                    txHash: undefined,
                   })
                 }
               }}
@@ -568,18 +569,8 @@ const LimitOrders: FC<{bigPanel?: boolean}> = ({ bigPanel}) => {
       <StyledUnlockButton variant='secondary' size='sm' />
     }
     </Flex>
-    {/* <AutoHistory type="Limit" /> */}
-    {/* <AdvancedSwapDetails 
-        showWrap={showWrap}
-        trade={trade} /> */}
   </FCard>
 	)
 }
 
 export default LimitOrders;
-
-    //   {/* <AutoHistory type="Limit" /> */}
-    //   {/* <AdvancedSwapDetails 
-    //       showWrap={showWrap}
-    //       trade={trade} /> */}
-    // </div>

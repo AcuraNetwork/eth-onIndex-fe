@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { Text, Button, Flex, ButtonMenuItem } from '@evercreative/onidex-uikit';
 import UnlockButton from 'components/UnlockButton';
 
-export const FCard = styled.div<{ isMobile?: boolean, bigPanel?: boolean }>`
+export const FCard = styled.div<{ isMobile?: boolean, bigPanel?: boolean, swapPage?: boolean }>`
   /* background: ${({ theme }) => theme.isDark ? 'rgba(92, 103, 125, 0.27)' : '#fff'}; */
   border-radius: 12px;
   margin-right: 10px;
-  width: ${({ bigPanel }) => bigPanel ? '50%' : 'calc(40% - 10px)'};
+  width: ${({ bigPanel, swapPage }) => bigPanel || swapPage ? '50%' : 'calc(40% - 10px)'};
   min-width: 280px;
   align-items: ${props => props.isMobile ? 'flex-start' : 'center'};
   margin-top: ${props => props.isMobile && '16px'};
@@ -59,6 +59,9 @@ export const FCard = styled.div<{ isMobile?: boolean, bigPanel?: boolean }>`
       font-size: 14px;
       line-height: 18px;
     }
+  }
+  @media screen and (max-width: 990px) {
+    width: 100%;
   }
 `;
 
@@ -290,6 +293,13 @@ export const SwapDetailsContainer = styled.div<{ bkColor: string, bigPanel?: boo
   border-radius: 15px;
   padding: 20px 15px;
   margin-right: ${({ bigPanel }) => bigPanel ? '0px' : '10px'};
+  @media screen and (max-width: 990px) {
+    width: 100%;
+    /* margin-top: 20px; */
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: 30px;
+  }
 `
 export const TransactionContainer = styled.div<{ bkColor: string }>`
   display: flex;
@@ -300,4 +310,9 @@ export const TransactionContainer = styled.div<{ bkColor: string }>`
   width: 30%;
   border-radius: 15px;
   padding: 20px 15px;
+  @media screen and (max-width: 990px) {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 `

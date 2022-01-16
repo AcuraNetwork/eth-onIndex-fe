@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Flex, ButtonMenu, ButtonMenuItem } from '@evercreative/onidex-uikit';
+import LimitOrderPanel from 'views/Swap/LimitOrders/LimitOrders';
 import redDots from 'assets/images/reddots.svg';
 import blackDots from 'assets/images/blackdots.svg';
 import swapLeft from 'assets/images/swapleft.svg';
@@ -45,6 +46,13 @@ const Swap = () => {
               <AdvancedSwapDetailsInfo bigPanel/>
             </CardsFlex>
           }
+          {
+            tabIndex === 1 &&
+            <CardsFlex>
+              <LimitOrderPanel swapPage />
+              <AdvancedSwapDetailsInfo bigPanel/>
+            </CardsFlex>
+          }
         </Content>
       </Container>  
     </Wrapper>
@@ -56,6 +64,9 @@ const Wrapper = styled(Flex)`
   width: 100%;
   height: calc(100vh - 72px);
   justify-content: center;
+  @media screen and (max-width: 768px) {
+    margin-bottom: 50px;
+  }
 `
 const Container = styled.div`
   background: ${({ theme }) => (theme.isDark ? '#070707' : '#fff')};
@@ -124,6 +135,9 @@ const TabTypeItem = styled(ButtonMenuItem)<{ active?: boolean }>`
 const CardsFlex = styled.div`
   display: flex;
   width: 100%;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 const RedDotsLeft = styled.img`
   position: absolute;

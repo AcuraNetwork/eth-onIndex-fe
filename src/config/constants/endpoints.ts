@@ -19,3 +19,4 @@ export const BLOCKS_CLIENT = 'https://api.thegraph.com/subgraphs/name/pancakeswa
 export const GRAPH_API_NFTMARKET = process.env.REACT_APP_GRAPH_API_NFT_MARKET
 
 export const DEX_API_BASE_URL = 'https://dapp-backend-bsc.vercel.app/ohlc'
+export const DEX_API_BASE_URL2 = 'https://dapp-backend-bsc.vercel.app/'

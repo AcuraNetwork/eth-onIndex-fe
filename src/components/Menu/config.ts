@@ -12,7 +12,7 @@ const config: MenuEntry[] = [
     href: '/swap'
   },
   {
-    label: "Pools",
+    label: "Stake",
     icon: "PoolIcon",
     href: "/polystake",
   },

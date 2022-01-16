@@ -69,9 +69,6 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and (max-width: 1144px) {
-    flex-direction: row;
-  }
   @media screen and (max-width: 490px) {
     flex-direction: column;
   }

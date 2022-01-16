@@ -88,7 +88,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
       stakedOnlyFarms: stakedOnlyFarmList 
     };
   }, [searchTerm, tokenMode, farmsLP]);
-
+  
   // /!\ This function will be removed soon
   // This function compute the APY for each farm and will be replaced when we have a reliable API
   // to retrieve assets prices against USD
