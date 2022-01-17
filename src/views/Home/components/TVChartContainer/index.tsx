@@ -42,7 +42,7 @@ function getLanguageFromURL(): LanguageCode | null {
 	return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' ')) as LanguageCode;
 }
 
-const TVChartContainer = ({ selectedCurrency, priceBot, jwtToken, containerId }) => {
+const TVChartContainer = ({ selectedCurrency, jwtToken, containerId }) => {
     const { isDark, toggleTheme } = useTheme()
 	const [defaultProps] = useState<ChartContainerProps>({
 		symbol: 'UNI',

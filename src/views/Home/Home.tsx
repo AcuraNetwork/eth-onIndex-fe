@@ -22,6 +22,9 @@ import OrderBook from './components/OrderBook/OrderBook';
 import { UNITOKEN } from '../../constants';
 import PairInfo from './components/PairInfo';
 import TradingCard from './components/TradingCard';
+import TradeSection from './components/Spot/TradeSection';
+import HistorySection from './components/Spot/HistorySection';
+import BottomSection from './components/Spot/BottomSection';
 
 const StyledPage = styled(Page)`
   padding: 8px;
@@ -82,6 +85,22 @@ const PriceBotChartContainer = styled.div`
   opacity: 0;
   display: none;
 `;
+
+const WebPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media screen and (max-width: 576px) {
+    display: none;
+  }
+`
+const MobilePage = styled.div`
+  display: none;
+  @media screen and (max-width: 576px) {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px 20px 0;
+  }
+`
 
 const columns = [
   {
@@ -175,7 +194,7 @@ const Home: React.FC = () => {
   return (
     <StyledPage> 
       {selectedCurrency && 
-        <>
+        <WebPage>
           <PageFlex>
             {/* <PolySwap /> */}
             <OrderBook selectedTokenInfo={selectedTokenInfo} />
@@ -215,8 +234,16 @@ const Home: React.FC = () => {
               </ChartFlex>
             </ChartContent>
           </PageFlex>
-          {/* <MobileFooter /> */}
-        </>
+        </WebPage>
+      }
+      {selectedCurrency && 
+        <MobilePage>
+          <Flex>
+            <TradeSection />
+            <HistorySection />
+          </Flex>
+          <BottomSection jwtToken={jwtToken} containerId='tv_chart_container_mobile' selectedCurrency={selectedCurrency}/>
+        </MobilePage>
       }
     </StyledPage>
   )
