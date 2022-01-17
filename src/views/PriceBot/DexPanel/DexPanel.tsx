@@ -402,6 +402,7 @@ const DexPanel = ({
       <Flex mt="40px" alignItems='flex-end' justifyContent='space-between'>
         <Label fontSize='18px'>Enable Price Message Options</Label>
         <SelectAll fontSize='14px' onClick={handleSelectAllOptions}>Select All</SelectAll>
+        
       </Flex>
       <MessageOptionsContainer>
         <Flex flexWrap='wrap' justifyContent='space-between'>
