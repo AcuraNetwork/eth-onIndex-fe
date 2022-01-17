@@ -49,6 +49,14 @@ export const OrderTypesWrapper = styled(Flex)`
     width: 100%;
     justify-content: space-between;
     border: 1px solid rgba(255,0,41,.1);
+    @media screen and (max-width: 576px) {
+      border: none;
+      background: linear-gradient(90.82deg, #141414 6.4%, rgba(37, 37, 37, 0) 101.22%);
+      border-radius: 0px 0px 50px 0px;
+    }
+  }
+  @media screen and (max-width: 576px) {
+    padding: 8px 0 0;
   }
 `;
 
@@ -69,6 +77,11 @@ export const TradeTypeItem = styled(ButtonMenuItem)<{ active?: boolean, bigPanel
     color: ${({ active }) => active && '#CF203C'};
     /* border-bottom: ${({ active }) => active && '2px solid #90E0EF'}; */
     background: transparent;
+  }
+  @media screen and (max-width: 576px){
+    background-color: transparent;
+    background: transparent;
+    color: ${({ active }) => !active ? '#57555D' : '#CF203C'};
   }
 `;
 const Label = styled(Text)<{ saved?: boolean }>`

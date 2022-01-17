@@ -11,6 +11,9 @@ import { UNITOKEN } from '../../constants';
 const Page = styled.div`
   padding: 16px;
   background-color: linear-gradient(180deg, #000000 100%, #FFFFFF 100%, #464646 100%);
+  @media screen and (max-width: 576px) {
+    padding: 16px 0;
+  }
 `;
 
 const PriceBotContainer = styled.div`

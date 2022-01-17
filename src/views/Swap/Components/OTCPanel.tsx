@@ -40,6 +40,11 @@ const OTCPanel = () => {
 const Container = styled.div`
   width: 100%;
   height: 100%;
+  @media screen and (max-width: 576px) {
+    background-color: #1B1919;
+    padding: 20px;
+    margin-bottom: 10px;
+  }
 `
 const Label = styled(Text)<{ saved?: boolean }>`
   color: ${({ theme }) => (theme.isDark ? '#878787' : 'black')};

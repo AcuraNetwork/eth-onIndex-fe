@@ -65,7 +65,10 @@ const Wrapper = styled(Flex)`
   height: calc(100vh - 72px);
   justify-content: center;
   @media screen and (max-width: 768px) {
-    margin-bottom: 50px;
+    margin-bottom: 65px;
+  }
+  @media screen and (max-width: 576px) {
+    margin-bottom: 85px;
   }
 `
 const Container = styled.div`
@@ -101,6 +104,9 @@ const Content = styled(Flex)`
   height: 100%;
   min-height: 405px;
   padding: 20px;
+  @media screen and (max-width: 576px) {
+    margin-bottom: 20px;
+  }
 `
 const TabTypesWrapper = styled(Flex)`
   background-color: ${({theme}) => theme.isDark ? '#171717' : 'fff'};

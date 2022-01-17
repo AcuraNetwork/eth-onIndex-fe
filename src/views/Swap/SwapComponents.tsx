@@ -300,6 +300,10 @@ export const SwapDetailsContainer = styled.div<{ bkColor: string, bigPanel?: boo
   @media screen and (max-width: 768px) {
     margin-top: 30px;
   }
+  @media screen and (max-width: 576px) {
+    background-color: transparent !important;
+    padding: 20px 0px;
+ }
 `
 export const TransactionContainer = styled.div<{ bkColor: string }>`
   display: flex;

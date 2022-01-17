@@ -25,6 +25,24 @@ const Label = styled(Text)`
   }
 `;
 
+const Label1 = styled(Text)`
+  color: ${({ theme }) => theme.isDark && '#C4C4C4'};
+  letter-spacing: 1px;
+  @media screen and (max-width: 576px) {
+    display: none;
+  }
+`;
+const Label2 = styled(Text)`
+  display: none;
+  color: ${({ theme }) => theme.isDark && '#C4C4C4'};
+  letter-spacing: 1px;
+  @media screen and (max-width: 576px) {
+    display: block;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 14px;
+  }
+`;
 const DexRow = styled(Flex)<{maxWidth?: string}>`
   width: 100%;
   justify-content: space-between;
@@ -62,6 +80,23 @@ const TokenInfoContainer = styled.div`
   }
 `;
 
+const TokenInfoWrapper = styled.div`
+  border-radius: 16px;
+  background: linear-gradient(0deg, #121212, #121212), linear-gradient(0deg, #000000, #000000), linear-gradient(0deg, #000000, #000000), #000000;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding: 24px 32px;
+  }
+  @media screen and (max-width: 470px) {
+    flex-direction: column;
+  }
+`;
+
 const SubTokenInfoContainter = styled.div`
   width: 50%;
   
@@ -82,6 +117,9 @@ const SubTokenInfoContainterRight = styled.div`
 const SelectAll = styled(Text)`
   color: #FFB20A;
   cursor: pointer;
+  @media screen and (max-width: 576px) {
+    display: none;
+  }
   @media screen and (max-width: 320px) {
     min-width: 60px;
   }
@@ -196,6 +234,15 @@ const Divider = styled(Flex)`
   height: 1px;
   background: #404040;
 `;
+const MessageOptionsContainer = styled.div`
+  width: 100%;
+  background-color: transparent;
+  @media screen and (max-width: 576px) {
+    background-color: #1A1A1A;
+    padding: 0 10px;
+    border-radius: 0 0 5px 5px;
+  }
+`
 
 const CHAINS = [
   {
@@ -329,39 +376,44 @@ const DexPanel = ({
           </>
         }
       </Flex>
-      <Label fontSize='18px' mb='8px'>Token Info</Label>
-      <TokenInfoContainer>
-        <SubTokenInfoContainter>
-          {/* <Flex justifyContent='space-between'> */}
-            <Text fontSize='18px'>{`Symbol: ${tokenName}`}</Text>
-            <Text fontSize='18px'>{`Marketcap: ${marketcap}`}</Text>
-          {/* </Flex>
-          <Flex justifyContent='space-between'> */}
-            <Text fontSize='18px'>{`Price: ${price}`}</Text>
-            <Text fontSize='18px'>{`Liquidity: ${liquidity}`}</Text>
-          {/* </Flex> */}
-        </SubTokenInfoContainter>
-        <SubTokenInfoContainterRight>
-          {/* <Flex justifyContent='space-between'> */}
-            <Text fontSize='18px'>{`${tokenName}/BNB: ${tokenMatic}`}</Text>
-            <Text fontSize='18px'>{`One LP: ${lpPrice}`}</Text>
-          {/* </Flex> */}
-          <Text fontSize='18px'>{`Supply: ${supply}`}</Text>
-        </SubTokenInfoContainterRight>
-      </TokenInfoContainer>
-      <Flex mt='40px' alignItems='flex-end' justifyContent='space-between'>
+      <Label1 fontSize='18px' mb='8px'>Token Info</Label1>
+      <TokenInfoWrapper>
+        <Label2 fontSize='18px' mb='8px'>Token Info</Label2>
+        <TokenInfoContainer>
+          <SubTokenInfoContainter>
+            {/* <Flex justifyContent='space-between'> */}
+              <Text fontSize='18px'>{`Symbol: ${tokenName}`}</Text>
+              <Text fontSize='18px'>{`Marketcap: ${marketcap}`}</Text>
+            {/* </Flex>
+            <Flex justifyContent='space-between'> */}
+              <Text fontSize='18px'>{`Price: ${price}`}</Text>
+              <Text fontSize='18px'>{`Liquidity: ${liquidity}`}</Text>
+            {/* </Flex> */}
+          </SubTokenInfoContainter>
+          <SubTokenInfoContainterRight>
+            {/* <Flex justifyContent='space-between'> */}
+              <Text fontSize='18px'>{`${tokenName}/BNB: ${tokenMatic}`}</Text>
+              <Text fontSize='18px'>{`One LP: ${lpPrice}`}</Text>
+            {/* </Flex> */}
+            <Text fontSize='18px'>{`Supply: ${supply}`}</Text>
+          </SubTokenInfoContainterRight>
+        </TokenInfoContainer>
+      </TokenInfoWrapper>
+      <Flex mt="40px" alignItems='flex-end' justifyContent='space-between'>
         <Label fontSize='18px'>Enable Price Message Options</Label>
         <SelectAll fontSize='14px' onClick={handleSelectAllOptions}>Select All</SelectAll>
       </Flex>
-      <Flex flexWrap='wrap' justifyContent='space-between'>
-        {messageOptions.map(option => {
-          return (
-            <RadioWrapper key={option.label}>
-              <RadioInput value={option.active} label={option.label} onChange={handleOptionChange(option.label)} />
-            </RadioWrapper>
-          )
-        })}
-      </Flex>
+      <MessageOptionsContainer>
+        <Flex flexWrap='wrap' justifyContent='space-between'>
+          {messageOptions.map(option => {
+            return (
+              <RadioWrapper key={option.label}>
+                <RadioInput value={option.active} label={option.label} onChange={handleOptionChange(option.label)} />
+              </RadioWrapper>
+            )
+          })}
+        </Flex>
+      </MessageOptionsContainer>
       <Divider mt='16px' />
       <ActionRow >
         <Flex flexDirection='column' alignItems='center' mt='16px'>

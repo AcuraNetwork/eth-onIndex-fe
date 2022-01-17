@@ -13,7 +13,7 @@ const MobileFooter = () => {
       </StyledLink>
       <StyledLink href="/swap" color={currentURL === `${BASE_URL}swap` ? '#CF203C' : '#555555'}>
         <SwapIcon color={currentURL === `${BASE_URL}swap` ? '#CF203C' : '#555555'} />
-        <p>Charts</p>
+        <p>Swap</p>
       </StyledLink>
       <StyledLink href="/polystake" color={currentURL === `${BASE_URL}polystake` ? '#CF203C' : '#555555'}>
         <PoolsIcon color={currentURL === `${BASE_URL}polystake` ? '#CF203C' : '#555555'} />

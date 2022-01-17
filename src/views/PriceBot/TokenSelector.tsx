@@ -216,6 +216,11 @@ const SearchInputWrapper = styled.div<{ isMobile: boolean }>`
     max-height: 300px;
     overflow: auto; 
   }
+
+  @media screen and (max-width: 576px){
+    margin: 8px 10px 0;
+    width: calc(100% - 20px);
+  }
 `;
 
 const TokenWrapper = styled(Flex)`
