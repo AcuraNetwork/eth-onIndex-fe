@@ -9,6 +9,7 @@ import getPools from 'subgraph/utils/pools';
 import { usePriceBnbBusd } from 'state/hooks';
 import getTimestampsForChanges from 'utils/getTimestampsForChanges';
 import { getBlocksFromTimestamps } from 'utils/getBlocksFromTimestamps';
+import BackImage from 'assets/images/dex-back.png';
 import { useAllPoolData, usePoolDatas } from 'state/info/hooks'
 import { PoolUpdater, ProtocolUpdater, TokenUpdater } from 'state/info/updaters'
 import { PAIRS_HISTORICAL_BULK, PAIR_DATA } from 'subgraph/queries/pools';
@@ -21,9 +22,15 @@ import FilterInput from './Input';
 import SearchInput from './SearchInput';
 
 const StyledPage = styled(Page)`
-  opacity: ${props => props.isFetching && '0.5'};
+  /* opacity: ${props => props.isFetching && '0.5'}; */
   padding: 8px;
   max-width: 100%;
+  background-image: url(${BackImage}) !important;
+  background-color: transparent !important;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 10px;
 
   article {
     div {
@@ -36,6 +43,10 @@ const StyledPage = styled(Page)`
     ${({ theme }) => theme.mediaQueries.sm} {
       display: block;
     }
+  }
+
+  .page-header {
+    background: transparent;
   }
 
   .header-mobile {
@@ -52,6 +63,10 @@ const StyledPage = styled(Page)`
       display: none;
       margin-bottom: 0;
     }
+  }
+
+  @media screen and (max-width: 576px) {
+    padding: 8px 0;
   }
 `;
 
@@ -145,18 +160,15 @@ const Pools: React.FC = () => {
   return (
     <StyledPage isFetching={isFetching}>
       <PoolUpdater />
-      <Flex justifyContent='space-between' mb='16px' mt='16px' padding='0 8px' flexWrap='wrap'>
+      <Flex justifyContent='space-between' mb='16px' mt='16px' padding='0 8px' flexWrap='wrap' className='page-header'>
         <Flex justifyContent='space-between' flexWrap='wrap'>
           <FilterInput value={filterData.volume24} placeholder='Volume 24h(USD)' onChange={handleUpdateSetFilterData('volume24')} />
           <FilterInput value={filterData.liquidity} placeholder='Liquidity(USD)' onChange={handleUpdateSetFilterData('liquidity')} />
         </Flex>
-        {/* <FilterInput placeholder='Project' />
-        <FilterInput placeholder='Lock Volume' /> */}
         <SearchInput value={filterData.searchTerm} onChange={handleUpdateSetFilterData('searchTerm')} />
       </Flex>
       <div>
         <PoolTable poolDatas={poolDatas} />
-        {/* <PoolsList pools={pools} /> */}
         {isFetching && 
           <SpinnerWrapper>
             <Spinner />

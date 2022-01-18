@@ -25,26 +25,27 @@ const ResponsiveGrid = styled.div`
   padding: 0 24px;
   @media screen and (max-width: 900px) {
     grid-template-columns: 20px 1.5fr repeat(3, 1fr);
-    & :nth-child(4),
-    & :nth-child(5) {
+    & :nth-child(5),
+    & :nth-child(6) {
       display: none;
     }
   }
   @media screen and (max-width: 500px) {
-    grid-template-columns: 20px 1.5fr repeat(1, 1fr);
-    & :nth-child(4),
+    grid-gap: 0.1em;
+    grid-template-columns: 20px 1.5fr repeat(2, 1fr);
+    /* & :nth-child(4), */
     & :nth-child(5),
     & :nth-child(6),
     & :nth-child(7) {
       display: none;
     }
   }
-  @media screen and (max-width: 480px) {
+  /* @media screen and (max-width: 480px) {
     grid-template-columns: 2.5fr repeat(1, 1fr);
     > *:nth-child(1) {
       display: none;
     }
-  }
+  } */
 
   div {
     font-size: 18px;
@@ -54,11 +55,9 @@ const ResponsiveGrid = styled.div`
   }
 `
 
-const LinkWrapper = styled(Link)`
-  text-decoration: none;
-  :hover {
-    cursor: pointer;
-    opacity: 0.7;
+const PoolText = styled(Text)`
+  @media screen and (max-width: 576px) {
+    font-size: 12px !important;
   }
 `
 
@@ -94,18 +93,18 @@ const DataRow = ({ poolData, index }: { poolData: PoolData; index: number }) => 
   return (
     // <LinkWrapper to={`/info/pool/${poolData.address}`}>
       <ResponsiveGrid>
-        <Text>{index + 1}</Text>
+        <PoolText>{index + 1}</PoolText>
         <Flex>
           <DoubleCurrencyLogo address0={poolData.token0.address} address1={poolData.token1.address} />
-          <Text ml="8px">
+          <PoolText ml="8px">
             {poolData.token0.symbol}/{poolData.token1.symbol}
-          </Text>
+          </PoolText>
         </Flex>
-        <Text>${formatAmount(poolData.volumeUSD)}</Text>
-        <Text>${formatAmount(poolData.tvlUSD)}</Text>
-        <Text>${formatAmount(poolData.volumeUSDWeek)}</Text>
-        <Text>${formatAmount(poolData.volumeUSD * (poolData.feeTier / 1000000))}</Text>
-        <Text style={{ color: poolData.volumeUSDChange < 0 ? '#CF203C' : '#1bc870'}}>{formatAmount(poolData.volumeUSDChange)}%</Text>
+        <PoolText>${formatAmount(poolData.volumeUSD)}</PoolText>
+        <PoolText>${formatAmount(poolData.tvlUSD)}</PoolText>
+        <PoolText>${formatAmount(poolData.volumeUSDWeek)}</PoolText>
+        <PoolText>${formatAmount(poolData.volumeUSD * (poolData.feeTier / 1000000))}</PoolText>
+        <PoolText style={{ color: poolData.volumeUSDChange < 0 ? '#CF203C' : '#1bc870'}}>{formatAmount(poolData.volumeUSDChange)}%</PoolText>
       </ResponsiveGrid>
     // </LinkWrapper>
   )
@@ -172,9 +171,9 @@ const PoolTable: React.FC<PoolTableProps> = ({ poolDatas, loading }) => {
         <Text color="secondary" fontSize="12px" bold>
           #
         </Text>
-        <Text color="secondary" fontSize="12px" bold textTransform="uppercase">
+        <PoolText color="secondary" fontSize="12px" bold textTransform="uppercase">
           Pool
-        </Text>
+        </PoolText>
         <ClickableColumnHeader
           color="secondary"
           fontSize="12px"

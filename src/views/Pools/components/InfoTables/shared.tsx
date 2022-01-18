@@ -3,6 +3,9 @@ import { Text, Flex } from '@evercreative/onidex-uikit'
 
 export const ClickableColumnHeader = styled(Text)`
   cursor: pointer;
+  @media screen and (max-width: 576px) {
+    font-size: 12px !important;
+  }
 `
 
 export const TableWrapper = styled(Flex)`
