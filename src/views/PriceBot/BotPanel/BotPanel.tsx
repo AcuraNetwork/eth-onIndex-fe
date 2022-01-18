@@ -126,10 +126,7 @@ const CommandHeader = styled(Flex)`
 
 const ChervonIconContainer = styled.div`
   padding: 5px;
-  display: none;
-  @media screen and (max-width: 576px) {
-    display: block;
-  }
+  display: block;
 `
 const PriceMessageHeader = styled(Flex)`
   background: transparent;
