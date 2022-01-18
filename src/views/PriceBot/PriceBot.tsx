@@ -45,12 +45,18 @@ const MarkLeft = styled.img`
   left: 0;
   bottom: 0;
   /* z-index: -1; */
+  @media screen and (max-width: 576px){
+    display: none;
+  }
 `
 const MarkRight = styled.img`
   position: absolute;
   right: 0;
   bottom: 0;
   /* z-index: -1; */
+  @media screen and (max-width: 576px){
+    display: none;
+  }
 `
 
 const MESSAGE_OPTIONS = [

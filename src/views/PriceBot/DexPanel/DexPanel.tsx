@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Text, Flex, ButtonMenu, ButtonMenuItem } from '@evercreative/onidex-uikit';
+import { Text, Flex, ButtonMenu, ButtonMenuItem, ChevronDownIcon, ChevronUpIcon } from '@evercreative/onidex-uikit';
 import RadioInput from 'components/RadioInput';
 
 const Panel = styled.div`
@@ -243,7 +243,20 @@ const MessageOptionsContainer = styled.div`
     border-radius: 0 0 5px 5px;
   }
 `
-
+const MessageOptionHeader = styled(Flex)`
+  @media screen and (max-width: 576px) {
+    background: linear-gradient(90.82deg, #141414 6.4%, rgba(37, 37, 37, 0) 101.22%);
+    border-radius: 0px 0px 50px 0px;
+    padding: 10px;
+  }
+`
+const ChervonIconContainer = styled.div`
+  padding: 5px;
+  display: none;
+  @media screen and (max-width: 576px) {
+    display: block;
+  }
+`
 const CHAINS = [
   {
     name: 'bsc',
@@ -295,6 +308,8 @@ const DexPanel = ({
   const lpPrice = '$4.48';
   const supply = '92,000,000';
 
+  const [messageOptionShow, setMessageOptionShow] = useState(true)
+
   const handleChangeDex = dex => () => {
     onChangeActiveDex(dex);
   };
@@ -328,6 +343,10 @@ const DexPanel = ({
   const handleChangeMessageType = index => {
     onChangeMessageType(index);
   };
+
+  const handleMessageOptions = () => {
+    setMessageOptionShow(!messageOptionShow)
+  }
 
   const activeChainData = CHAINS.find(item => item.name === activeChain);
 
@@ -399,12 +418,18 @@ const DexPanel = ({
           </SubTokenInfoContainterRight>
         </TokenInfoContainer>
       </TokenInfoWrapper>
-      <Flex mt="40px" alignItems='flex-end' justifyContent='space-between'>
+      <MessageOptionHeader mt="40px" alignItems='center' justifyContent='space-between' onClick={handleMessageOptions}>
         <Label fontSize='18px'>Enable Price Message Options</Label>
         <SelectAll fontSize='14px' onClick={handleSelectAllOptions}>Select All</SelectAll>
-        
-      </Flex>
-      <MessageOptionsContainer>
+        <ChervonIconContainer>
+          {
+            messageOptionShow ?
+            <ChevronUpIcon color="#EF5350" />:
+            <ChevronDownIcon color="#EF5350"/>
+          }
+        </ChervonIconContainer>
+      </MessageOptionHeader>
+      {messageOptionShow && <MessageOptionsContainer>
         <Flex flexWrap='wrap' justifyContent='space-between'>
           {messageOptions.map(option => {
             return (
@@ -414,7 +439,7 @@ const DexPanel = ({
             )
           })}
         </Flex>
-      </MessageOptionsContainer>
+      </MessageOptionsContainer>}
       <Divider mt='16px' />
       <ActionRow >
         <Flex flexDirection='column' alignItems='center' mt='16px'>

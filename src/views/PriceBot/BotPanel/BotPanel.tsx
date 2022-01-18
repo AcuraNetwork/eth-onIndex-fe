@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Text, Flex, Button } from '@evercreative/onidex-uikit';
+import { Text, Flex, Button, ChevronDownIcon, ChevronUpIcon } from '@evercreative/onidex-uikit';
 import RadioInput from 'components/RadioInput';
 import axios from 'axios';
 import { PRICE_BOT_URL } from 'config';
@@ -28,6 +28,11 @@ const StyledButton = styled(Button)`
   background-color: rgba(21,21,21,.85);
   color: #CF203C;
   border-color: #CF203C;
+  @media screen and (max-width: 576px) {
+    width: calc(100% - 20px);
+    background-color: rgba(21,21,21,1);
+    margin-left: 10px;
+  }
 `;
 
 const Label = styled(Text)`
@@ -37,7 +42,20 @@ const Label = styled(Text)`
     margin-top: 50px;
   }
 `;
-
+const PreviewLabel = styled(Text)`
+  letter-spacing: 4px;
+  font-weight: 900;
+  @media screen and (max-width: 576px) {
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-weight: 400;
+  }
+`;
+const CommandLabel = styled(Label)`
+  @media screen and (max-width: 576px) {
+    display: none;
+  }
+`
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -75,7 +93,7 @@ const Wrapper = styled.div`
 const TextArea = styled.textarea`
   resize: none;
   width: 100%;
-  height: 300px;
+  min-height: 150px;
   background: linear-gradient(0deg, #121212, #121212), linear-gradient(0deg, #000000, #000000), linear-gradient(0deg, #000000, #000000), #000000;
   color: white;
   border: none;
@@ -83,12 +101,61 @@ const TextArea = styled.textarea`
   padding: 16px;
   outline: none;
   opacity: .8;
+  @media screen and (max-width: 576px) {
+    background: #1A1A1A;
+    border-radius: 0px 0px 50px 0px;
+    opacity: 1;
+  }
 `;
 
 const ChatText = styled(Text)`
   letter-spacing: 0.2em;
   color: white;
 `;
+
+const CommandHeader = styled(Flex)`
+  background: transparent;
+  margin-bottom: 20px;
+  justify-content: space-between;
+  @media screen and (max-width: 576px) {
+    background: linear-gradient(90.82deg, #141414 6.4%, rgba(37, 37, 37, 0) 101.22%);
+    border-radius: 0px 0px 50px 0px;
+    padding: 10px;
+  }
+`
+
+const ChervonIconContainer = styled.div`
+  padding: 5px;
+  display: none;
+  @media screen and (max-width: 576px) {
+    display: block;
+  }
+`
+const PriceMessageHeader = styled(Flex)`
+  background: transparent;
+  margin: 20px 0;
+  @media screen and (max-width: 576px) {
+    background: linear-gradient(90.82deg, #141414 6.4%, rgba(37, 37, 37, 0) 101.22%);
+    border-radius: 0px 0px 50px 0px;
+    padding: 10px;
+  }
+`
+const PreviewHeader = styled(Flex)`
+  width: calc(100% - 20px);
+  margin: 0 10px;
+  padding: 10px 20px;
+  @media screen and (max-width: 576px) {
+    background: linear-gradient(90.82deg, #141414 6.4%, rgba(37, 37, 37, 0) 101.22%);
+    border-radius: 0px 0px 50px 0px;
+  }
+`
+
+const ChartsContainer = styled(Flex)`
+  display: block;
+  @media screen and (max-width: 576px) {
+    display: none;
+  }
+`
 
 const BotPanel = ({ apiParams }) => {
   const [commands, setCommands] = useState([
@@ -106,6 +173,9 @@ const BotPanel = ({ apiParams }) => {
   const volume = '$152.927.00';
   const liquidity = '$5,004,356.37';
   const lpPrice = '$42.53';
+
+  const [commandsShow, setCommandsShow] = useState(true)
+  const [showPreview, setShowPreview] = useState(true)
 
   useEffect(() => {
     const fetchBots = async () => {
@@ -135,13 +205,30 @@ const BotPanel = ({ apiParams }) => {
     setCommands(newCommands);
   };
 
+  const handleCommandsShow = () => {
+    setCommandsShow(!commandsShow);
+  }
+
+  const handleShowPreview = () => {
+    setShowPreview(!showPreview)
+  }
+
   return (
     <Wrapper>
       <Flex flexDirection='column' alignItems='center' className='bot-setting' mt='16px'>
-        <Label fontSize='24px' mb='24px' bold>COMMANDS</Label>
+        <CommandLabel fontSize='24px' mb='24px' bold>COMMANDS</CommandLabel>
         <div className='container'>
-          <Text fontSize='18px' mb='36px'>Enabled Commands For Users</Text>
-          {commands.map(command => {
+          <CommandHeader onClick={handleCommandsShow}>
+            <Text fontSize='18px'>Commands For Users</Text>
+            <ChervonIconContainer>
+              {
+                commandsShow ?
+                <ChevronUpIcon color="#EF5350" />:
+                <ChevronDownIcon color="#EF5350"/>
+              }
+            </ChervonIconContainer>
+          </CommandHeader>
+          {commandsShow && commands.map(command => {
             return (
               <Flex flexDirection='column' key={command.label} mb='16px'>
                 <RadioInput
@@ -152,16 +239,25 @@ const BotPanel = ({ apiParams }) => {
               </Flex>
             )
           })}
-          <Flex justifyContent='center'>
-            <Text fontSize='18px' mt='90px' mb='24px'>Price Message Content</Text>
-          </Flex>
-          <TextArea placeholder='Text here...' />
+          <PriceMessageHeader flexDirection='column'>
+            <Text fontSize='18px' mb = "16px">Price Message Content</Text>
+            <TextArea placeholder='Sample...' />
+          </PriceMessageHeader>
         </div>
       </Flex>
       <Flex className='bot-info' flexDirection='column' mt='16px'>
         <Flex flexDirection='column' justifyContent='center' alignItems='center' mb='40px'>
-          <Label fontSize='24px' mb='24px' bold>PREVIEW</Label>
-          <PreviewPanel>          
+          <PreviewHeader alignItems='center' justifyContent='space-between' onClick={handleShowPreview}>
+            <PreviewLabel fontSize='24px' bold>Preview</PreviewLabel>
+            <ChervonIconContainer>
+              {
+                showPreview ?
+                <ChevronUpIcon color="#EF5350" />:
+                <ChevronDownIcon color="#EF5350"/>
+              }
+            </ChervonIconContainer>
+          </PreviewHeader>
+          {showPreview && <PreviewPanel>          
             <ChatText fontSize='18px' mb='16px'>ONIDEXPRICEBOT</ChatText>
             <ChatText fontSize='14px'>Chart:</ChatText>
             <ChatText fontSize='14px'>{`Symbol: ${symbol}`}</ChatText>
@@ -177,12 +273,12 @@ const BotPanel = ({ apiParams }) => {
             <ChatText fontSize='14px'>-----------------------------------</ChatText>
             <ChatText fontSize='14px'>{`ETH: ${price}`}</ChatText>
             <ChatText fontSize='14px'>ONI: $ | Powered by Onidex Network.</ChatText>
-          </PreviewPanel>
+          </PreviewPanel>}
         </Flex>
-        <Flex flexDirection='column' justifyContent='center' alignItems='center' mb='36px'>
+        <ChartsContainer flexDirection='column' justifyContent='center' alignItems='center' mb='36px'>
           <Label fontSize='24px' mb='20px'>CHARTS</Label>
           <Panel />
-        </Flex>
+        </ChartsContainer>
         <StyledButton onClick={handleCreateBot} variant='secondary' color='primary'>CREATE BOT</StyledButton>
       </Flex>
     </Wrapper>
