@@ -80,7 +80,6 @@ async function fetchEthPrices(
       error: true,
     }
   } catch (e) {
-    console.log(e)
     return {
       data: undefined,
       error: true,

@@ -1,13 +1,17 @@
 /* eslint-disable react/react-in-jsx-scope */
-import React, { useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components'
-import { ButtonMenu } from '@evercreative/onidex-uikit'
+import { ButtonMenu, Text, ArrowBackIcon, ArrowForwardIcon } from '@evercreative/onidex-uikit'
 import { useEthPrices } from 'hooks/useEthPrices'
-import { useUniUsdPrice } from 'hooks/useUSDCPrice'
+import { useAllPoolData } from 'state/info/hooks'
+import { PoolUpdater } from 'state/info/updaters'
 import RedStarIcon from 'assets/images/redStar.svg'
 import GreyStarIcon from 'assets/images/greyStar.svg'
 import SearchInputSection from './SearchInputSection'
 import { OrderTypesWrapper, TradeTypeItem } from './AutoHistoryStyles'
+import { PageButtons, Arrow, Break } from './shared'
+
+const ITEMS_PER_INFO_TABLE_PAGE = 15;
 
 const OrderBookCard = styled.div`
   background: ${({ theme }) => (theme.isDark ? '#070707' : '#fff')};
@@ -67,94 +71,6 @@ const ContentContainer = styled.div`
     flex-direction: column;
   }
 `
-
-const pairData = [
-  {
-    id: "pair1",
-    fav: true,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },{
-    id: "pair2",
-    fav: false,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },{
-    id: "pair3",
-    fav: false,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },{
-    id: "pair4",
-    fav: false,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },{
-    id: "pair5",
-    fav: true,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },{
-    id: "pair6",
-    fav: true,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },{
-    id: "pair7",
-    fav: true,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },{
-    id: "pair8",
-    fav: true,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },{
-    id: "pair9",
-    fav: true,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },{
-    id: "pair10",
-    fav: true,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },{
-    id: "pair11",
-    fav: true,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },{
-    id: "pair12",
-    fav: true,
-    tokenSymbol: "ETH",
-    quoteSymbol: "USDT",
-    tokenPrice: 4700.56,
-    change: 2.36
-  },
-]
 
 const marketTrades = [
   {
@@ -226,6 +142,41 @@ const PairInfo = ({ selectedTokenInfo }) => {
   const ethPriceUsd = useEthPrices();
   const ethCurrentPriceUsd = ethPriceUsd !== undefined ? ethPriceUsd.current : 0
 
+  // pagination
+  const [page, setPage] = useState(1)
+  const [maxPage, setMaxPage] = useState(1)
+
+  const allPoolData = useAllPoolData()
+  
+  const poolDatas = useMemo(() => {
+    const dataList = Object.values(allPoolData)
+      .map((pool) => pool.data)
+      .filter((pool) => pool)
+
+    return dataList;
+  }, [allPoolData])
+  
+  useEffect(() => {
+    if (poolDatas){
+      let extraPages = 1
+      if (poolDatas.length % ITEMS_PER_INFO_TABLE_PAGE === 0) {
+        extraPages = 0
+      }
+      setMaxPage(Math.floor(poolDatas.length / ITEMS_PER_INFO_TABLE_PAGE) + extraPages)
+      setPage(1);
+    }
+  }, [poolDatas])
+  
+  const renderPoolData = useMemo(() => {
+    const temp = poolDatas.map((_item) => {
+      return {
+        ..._item,
+        fav: false,
+      }
+    })
+    return temp.filter((_pool, i) => i >= (page-1) * ITEMS_PER_INFO_TABLE_PAGE && i < page * ITEMS_PER_INFO_TABLE_PAGE)
+  }, [poolDatas, page])
+
   const handleChangeTradeType = (type) => {
     setTradeType(type)
   }
@@ -234,6 +185,7 @@ const PairInfo = ({ selectedTokenInfo }) => {
 
   return (
     <OrderBookCard>
+      <PoolUpdater />
       <SearchInputSection />
       <ContentContainer>
         <table className="table mt-5 table-borderless">
@@ -247,23 +199,42 @@ const PairInfo = ({ selectedTokenInfo }) => {
           </thead>
           <tbody>
             {
-              pairData.map((_p) => {
+              renderPoolData.map((_p, i) => {
                 return (
-                  <tr className="order_book_table_body" key={_p.id}>
+                  <tr className="order_book_table_body" key={`${_p.token0.address}/${_p.token1.address}-${_p.volumeUSDChange}`}>
                     {
                       _p.fav ?
                       <img src={RedStarIcon} alt="icon" />:
                       <img src={GreyStarIcon} alt="icon" />
                     }
-                    <td style={{ color: '#F1FFF8' }}>{`${_p.tokenSymbol}/${_p.quoteSymbol}`}</td>
-                    <td style={{ color: '#1BC870' }}>{_p.tokenPrice}</td>
-                    <td style={{ color: '#1BC870' }}>{_p.change}%</td>
+                    <td style={{ color: '#F1FFF8' }}>{`${_p.token1.symbol}/${_p.token0.symbol}`}</td>
+                    <td style={{ color: '#1BC870' }}>{_p.token0Price.toFixed(2)}</td>
+                    <td style={{ color: _p.volumeUSDChange < 0 ? '#CF203C' : 'rgb(27, 200, 112)' }}>{_p.volumeUSDChange.toFixed(2)}%</td>
                   </tr>
                 )
               })
             }
           </tbody>
         </table>
+        <PageButtons>
+          <Arrow
+            onClick={() => {
+              setPage(page === 1 ? page : page - 1)
+            }}
+          >
+            <ArrowBackIcon color={page === 1 ? 'textDisabled' : 'primary'} />
+          </Arrow>
+
+          <Text>{`Page ${page} of ${maxPage}`}</Text>
+
+          <Arrow
+            onClick={() => {
+              setPage(page === maxPage ? page : page + 1)
+            }}
+          >
+            <ArrowForwardIcon color={page === maxPage ? 'textDisabled' : 'primary'} />
+          </Arrow>
+        </PageButtons>
         <OrderTypesWrapper>
           <ButtonMenu activeIndex={tradeType} variant="primary" onClick={handleChangeTradeType}>
             <TradeTypeItem active={tradeType === 0}>

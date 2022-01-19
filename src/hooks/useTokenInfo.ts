@@ -29,7 +29,6 @@ const useTokenInfo = (tokenAddress, jwtToken) => {
             }
           }
         );
-        console.log(result);
         setTokenInfo(result.data.tokenInfo.data.ethereum.dexTrades[0]);
       // eslint-disable-next-line no-empty
       } catch (error) {
