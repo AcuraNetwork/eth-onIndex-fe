@@ -6,6 +6,9 @@ import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
 import { Flex } from '@evercreative/onidex-uikit';
 import Page from 'components/layout/Page'
+
+import {useProtocolTransactions } from 'state/protocol/hooks'
+
 import MobileFooter from 'components/MobileFooter'
 import useLatestTrades from 'hooks/useLatestTrades';
 import useTokenInfo from 'hooks/useTokenInfo';
@@ -134,6 +137,8 @@ const Home: React.FC = () => {
   const latestTrades = useLatestTrades(address, jwtToken);
   const selectedTokenInfo = useTokenInfo(address, jwtToken);
 
+  const [transactions] = useProtocolTransactions()
+
   // const bnbPriceUsd = new BigNumber(0);
   // usePriceBnbBusd();
   const ethPriceUsd = useEthPrices();
@@ -169,7 +174,7 @@ const Home: React.FC = () => {
     }
   }, [jwtToken, setJwtToken]);
 
-  const transactions = 
+  const transactionsForToken = 
   selectedTokenInfo && latestTrades ? latestTrades.map(trade => {
     const date = new Date(trade.date.date);
     const timeDate = new Date(Date.UTC(
@@ -230,7 +235,7 @@ const Home: React.FC = () => {
                     <TradingCard />
                   </Flex>
                 </TokenDetails>
-                <PairInfo selectedTokenInfo={selectedTokenInfo} />
+                <PairInfo selectedTokenInfo={selectedTokenInfo} transactions={transactions === undefined ? null : transactions}/>
               </ChartFlex>
             </ChartContent>
           </PageFlex>

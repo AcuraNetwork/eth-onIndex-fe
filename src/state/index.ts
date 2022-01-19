@@ -9,6 +9,7 @@ import userReducer from './user/reducer'
 import swapReducer from './swap/reducer'
 import limitOrdersReducer from './limitOrders/reducer'
 import infoReducer from './info'
+import protocol from './protocol/reducer'
 
 const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
@@ -22,7 +23,8 @@ const store = configureStore({
     user: userReducer,
     swap: swapReducer,
     info: infoReducer,
-    limitOrders: limitOrdersReducer
+    limitOrders: limitOrdersReducer,
+    protocol,
   },
 })
 

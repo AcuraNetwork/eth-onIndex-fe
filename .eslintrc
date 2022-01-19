@@ -32,7 +32,12 @@
     "no-param-reassign": 0,
     "no-nested-ternary": 0,
     "no-restricted-syntax": 0,
-    "no-return-await": 0
+    "no-return-await": 0,
+    "@typescript-eslint/no-shadow": 0,
+    "no-else-return": 0,
+    "react/prop-types": 0,
+    "import/no-named-as-default": 0,
+    "jsx-a11y/click-events-have-key-events": 0
     // End temporary rules
   }
 }

@@ -6,6 +6,7 @@ import Providers from './Providers'
 import ApplicationUpdater from './state/application/updater'
 import ListsUpdater from './state/tokens/updater'
 import MulticallUpdater from './state/multicall/updater'
+import ProtocolUpdater from './state/protocol/updater'
 
 ReactDOM.render(
   // <React.StrictMode>
@@ -13,6 +14,7 @@ ReactDOM.render(
       <ListsUpdater />
       <ApplicationUpdater />
       <MulticallUpdater />
+      <ProtocolUpdater />
       <App />
     </Providers>,
   // </React.StrictMode>,

@@ -1,17 +1,21 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components'
-import { ButtonMenu, Text, ArrowBackIcon, ArrowForwardIcon } from '@evercreative/onidex-uikit'
-import { useEthPrices } from 'hooks/useEthPrices'
+import { useWeb3React } from '@web3-react/core'
+import { ButtonMenu, Text, Flex, ArrowBackIcon, ArrowForwardIcon } from '@evercreative/onidex-uikit'
+// import { useEthPrices } from 'hooks/useEthPrices'
 import { useAllPoolData } from 'state/info/hooks'
 import { PoolUpdater } from 'state/info/updaters'
 import RedStarIcon from 'assets/images/redStar.svg'
 import GreyStarIcon from 'assets/images/greyStar.svg'
+import formatTime from 'utils/date'
+import { formatDollarAmount, formatAmount } from 'utils/formatBalance'
 import SearchInputSection from './SearchInputSection'
 import { OrderTypesWrapper, TradeTypeItem } from './AutoHistoryStyles'
-import { PageButtons, Arrow, Break } from './shared'
+import { PageButtons, Arrow } from './shared'
 
 const ITEMS_PER_INFO_TABLE_PAGE = 15;
+const ITEMS_PER_TRADE_TABLE_PAGE = 10;
 
 const OrderBookCard = styled.div`
   background: ${({ theme }) => (theme.isDark ? '#070707' : '#fff')};
@@ -62,7 +66,6 @@ const OrderBookCard = styled.div`
     margin-top: 30px;
   }
 `
-
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -72,79 +75,19 @@ const ContentContainer = styled.div`
   }
 `
 
-const marketTrades = [
-  {
-    id: 'trade1',
-    time: '10:56:36 PM',
-    tradeAmt: 0.5614,
-  },{
-    id: 'trade2',
-    time: '10:56:36 PM',
-    tradeAmt: 0.5614,
-  },{
-    id: 'trade3',
-    time: '10:56:36 PM',
-    tradeAmt: -0.5614,
-  },{
-    id: 'trade4',
-    time: '10:56:36 PM',
-    tradeAmt: 0.5614,
-  },{
-    id: 'trade5',
-    time: '10:56:36 PM',
-    tradeAmt: 0.5614,
-  },{
-    id: 'trade6',
-    time: '10:56:36 PM',
-    tradeAmt: 0.5614,
-  },{
-    id: 'trade7',
-    time: '10:56:36 PM',
-    tradeAmt: -0.5614,
-  },{
-    id: 'trade8',
-    time: '10:56:36 PM',
-    tradeAmt: 0.5614,
-  },{
-    id: 'trade9',
-    time: '10:56:36 PM',
-    tradeAmt: 0.5614,
-  },{
-    id: 'trade10',
-    time: '10:56:36 PM',
-    tradeAmt: -0.5614,
-  },{
-    id: 'trade11',
-    time: '10:56:36 PM',
-    tradeAmt: 0.5614,
-  },{
-    id: 'trade12',
-    time: '10:56:36 PM',
-    tradeAmt: 0.5614,
-  },
-]
-
-const myTrades = [
-  {
-    id: 'trade1',
-    time: '10:56:36 PM',
-    tradeAmt: 0.5614,
-  },{
-    id: 'trade1',
-    time: '10:56:36 PM',
-    tradeAmt: 0.5614,
-  },
-]
-
-const PairInfo = ({ selectedTokenInfo }) => {
+const PairInfo = ({ selectedTokenInfo, transactions }) => {
   // const uniPriceUsd = useUniUsdPrice();
+  const { account } = useWeb3React()
   const [tradeType, setTradeType] = useState(0)
-  const ethPriceUsd = useEthPrices();
-  const ethCurrentPriceUsd = ethPriceUsd !== undefined ? ethPriceUsd.current : 0
+  // const ethPriceUsd = useEthPrices();
+  // const ethCurrentPriceUsd = ethPriceUsd !== undefined ? ethPriceUsd.current : 0
 
   // pagination
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
+  const [pageTrade, setPageTrade] = useState(1)
+  const [marketMaxPage, setMarketMaxPage] = useState(1)
+  // const [myTradeMaxPage, setMyTradeMaxPage] = useState(1)
 
   const allPoolData = useAllPoolData()
   
@@ -167,6 +110,17 @@ const PairInfo = ({ selectedTokenInfo }) => {
     }
   }, [poolDatas])
   
+  useEffect(() => {
+    if (transactions){
+      let extraPages = 1
+      if (transactions.length % ITEMS_PER_TRADE_TABLE_PAGE === 0) {
+        extraPages = 0
+      }
+      setMarketMaxPage(Math.floor(transactions.length / ITEMS_PER_TRADE_TABLE_PAGE) + extraPages)
+      setPageTrade(1);
+    }
+  }, [transactions])
+
   const renderPoolData = useMemo(() => {
     const temp = poolDatas.map((_item) => {
       return {
@@ -181,7 +135,29 @@ const PairInfo = ({ selectedTokenInfo }) => {
     setTradeType(type)
   }
 
-  const tradeData = tradeType === 0 ? marketTrades : myTrades
+  const myTradeData1 = useMemo(() => {
+    return transactions ?
+      transactions.filter((t) => t.sender.toLowerCase() === account?.toLowerCase())
+      :
+      []
+  }, [transactions, account])
+
+  const renderTradeData = useMemo(() => {
+    return transactions ?
+      transactions.filter((_, i) => i >= (pageTrade-1) * ITEMS_PER_TRADE_TABLE_PAGE && i < pageTrade * ITEMS_PER_TRADE_TABLE_PAGE)
+      :
+      []
+  }, [transactions, pageTrade])
+
+  const renderMyTradeData = useMemo(() => {
+    return myTradeData1 ?
+      myTradeData1.filter((_, i) => i >= (pageTrade-1) * ITEMS_PER_TRADE_TABLE_PAGE && i < pageTrade * ITEMS_PER_TRADE_TABLE_PAGE)
+      :
+      []
+  }, [myTradeData1, pageTrade])
+
+  const tradeData = tradeType === 0 ? renderTradeData : renderMyTradeData
+  const tradeMaxPage = tradeType === 0 ? marketMaxPage : (renderMyTradeData.length + 1)
 
   return (
     <OrderBookCard>
@@ -235,6 +211,7 @@ const PairInfo = ({ selectedTokenInfo }) => {
             <ArrowForwardIcon color={page === maxPage ? 'textDisabled' : 'primary'} />
           </Arrow>
         </PageButtons>
+        
         <OrderTypesWrapper>
           <ButtonMenu activeIndex={tradeType} variant="primary" onClick={handleChangeTradeType}>
             <TradeTypeItem active={tradeType === 0}>
@@ -245,6 +222,7 @@ const PairInfo = ({ selectedTokenInfo }) => {
             </TradeTypeItem>
           </ButtonMenu>
         </OrderTypesWrapper>
+        
         <table className="table mt-5 table-borderless">
           <thead>
             <tr className="order_book_table_heading">
@@ -256,17 +234,54 @@ const PairInfo = ({ selectedTokenInfo }) => {
           <tbody>
             {
               tradeData.map((_t) => {
+                const abs0 = Math.abs(_t.amountToken0)
+                const abs1 = Math.abs(_t.amountToken1)
+
                 return (
-                  <tr className="order_book_table_body" key={_t.id}>
-                    <td style={{ color: _t.tradeAmt > 0 ? '#1BC870' : '#EF5350' }}>{_t.time}</td>
-                    <td style={{ color: _t.tradeAmt > 0 ? '#1BC870' : '#EF5350', display: 'flex', justifyContent: 'center' }}>{Math.abs(_t.tradeAmt)}<p style={{color: '#787878'}}>&nbsp;ETH</p></td>
-                    <td style={{ color: _t.tradeAmt > 0 ? '#1BC870' : '#EF5350' }}>${(Math.abs(_t.tradeAmt) * ethCurrentPriceUsd).toFixed(2)}</td>
+                  <tr className="order_book_table_body" key={`${_t.hash}-${_t.amountUSD}`}>
+                    <td style={{ color: _t.tradeAmt > 0 ? '#1BC870' : '#1BC870' }}>
+                      {formatTime(_t.timestamp, 0)}
+                    </td>
+                    <td style={{ color: _t.tradeAmt > 0 ? '#1BC870' : '#1BC870', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <Flex flexDirection="column" alignItems="center" justifyContent="center">
+                        <Flex mb="4px">
+                          {`${formatAmount(abs0)}`}
+                          <p style={{color: '#787878', fontSize: '12px'}}>&nbsp;{`${_t.token0Symbol}->`}</p>
+                        </Flex>
+                        <Flex> 
+                          <p style={{color: '#EF5350', fontSize: '12px'}}>{`${formatAmount(abs1)}`}</p>
+                          <p style={{color: '#787878', fontSize: '12px'}}>&nbsp;{`${_t.token1Symbol}`}</p>
+                        </Flex>
+                      </Flex>
+                    </td>
+                    <td style={{ color: _t.tradeAmt > 0 ? '#1BC870' : '#1BC870' }}>
+                      {formatDollarAmount(_t.amountUSD)}
+                    </td>
                   </tr>
                 )
               })
             }
           </tbody>
         </table>
+        <PageButtons>
+          <Arrow
+            onClick={() => {
+              setPageTrade(pageTrade === 1 ? pageTrade : pageTrade - 1)
+            }}
+          >
+            <ArrowBackIcon color={pageTrade === 1 ? 'textDisabled' : 'primary'} />
+          </Arrow>
+
+          <Text>{`Page ${pageTrade} of ${tradeMaxPage}`}</Text>
+
+          <Arrow
+            onClick={() => {
+              setPageTrade(pageTrade === tradeMaxPage ? pageTrade : pageTrade + 1)
+            }}
+          >
+            <ArrowForwardIcon color={pageTrade === tradeMaxPage ? 'textDisabled' : 'primary'} />
+          </Arrow>
+        </PageButtons>
       </ContentContainer>
     </OrderBookCard>
   )
