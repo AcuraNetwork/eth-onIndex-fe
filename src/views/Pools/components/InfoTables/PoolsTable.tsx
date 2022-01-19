@@ -124,6 +124,7 @@ const PoolTable: React.FC<PoolTableProps> = ({ poolDatas, loading }) => {
   // pagination
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
+  
   useEffect(() => {
     let extraPages = 1
     if (poolDatas.length % ITEMS_PER_INFO_TABLE_PAGE === 0) {
