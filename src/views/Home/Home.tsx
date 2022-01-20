@@ -176,7 +176,7 @@ const Home: React.FC = () => {
 
     if (!jwtToken || (new Date().getTime() - jwtToken.time) >= 86400000) {
       fetchJwtToken();
-    }
+    } 
   }, [jwtToken, setJwtToken]);
 
   useEffect(() => {
@@ -205,14 +205,14 @@ const Home: React.FC = () => {
     dispatch(updateLimitOrderTokenAddress(currency.address))
     history.push(`/token/${currency.address}`);
   }
-  
+
   return (
     <StyledPage> 
       {selectedCurrency && 
         <WebPage>
           <PageFlex>
             {/* <PolySwap /> */}
-            <OrderBook selectedTokenInfo={selectedTokenInfo} orderLimitData = {limitOrders === undefined ? null : limitOrders} />
+            <OrderBook selectedTokenInfo={selectedTokenInfo} orderLimitData = {limitOrders === undefined ? null : limitOrders} selectedCurrency={selectedCurrency}/>
             <ChartContent flexDirection='column'>
               <div className='header'>
                 <TransactionHeader

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Flex, Text, Button, SunIcon, MoonIcon } from '@evercreative/onidex-uikit';
 import styled from 'styled-components';
-import BigNumber from 'bignumber.js';
+// import BigNumber from 'bignumber.js';
 // import moment from 'moment';
 
 // import { usePriceCakeBusd, usePriceBnbBusd } from 'state/hooks';
 import { useUniUsdPrice } from 'hooks/useUSDCPrice';
 import { useEthPrices } from 'hooks/useEthPrices';
-import { getBalanceNumber } from 'utils/formatBalance';
-import { useTokenBurnedBalance, useTokenTotalSupply } from 'hooks/useTokenBalance';
+// import { getBalanceNumber } from 'utils/formatBalance';
+// import { useTokenBurnedBalance, useTokenTotalSupply } from 'hooks/useTokenBalance';
 import useTheme from 'hooks/useTheme'
 // import useTokenData from 'hooks/useTokenData';
 import { useFetchedTokenDatas } from 'subgraph/tokens/tokenData';
@@ -25,34 +25,18 @@ const TransactionHeader = ({ selectedCurrency, selectedTokenInfo, isMobile, onSe
   // const bnbPriceUsd = usePriceBnbBusd();
   const ethPriceUsd = useEthPrices();
   const { isDark, toggleTheme } = useTheme()
-  const tokenBurnedBalance = useTokenBurnedBalance(selectedCurrency ? selectedCurrency.address : UNITOKEN);
-  const tokenTotalSupply = useTokenTotalSupply(selectedCurrency ? selectedCurrency.address : UNITOKEN);
-  const circSupply = tokenTotalSupply ? tokenTotalSupply.minus(tokenBurnedBalance) : new BigNumber(0);
-  const quoteTokenPrice = selectedTokenInfo ? selectedTokenInfo.quotePrice * ethPriceUsd?.current : uniPriceUsd;
-  const marketCap = new BigNumber(quoteTokenPrice).times(circSupply);
+  // const tokenBurnedBalance = useTokenBurnedBalance(selectedCurrency ? selectedCurrency.address : UNITOKEN);
+  // const tokenTotalSupply = useTokenTotalSupply(selectedCurrency ? selectedCurrency.address : UNITOKEN);
+  // const circSupply = tokenTotalSupply ? tokenTotalSupply.minus(tokenBurnedBalance) : new BigNumber(0);
+  // const quoteTokenPrice = selectedTokenInfo ? selectedTokenInfo.quotePrice * ethPriceUsd?.current : selectedCurrency.symbol === 'WETH' ? ethPriceUsd?.current : uniPriceUsd;
   
-  // const d = new Date();
-  // const day = d.getUTCDate();
-  // const year = d.getUTCFullYear();
-  // const month = d.getUTCMonth();
-  // const utcDate = Date.UTC(year, month, day) / 1000;
-  // const yesterdayDate = utcDate - (5 * 86400);
-
   const passedTokenAddress = selectedCurrency ? selectedCurrency.address.toLowerCase() : UNITOKEN.toLowerCase();
-  // const tokenData = useTokenData(passedTokenAddress, yesterdayDate);
   const tokenDataFull = useFetchedTokenDatas([passedTokenAddress]);
   const tokenData = !tokenDataFull.loading ? tokenDataFull?.data[`${passedTokenAddress}`] : null;
-
+  const marketCap = tokenData && tokenData.tvlUSD // : new BigNumber(quoteTokenPrice).times(circSupply);
   const liquidity = tokenData && ethPriceUsd?.current !== 0 ? tokenData.tvlUSD / ethPriceUsd?.current: 0
-
-  // const tokenDayDataLength = 0 // tokenData && tokenData.token?.tokenDayData ? tokenData && tokenData.token.tokenDayData.length : 0;
-
   const todayLiquidityUsd = tokenData ? tokenData.volumeUSD : 0
-  // const yesterdayLiquidityUsd = 0 // (tokenData && tokenData.token.tokenDayData) ? parseFloat(tokenData.token.tokenDayData[tokenDayDataLength-2].totalLiquidityUSD) : 0;
   const changePercent = tokenData ? tokenData.volumeUSDChange : 0 // ((todayLiquidityUsd - yesterdayLiquidityUsd) / yesterdayLiquidityUsd) * 100;
-
-  // console.log('ant : tokenData => ', tokenData);
-  // console.log('ant : Math.floor((new Date()).getTime() / 1000) => ', utcDate, utcDate - 2 * 86400);
 
   return (
     <FCard isMobile={isMobile}>
@@ -94,7 +78,7 @@ const TransactionHeader = ({ selectedCurrency, selectedTokenInfo, isMobile, onSe
             </TokenDetails>
             <TokenDetails isMobile={false} minW="140px">
               <StyledText fontSize='14px' color='primary'>Marketcap</StyledText>
-              <StyledCardValue fontSize="14px" decimals={2} value={getBalanceNumber(new BigNumber(marketCap))} prefix="$" />
+              <StyledCardValue fontSize="14px" decimals={2} value={marketCap} prefix="$" />
             </TokenDetails>
           </SubFlex>
           <SubFlex>

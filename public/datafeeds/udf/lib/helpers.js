@@ -6,7 +6,6 @@ export function logMessage(message) {
     if (isLoggingEnabled) {
         var now = new Date();
         // tslint:disable-next-line:no-console
-        // console.log(now.toLocaleTimeString() + "." + now.getMilliseconds() + "> " + message);
     }
 }
 export function getErrorMessage(error) {

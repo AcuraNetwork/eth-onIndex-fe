@@ -1,8 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
-import { Flex, Text, ArrowDownIcon } from '@evercreative/onidex-uikit'
-// import { useEthPrices } from 'hooks/useEthPrices'
+import { Flex, Text, ArrowDownIcon, ArrowUpIcon } from '@evercreative/onidex-uikit'
+import { useEthPrices } from 'hooks/useEthPrices'
 import { useUniUsdPrice } from 'hooks/useUSDCPrice'
 import { useToken } from 'hooks/useTokens'
 import { getBalanceNumber } from 'utils/formatBalance'
@@ -81,20 +81,18 @@ const ContentContainer = styled.div`
   }
 `
 
-const OrderBook = ({ selectedTokenInfo, orderLimitData }) => {
+const OrderBook = ({ selectedTokenInfo, orderLimitData, selectedCurrency }) => {
   const uniPriceUsd = useUniUsdPrice();
 
-  // const ethPriceUsd = useEthPrices();
+  const ethPriceUsd = useEthPrices();
 
-  const selectedToken = useToken(selectedTokenInfo?.baseCurrency.address);
-  const passedTokenAddress = selectedTokenInfo ? selectedTokenInfo?.baseCurrency.address.toLowerCase() : UNITOKEN.toLowerCase();
+  const selectedToken = useToken(selectedCurrency ? selectedCurrency.address.toLowerCase() : UNITOKEN.toLowerCase());
+  const passedTokenAddress = selectedCurrency ? selectedCurrency.address.toLowerCase() : UNITOKEN.toLowerCase();
 
   const tokenDataFull = useFetchedTokenDatas([passedTokenAddress]);
   const tokenData = !tokenDataFull.loading ? tokenDataFull?.data[`${passedTokenAddress}`] : null;
 
-  const quoteTokenPrice = tokenData
-    ? tokenData.priceUSD
-    : uniPriceUsd
+  const quoteTokenPrice = selectedTokenInfo ? selectedTokenInfo.quotePrice * ethPriceUsd?.current : selectedCurrency.symbol === 'WETH' ? ethPriceUsd?.current : uniPriceUsd;
 
   const makerData = orderLimitData?
     orderLimitData.filter((_) => _.type === 'maker')
@@ -138,12 +136,12 @@ const OrderBook = ({ selectedTokenInfo, orderLimitData }) => {
           </tbody>
         </table>
         <Flex justifyContent="center" alignItems="flex-end" mt="20px" mb="20px">
-          <Text fontSize="20px" color="#1BC870">{quoteTokenPrice.toFixed(5)}</Text>
+          <Text fontSize="20px" color="#1BC870">{quoteTokenPrice?.toFixed(5)}</Text>
           {
             tokenData && tokenData?.priceUSDChange < 0 ?
             <ArrowDownIcon color="#9C3634"/>
             :
-            <ArrowDownIcon color="#1BC870"/>
+            <ArrowUpIcon color="#1BC870"/>
           }
           <Text fontSize="16px" color="#878787">{Math.abs(tokenData?.priceUSDChange).toFixed(2)}</Text>
         </Flex>

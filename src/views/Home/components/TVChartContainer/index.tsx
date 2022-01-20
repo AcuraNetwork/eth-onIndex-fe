@@ -2,7 +2,6 @@
 // @ts-nocheck
 
 import React, { useEffect, useState } from 'react';
-import { Button } from '@evercreative/onidex-uikit';
 import styled from 'styled-components';
 
 import './index.css';
@@ -10,13 +9,14 @@ import {
 	widget as Widget,
 	ChartingLibraryWidgetOptions,
 	LanguageCode,
-    IBasicDataFeed,
+    // IBasicDataFeed,
 	// IChartingLibraryWidget,	
 	ResolutionString,
 } from './charting_library';
 import getDataFeed from './api/tvDatabaseApi';
 import { useEthPrices } from 'hooks/useEthPrices';
-import { usePriceBnbBusd } from 'state/hooks';
+import { useUSDTUsdPrice } from 'hooks/useUSDCPrice';
+// import { usePriceBnbBusd } from 'state/hooks';
 import useTheme from 'hooks/useTheme';
 
 export interface ChartContainerProps {
@@ -60,6 +60,8 @@ const TVChartContainer = ({ selectedCurrency, jwtToken, containerId }) => {
 	});
     // const bnbPriceUSD = usePriceBnbBusd();
     const ethPriceUsd = useEthPrices();
+    const usdtPriceUsd = useUSDTUsdPrice();
+
     const isBnbPrice = ethPriceUsd ? ethPriceUsd?.current > 0 : false;
 
 	const [tvWidget, setTvWidget] = useState(null);
@@ -71,7 +73,7 @@ const TVChartContainer = ({ selectedCurrency, jwtToken, containerId }) => {
                 symbol: defaultProps.symbol as string,
                 // BEWARE: no trailing slash is expected in feed URL
                 // tslint:disable-next-line:no-any
-                datafeed: getDataFeed(selectedCurrency, ethPriceUsd?.current, jwtToken, () => { console.log('ant: data loaded')}),
+                datafeed: getDataFeed(selectedCurrency, selectedCurrency.symbol === 'WETH' ? usdtPriceUsd? usdtPriceUsd : 1 : ethPriceUsd?.current, jwtToken, () => { console.log('ant: data loaded')}),
                 // datafeed: new (window as any).Datafeeds.UDFCompatibleDatafeed(defaultProps.datafeedUrl),
                 interval: defaultProps.interval as ChartingLibraryWidgetOptions['interval'],
                 container_id: defaultProps.containerId as ChartingLibraryWidgetOptions['container_id'],
@@ -103,7 +105,6 @@ const TVChartContainer = ({ selectedCurrency, jwtToken, containerId }) => {
                         title: 'Notification',
                         body: 'TradingView Charting Library API works correctly',
                         callback: () => {
-                            // console.log('Noticed!');
                         },
                     }));
                     button.innerHTML = 'Check API';

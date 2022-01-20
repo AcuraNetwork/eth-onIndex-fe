@@ -5,7 +5,6 @@ import { INFO_CLIENT } from 'config/constants/endpoints'
 const useTokenData = (tokenAddress: string, yesterdayDate: number) => {
   const [tokenData, setTokenData] = useState(null);
 
-  // console.log('ant : useTokenData ');
   useEffect(() => {
     const fetchTokenData = async () => {
       try {
@@ -36,12 +35,8 @@ const useTokenData = (tokenAddress: string, yesterdayDate: number) => {
           }
         `
 
-        // console.log('ant: query => ', query);
         const data = await request(INFO_CLIENT, query);
-        // console.log('ant : INFO_CLIENT data => ', data);
         setTokenData(data);
-        // return null;
-        // return { data, error: false }
       } catch (error) {
         console.error('Failed to fetch token data', error)
         // return { error: true }

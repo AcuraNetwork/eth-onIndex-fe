@@ -285,7 +285,6 @@ const LimitOrders = () => {
 }
 
   // const handleRateChange = () => {
-  //   console.log('ant : rate change');
   // };
 
   const realPriceValue = useMemo(() => {

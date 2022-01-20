@@ -132,12 +132,6 @@ function useSwapCallArguments(
         })
       )
     }
-    // console.log(
-    //   'swapMethods',
-    //   allowedSlippage,
-    //   swapMethods,
-    //   new Percent(JSBI.BigInt(Math.floor(allowedSlippage)), BIPS_BASE)
-    // )
     return swapMethods.map((parameters) => ({ parameters, contract }))
   }, [account, allowedSlippage, chainId, deadline, library, recipient, trade])
 }
@@ -334,7 +328,6 @@ export function useAutonomySwapCallArguments(
             }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
-          // console.log('tokens bnb', calldata)
           break
         case 'swapExactTokensForTokens':
         case 'swapTokensForExactTokens':
@@ -372,7 +365,6 @@ export function useAutonomySwapCallArguments(
             }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
-          // console.log('@@@@', calldata)
           break
         case 'swapExactTokensForTokensSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'tokenToTokenLimitOrder' : 'tokenToTokenStopLoss'
@@ -409,7 +401,6 @@ export function useAutonomySwapCallArguments(
             }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
-          // console.log('@@@@', calldata)
           // eslint-disable-next-line no-case-declarations
           const wrapperArgs = [
             midRouterContract.address,
@@ -426,7 +417,6 @@ export function useAutonomySwapCallArguments(
           const wrapperValue = autonomyPrepay
             ? BigNumber.from(value).add(ethers.utils.parseEther('0.01')).toHexString()
             : BigNumber.from(value).toHexString()
-          // console.log('swapExactTokensForTokensSupportingFeeOnTransferTokens', wrapperValue)
           return {
             parameters: { methodName: 'newReq', args: wrapperArgs, value: wrapperValue },
             contract: registryContract,
@@ -446,7 +436,6 @@ export function useAutonomySwapCallArguments(
       const wrapperValue = autonomyPrepay
         ? BigNumber.from(value).add(ethers.utils.parseEther('0.01')).toHexString()
         : BigNumber.from(value).toHexString()
-      // console.log('wrapperValue', wrapperValue)
       return {
         parameters: { methodName: 'newReq', args: wrapperArgs, value: wrapperValue },
         contract: registryContract,

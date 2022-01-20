@@ -46,8 +46,6 @@ const fetchTopPools = async (timestamp24hAgo: number): Promise<string[]> => {
       }
     `
     const data = await request<TopPoolsResponse>(INFO_CLIENT, query, { blacklist: TOKEN_BLACKLIST, timestamp24hAgo })
-    // pairDayDatas id has compound id "0xPOOLADDRESS-NUMBERS", extracting pool address with .split('-')
-    // console.log("data.pairDayDatas ::", data.pairDayDatas)
     return data.pairDayDatas.map((p) => p.id.split('-')[0])
   } catch (error) {
     console.error('Failed to fetch top pools', error)

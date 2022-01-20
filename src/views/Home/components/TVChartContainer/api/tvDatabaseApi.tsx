@@ -16,13 +16,13 @@ const getDataFeed = (selectedCurrency, bnbPriceUSD, jwtToken, onDataLoaded) => {
         searchSymbols: () => {},
         resolveSymbol: (symbolName, onSymbolResolvedCallback, onResolveErrorCallback) => {
 			try {
-				const tSymbolName = selectedCurrency ? selectedCurrency.symbol : 'ETH'
-				const brokerName = selectedCurrency ? selectedCurrency.symbol : 'ETH'
+				const tSymbolName = selectedCurrency ? selectedCurrency.symbol : selectedCurrency.symbol === 'WETH' ? 'USDT' : 'ETH'
+				const brokerName = selectedCurrency ? selectedCurrency.symbol : selectedCurrency.symbol === 'WETH' ? 'USDT' : 'ETH'
 				const symbolStub = {
 					// base_name: tSymbolName,
 					name: 'brokerName', 
-                    full_name: selectedCurrency && selectedCurrency.symbol === 'WETH' ? 'ETH' : `${tSymbolName}/ETH`,
-					pro_name: selectedCurrency && selectedCurrency.symbol === 'WETH' ? 'ETH' : `${tSymbolName}/ETH`,
+                    full_name: selectedCurrency && selectedCurrency.symbol === 'WETH' ? 'ETH/USDT' : `${tSymbolName}/ETH`,
+					pro_name: selectedCurrency && selectedCurrency.symbol === 'WETH' ? 'ETH/USDT' : `${tSymbolName}/ETH`,
 					description: '',
 					timezone: 'Etc/UTC',
 					// ticker: tSymbolName,

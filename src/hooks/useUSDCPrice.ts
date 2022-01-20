@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { UNITOKEN } from '../constants'
+import { UNITOKEN, USDTTOKEN } from '../constants'
 import { axiosGetMain } from '../moralisApi'
 
 // import { SupportedChainId } from '../connectors'
@@ -43,6 +43,22 @@ export const useUniUsdPrice = () => {
 
   return uniPrice
 }
+export const useUSDTUsdPrice = () => {
+  const [usdtPrice, setUsdtPrice] = useState(0)
+
+  useEffect(() => {
+    const fetch = async () => {
+      const price = await getUSDPrices([USDTTOKEN])
+      if (price[0].data) {
+        setUsdtPrice(price[0].data.usdPrice)
+      }
+    }
+    fetch()
+  }, [])
+
+  return usdtPrice
+}
+
 // export function useUSDCValue(currencyAmount: CurrencyAmount<Currency> | undefined | null) {
 //   const price = useUSDCPrice(currencyAmount?.currency)
 

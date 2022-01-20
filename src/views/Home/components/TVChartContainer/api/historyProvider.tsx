@@ -34,8 +34,9 @@ export default {
         }
 
         const address = selectedCurrency ? selectedCurrency.address : UNITOKEN;
+        const quotAddress = selectedCurrency.symbol === 'WETH' ? '0xdAC17F958D2ee523a2206206994597C13D831ec7' : '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
         try {
-            const result = await axios.get(`${DEX_API_BASE_URL}?until=${new Date(to * 1000).toISOString()}&window=${window}&limit=${Math.round(tempLimit)+50}&baseToken=${address}&quoteCurrency=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2&network=ethereum&exchange=Uniswap`, {
+            const result = await axios.get(`${DEX_API_BASE_URL}?until=${new Date(to * 1000).toISOString()}&window=${window}&limit=${Math.round(tempLimit)+50}&baseToken=${address}&quoteCurrency=${quotAddress}&network=ethereum&exchange=Uniswap`, {
                 headers: {
                     token: jwtToken.jwtToken
                 }
@@ -94,7 +95,6 @@ export default {
             // return bars;
             return bars.reverse();
         } catch (error) {
-            console.log("get bars error ::", error);
             return [];
         }
     }

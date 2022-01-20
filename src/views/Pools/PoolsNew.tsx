@@ -124,7 +124,6 @@ interface PoolData {
 const Pools: React.FC = () => {  
   const [isFetching, setIsFetching] = useState(false);
   const allPoolData = useAllPoolData()
-  // console.log("Pools all pool data ::", allPoolData)
 
   const [filterData, setFilterData] = useState({
     volume24: '',

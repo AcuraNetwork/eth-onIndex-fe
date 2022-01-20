@@ -149,7 +149,6 @@ const PoolTable: React.FC<PoolTableProps> = ({ poolDatas, loading }) => {
       : []
   }, [page, poolDatas, sortDirection, sortField])
 
-  // console.log("sorted pools ::", sortedPools)
   const handleSort = useCallback(
     (newField: string) => {
       setSortField(newField)

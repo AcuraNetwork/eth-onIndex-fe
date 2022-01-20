@@ -28,7 +28,6 @@
 // 	useEffect(() => {
 //     const interval = setInterval(async () => {
 // 		const data = await getTransactionHistory(account)
-// 		console.log('ant : transactionHistory => ', data);
 // 			setOrders(parseOrders(data))
 //     }, 10000)
 
@@ -47,7 +46,6 @@
 // 	useEffect(() => {
 // 	const interval = setInterval(async () => {
 // 		const data = await getCancellationHistory(account)
-// 		console.log('ant : cancelledTransaction => ', data);
 // 			setCancels(data)
 // 	}, 10000)
 

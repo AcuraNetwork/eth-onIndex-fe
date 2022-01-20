@@ -286,7 +286,6 @@ const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, s
 }
 
   // const handleRateChange = () => {
-  //   console.log('ant : rate change');
   // };
 
   const realPriceValue = useMemo(() => {
