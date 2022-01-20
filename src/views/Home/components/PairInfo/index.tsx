@@ -233,12 +233,12 @@ const PairInfo = ({ selectedTokenInfo, transactions }) => {
           </thead>
           <tbody>
             {
-              tradeData.map((_t) => {
+              tradeData.map((_t, index) => {
                 const abs0 = Math.abs(_t.amountToken0)
                 const abs1 = Math.abs(_t.amountToken1)
 
                 return (
-                  <tr className="order_book_table_body" key={`${_t.hash}-${_t.amountUSD}`}>
+                  <tr className="order_book_table_body" key={`${_t.hash}-${index}`}>
                     <td style={{ color: _t.tradeAmt > 0 ? '#1BC870' : '#1BC870' }}>
                       {formatTime(_t.timestamp, 0)}
                     </td>

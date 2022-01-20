@@ -11,3 +11,4 @@ export const BSC_BLOCK_TIME = 3
 export const CAKE_POOL_PID = 1
 export const BASE_URL = 'http://localhost:3000/'
 export const PRICE_BOT_URL = 'https://acura-pricebot-bsc.herokuapp.com'
+export const LIMIT_ORDER_API_BASE_URL = 'https://limit-orders.1inch.exchange/v2.0/1/limit-order'

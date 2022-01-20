@@ -3,24 +3,24 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
+import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom';
 import { Flex } from '@evercreative/onidex-uikit';
 import Page from 'components/layout/Page'
 
-import {useProtocolTransactions } from 'state/protocol/hooks'
-
-import MobileFooter from 'components/MobileFooter'
+import { useProtocolTransactions, useLimitOrders, useLimitOrdersParam } from 'state/protocol/hooks'
+import { updateLimitOrderTokenAddress } from 'state/protocol/actions';
+import { AppDispatch } from 'state'
 import useLatestTrades from 'hooks/useLatestTrades';
 import useTokenInfo from 'hooks/useTokenInfo';
-import { usePriceBnbBusd } from 'state/hooks';
 import { useToken } from 'hooks/useTokens';
 import { useEthPrices } from 'hooks/useEthPrices';
 import useLocalStorageState from 'hooks/useLocalStorageState';
-import TransactionsTable from './components/TransactionsTable';
+// import TransactionsTable from './components/TransactionsTable';
 import CurrencySelector from './components/CurrencySelector';
 import TransactionHeader from './components/TransactionHeader';
 import TVChartContainer from './components/TVChartContainer';
-import PolySwap from './components/PolySwap/PolySwap';
+// import PolySwap from './components/PolySwap/PolySwap';
 import OrderBook from './components/OrderBook/OrderBook';
 import { UNITOKEN } from '../../constants';
 import PairInfo from './components/PairInfo';
@@ -28,6 +28,7 @@ import TradingCard from './components/TradingCard';
 import TradeSection from './components/Spot/TradeSection';
 import HistorySection from './components/Spot/HistorySection';
 import BottomSection from './components/Spot/BottomSection';
+import { SupportedNetwork } from '../../constants/networks'
 
 const StyledPage = styled(Page)`
   padding: 8px;
@@ -83,11 +84,11 @@ const ChartContent = styled(Flex)`
   width: 100%;
 `;
 
-const PriceBotChartContainer = styled.div`
-  position: absolute;
-  opacity: 0;
-  display: none;
-`;
+// const PriceBotChartContainer = styled.div`
+//   position: absolute;
+//   opacity: 0;
+//   display: none;
+// `;
 
 const WebPage = styled.div`
   display: flex;
@@ -105,31 +106,34 @@ const MobilePage = styled.div`
   }
 `
 
-const columns = [
-  {
-    name: "time",
-    label: "Time",
-    render: ({ value }: { value: React.ReactNode }): React.ReactNode => value,
-  },
-  {
-    name: "traded",
-    label: "Traded",
-  },
-  {
-    name: "tokenPrice",
-    label: 'Token Price'
-  },
-  {
-    name: "value",
-    label: 'Value'
-  },
-  {
-    name: "dex",
-    label: 'Dex'
-  }
-];
+// const columns = [
+//   {
+//     name: "time",
+//     label: "Time",
+//     render: ({ value }: { value: React.ReactNode }): React.ReactNode => value,
+//   },
+//   {
+//     name: "traded",
+//     label: "Traded",
+//   },
+//   {
+//     name: "tokenPrice",
+//     label: 'Token Price'
+//   },
+//   {
+//     name: "value",
+//     label: 'Value'
+//   },
+//   {
+//     name: "dex",
+//     label: 'Dex'
+//   }
+// ];
 
 const Home: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const [page,] = useLimitOrdersParam()
+
   const params = useParams();
   const history = useHistory();
   const address = params.tokenAddress ? params.tokenAddress : UNITOKEN;
@@ -138,6 +142,7 @@ const Home: React.FC = () => {
   const selectedTokenInfo = useTokenInfo(address, jwtToken);
 
   const [transactions] = useProtocolTransactions()
+  const [limitOrders] = useLimitOrders()
 
   // const bnbPriceUsd = new BigNumber(0);
   // usePriceBnbBusd();
@@ -174,6 +179,10 @@ const Home: React.FC = () => {
     }
   }, [jwtToken, setJwtToken]);
 
+  useEffect(() => {
+    dispatch(updateLimitOrderTokenAddress(params.tokenAddress ? params.tokenAddress : UNITOKEN))
+  }, [dispatch, params.tokenAddress]);
+
   const transactionsForToken = 
   selectedTokenInfo && latestTrades ? latestTrades.map(trade => {
     const date = new Date(trade.date.date);
@@ -193,6 +202,7 @@ const Home: React.FC = () => {
   }) : []
 
   const handleSetCurrency = currency => {
+    dispatch(updateLimitOrderTokenAddress(currency.address))
     history.push(`/token/${currency.address}`);
   }
   
@@ -202,10 +212,10 @@ const Home: React.FC = () => {
         <WebPage>
           <PageFlex>
             {/* <PolySwap /> */}
-            <OrderBook selectedTokenInfo={selectedTokenInfo} />
+            <OrderBook selectedTokenInfo={selectedTokenInfo} orderLimitData = {limitOrders === undefined ? null : limitOrders} />
             <ChartContent flexDirection='column'>
               <div className='header'>
-                <TransactionHeader 
+                <TransactionHeader
                   isMobile={false} 
                   selectedCurrency={selectedCurrency}
                   selectedTokenInfo={selectedTokenInfo} 

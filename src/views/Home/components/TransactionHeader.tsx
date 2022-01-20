@@ -40,7 +40,6 @@ const TransactionHeader = ({ selectedCurrency, selectedTokenInfo, isMobile, onSe
 
   const passedTokenAddress = selectedCurrency ? selectedCurrency.address.toLowerCase() : UNITOKEN.toLowerCase();
   // const tokenData = useTokenData(passedTokenAddress, yesterdayDate);
-
   const tokenDataFull = useFetchedTokenDatas([passedTokenAddress]);
   const tokenData = !tokenDataFull.loading ? tokenDataFull?.data[`${passedTokenAddress}`] : null;
 

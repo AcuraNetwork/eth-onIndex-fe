@@ -1,7 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { ChartDayData, Transaction } from 'types'
 import { SupportedNetwork } from 'constants/networks'
-import { updateChartData, updateTransactions } from './actions'
+import {
+  updateChartData,
+  updateLimitOrders,
+  updateTransactions,
+  updateLimitOrderParams,
+  updateLimitOrderPage,
+  updateLimitOrderTokenAddress
+} from './actions'
 
 export interface ProtocolData {
   // volume
@@ -29,7 +36,10 @@ export interface ProtocolState {
     readonly data: ProtocolData | undefined
     readonly chartData: ChartDayData[] | undefined
     readonly transactions: Transaction[] | undefined
-  }
+    readonly limitOrders: any[] | undefined
+    readonly page: number
+    tokenAddress: string | undefined
+  };
 }
 
 export const initialState: ProtocolState = {
@@ -38,18 +48,27 @@ export const initialState: ProtocolState = {
     chartData: undefined,
     transactions: undefined,
     lastUpdated: undefined,
+    limitOrders: undefined,
+    page: 1,
+    tokenAddress: null,
   },
   [SupportedNetwork.ARBITRUM]: {
     data: undefined,
     chartData: undefined,
     transactions: undefined,
     lastUpdated: undefined,
+    limitOrders: undefined,
+    page: 1,
+    tokenAddress: null,
   },
   [SupportedNetwork.OPTIMISM]: {
     data: undefined,
     chartData: undefined,
     transactions: undefined,
     lastUpdated: undefined,
+    limitOrders: undefined,
+    page: 1,
+    tokenAddress: null,
   },
 }
 
@@ -60,5 +79,18 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(updateTransactions, (state, { payload: { transactions, networkId } }) => {
       state[networkId].transactions = transactions
+    })
+    .addCase(updateLimitOrders, (state, { payload: { limitOrders, networkId } }) => {
+      state[networkId].limitOrders = limitOrders
+    })
+    .addCase(updateLimitOrderParams, (state, { payload: { page, tokenAddress, networkId } }) => {
+      state[networkId].page = page
+      state[networkId].tokenAddress = tokenAddress
+    })
+    .addCase(updateLimitOrderTokenAddress, (state, { payload: tokenAddress }) => {
+      state[SupportedNetwork.ETHEREUM].tokenAddress = tokenAddress
+    })
+    .addCase(updateLimitOrderPage, (state, { payload: page }) => {
+      state[SupportedNetwork.ETHEREUM].page = page
     })
 )

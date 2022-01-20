@@ -1,9 +1,16 @@
 /* eslint-disable react/react-in-jsx-scope */
 import styled from 'styled-components'
+import BigNumber from 'bignumber.js'
 import { Flex, Text, ArrowDownIcon } from '@evercreative/onidex-uikit'
-import { useEthPrices } from 'hooks/useEthPrices'
+// import { useEthPrices } from 'hooks/useEthPrices'
 import { useUniUsdPrice } from 'hooks/useUSDCPrice'
+import { useToken } from 'hooks/useTokens'
+import { getBalanceNumber } from 'utils/formatBalance'
+import { useFetchedTokenDatas } from 'subgraph/tokens/tokenData';
+import { UNITOKEN } from '../../../../constants';
+
 // import AutoHistory from './AutoHistory'
+
 
 const OrderBookCard = styled.div`
   background: ${({ theme }) => (theme.isDark ? '#070707' : '#fff')};
@@ -74,13 +81,29 @@ const ContentContainer = styled.div`
   }
 `
 
-const OrderBook = ({ selectedTokenInfo }) => {
+const OrderBook = ({ selectedTokenInfo, orderLimitData }) => {
   const uniPriceUsd = useUniUsdPrice();
 
-  const ethPriceUsd = useEthPrices();
-  const quoteTokenPrice = selectedTokenInfo && selectedTokenInfo.quotePrice && ethPriceUsd !== undefined
-    ? selectedTokenInfo.quotePrice * ethPriceUsd.current
+  // const ethPriceUsd = useEthPrices();
+
+  const selectedToken = useToken(selectedTokenInfo?.baseCurrency.address);
+  const passedTokenAddress = selectedTokenInfo ? selectedTokenInfo?.baseCurrency.address.toLowerCase() : UNITOKEN.toLowerCase();
+
+  const tokenDataFull = useFetchedTokenDatas([passedTokenAddress]);
+  const tokenData = !tokenDataFull.loading ? tokenDataFull?.data[`${passedTokenAddress}`] : null;
+
+  const quoteTokenPrice = tokenData
+    ? tokenData.priceUSD
     : uniPriceUsd
+
+  const makerData = orderLimitData?
+    orderLimitData.filter((_) => _.type === 'maker')
+    :
+    []
+  const takerData = orderLimitData?
+    orderLimitData.filter((_) => _.type === 'taker')
+    :
+    []
 
   return (
     <OrderBookCard>
@@ -94,143 +117,57 @@ const OrderBook = ({ selectedTokenInfo }) => {
         <table className="table mt-3 table-borderless">
           <thead>
             <tr className="order_book_table_heading">
-              <td className="left">Price(USDT)</td>
+              <td className="left">Price(USD)</td>
               <td>Amount</td>
               <td className="right">Total</td>
             </tr>
           </thead>
           <tbody>
-            <tr className="order_book_table_body">
-              <td  className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>0.07</td>
-              <td className="right">{(0.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>1.07</td>
-              <td className="right">{(1.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>0.98</td>
-              <td className="right">{(0.98 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>2.07</td>
-              <td className="right">{(2.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>4.17</td>
-              <td className="right">{(4.17 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>56.24</td>
-              <td className="right">{(56.24 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>2</td>
-              <td className="right">{(2 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>0.07</td>
-              <td className="right">{(0.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>2.07</td>
-              <td className="right">{(2.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>3.897</td>
-              <td className="right">{(3.897 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>3.07</td>
-              <td className="right">{(3.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>2.65</td>
-              <td className="right">{(2.65 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
+            {
+              makerData.map((item, index) => {
+                const amount = getBalanceNumber(new BigNumber(item.data.makingAmount), selectedToken?.decimals)
+                return (
+                  <tr className="order_book_table_body" key={index.toString()}>
+                    <td  className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
+                    <td>{amount.toFixed(2)}</td>
+                    <td className="right">{(amount * quoteTokenPrice).toFixed(2)}</td>
+                  </tr>
+                )
+              })
+            }
           </tbody>
         </table>
         <Flex justifyContent="center" alignItems="flex-end" mt="20px" mb="20px">
-          <Text fontSize="20px" color="#1BC870">330.66</Text>
-          <ArrowDownIcon color="#1BC870"/>
-          <Text fontSize="16px" color="#878787">30.67</Text>
+          <Text fontSize="20px" color="#1BC870">{quoteTokenPrice.toFixed(5)}</Text>
+          {
+            tokenData && tokenData?.priceUSDChange < 0 ?
+            <ArrowDownIcon color="#9C3634"/>
+            :
+            <ArrowDownIcon color="#1BC870"/>
+          }
+          <Text fontSize="16px" color="#878787">{Math.abs(tokenData?.priceUSDChange).toFixed(2)}</Text>
         </Flex>
         <table className="table mt-5 table-borderless">
           <thead>
             <tr className="order_book_table_heading">
-              <td className="left">Price</td>
+              <td className="left">Price(USD)</td>
               <td>Amount</td>
               <td className="right">Total</td>
             </tr>
           </thead>
           <tbody>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>2.07</td>
-              <td className="right">{(2.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>3.897</td>
-              <td className="right">{(3.897 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>3.07</td>
-              <td className="right">{(3.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>2.65</td>
-              <td className="right">{(2.65 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>0.07</td>
-              <td className="right">{(0.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>2.07</td>
-              <td className="right">{(2.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>4.17</td>
-              <td className="right">{(4.17 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>56.24</td>
-              <td className="right">{(56.24 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>2</td>
-              <td className="right">{(2 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>0.07</td>
-              <td className="right">{(0.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
-            <tr className="order_book_table_body">
-              <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
-              <td>2.07</td>
-              <td className="right">{(2.07 * quoteTokenPrice).toFixed(2)}</td>
-            </tr>
+            {
+              takerData.map((item, index) => {
+                const amount = getBalanceNumber(new BigNumber(item.data.takingAmount), selectedToken?.decimals)
+                return (
+                  <tr className="order_book_table_body" key={index.toString()}>
+                    <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
+                    <td>{amount.toFixed(2)}</td>
+                    <td className="right">{(amount * quoteTokenPrice).toFixed(2)}</td>
+                  </tr>
+                )
+              })
+            }
           </tbody>
         </table>
       </ContentContainer>

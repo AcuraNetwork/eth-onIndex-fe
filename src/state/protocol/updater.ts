@@ -1,10 +1,13 @@
 import { useEffect } from 'react'
 import gql from 'graphql-tag'
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
+import axios from 'axios'
 import { Transaction, TransactionType } from 'types'
 import { useClients } from 'state/application/hooks'
 import { formatTokenSymbol } from 'utils/tokens'
-import { useProtocolTransactions } from './hooks'
+import { LIMIT_ORDER_API_BASE_URL } from 'config'
+import { useProtocolTransactions, useLimitOrders, useLimitOrdersParam } from './hooks'
+import { LIMIT_ORDER_PAGE } from '../../constants'
 
 const GLOBAL_TRANSACTIONS = gql`
   query transactions {
@@ -194,11 +197,50 @@ export async function fetchTopTransactions(
   }
 }
 
+export async function fetchLimitOrders(
+  page: number,
+  tokenAddress: string
+): Promise<any[] | undefined> {
+  try {
+    const makerResult = await axios.get(`${LIMIT_ORDER_API_BASE_URL}/all?page=${page}&limit=${LIMIT_ORDER_PAGE}&status=[1]&makerAsset=${tokenAddress}`, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+    const takerResult = await axios.get(`${LIMIT_ORDER_API_BASE_URL}/all?page=${page}&limit=${LIMIT_ORDER_PAGE}&status=[1]&takerAsset=${tokenAddress}`, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+    const mResult = makerResult?.data?.map((_item) => {
+      return {
+        ..._item,
+        type: 'maker'
+      }
+    })
+    const tResult = takerResult?.data?.map((_item) => {
+      return {
+        ..._item,
+        type: 'taker'
+      }
+    })
+    return [
+      ...mResult,
+      ...tResult
+    ];
+  } catch {
+    return undefined
+  }
+}
+
+
 export default function Updater(): null {
   // client for data fetching
   const { dataClient } = useClients()
 
   const [transactions, updateTransactions] = useProtocolTransactions()
+  const [limitOrders, updateLimitOrders] = useLimitOrders()
+  const [page, tokenAddress] = useLimitOrdersParam()
 
   useEffect(() => {
     async function fetch() {
@@ -211,6 +253,18 @@ export default function Updater(): null {
       fetch()
     }
   }, [transactions, updateTransactions, dataClient])
+
+  useEffect(() => {
+    async function fetch() {
+      const data = await fetchLimitOrders(page, tokenAddress)
+      if (data) {
+        updateLimitOrders(data)
+      }
+    }
+    if (tokenAddress) {
+      fetch()
+    }
+  }, [limitOrders, page, tokenAddress, updateLimitOrders])
 
   return null
 }

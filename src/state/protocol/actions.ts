@@ -8,3 +8,16 @@ export const updateChartData = createAction<{ chartData: ChartDayData[]; network
 export const updateTransactions = createAction<{ transactions: Transaction[]; networkId: SupportedNetwork }>(
   'protocol/updateTransactions'
 )
+export const updateLimitOrders = createAction<{ limitOrders: any[]; networkId: SupportedNetwork }>(
+  'protocol/updateLimitOrders'
+)
+export const updateLimitOrderParams = createAction<{ page: number; tokenAddress: string; networkId: SupportedNetwork }>(
+  'protocol/updateLimitOrderParams'
+)
+export const updateLimitOrderPage = createAction<number>(
+  'protocol/updateLimitOrderPage'
+)
+export const updateLimitOrderTokenAddress = createAction<string>(
+  'protocol/updateLimitOrderTokenAddress'
+)
+
