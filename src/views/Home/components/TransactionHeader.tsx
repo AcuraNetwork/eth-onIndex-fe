@@ -74,7 +74,7 @@ const TransactionHeader = ({ selectedCurrency, selectedTokenInfo, isMobile, onSe
             </TokenDetails>
             <TokenDetails isMobile={false}>
               <StyledText fontSize='14px' color='primary'>Price</StyledText>
-              <Label fontSize='14px'>{`$${selectedCurrency && tokenData ? (tokenData.priceUSD).toFixed(2) : uniPriceUsd?.toFixed(2)}`}</Label>  
+              <Label fontSize='14px'>{`$${selectedCurrency.symbol === 'WETH' ? ethPriceUsd?.current.toFixed(2) : selectedCurrency && tokenData ? (tokenData.priceUSD).toFixed(2) : uniPriceUsd?.toFixed(2)}`}</Label>  
             </TokenDetails>
             <TokenDetails isMobile={false} minW="140px">
               <StyledText fontSize='14px' color='primary'>Marketcap</StyledText>
