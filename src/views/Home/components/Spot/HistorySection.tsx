@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Flex, ArrowDropDownIcon } from '@evercreative/onidex-uikit';
+import { Flex, ArrowDropDownIcon, Text } from '@evercreative/onidex-uikit';
+import { SubMenu, SubMenuItem } from 'components/SubMenu';
 import { ReactComponent as ClassicViewIcon } from 'assets/images/classicView.svg';
 
 const pairData = {
@@ -55,8 +56,21 @@ const historyData = [
   },
 ]
 
-const HistorySection = () => {
+const selectValues = [1, 0.01, 0.001, 0.0001]
 
+const HistorySection = () => {
+  const [tabIndex, setTabIndex] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
+  const toggling = (event: React.MouseEvent<HTMLDivElement>) => {
+    setIsOpen(!isOpen);
+    event.stopPropagation();
+  };
+
+  const handleItemClick = (index) => {
+    setTabIndex(index)
+    setIsOpen(false)
+  }
+  
   return (
     <Container>
       <HeaderContainer>
@@ -96,13 +110,26 @@ const HistorySection = () => {
         })
       }
       <HistoryFooter>
-        <Selector justifyContent='space-between' alignItems='center'>
-          <div />
-          <p>0.01</p>
-          <Dropdown>
-            <ArrowDropDownIcon />
-          </Dropdown>
-        </Selector>
+        <SelectorWrapper>
+          <Selector
+            component={
+              <SelectorHeader>
+                <div />
+                <Text>{selectValues[tabIndex]}</Text>
+                <ArrowDropDownIcon />
+              </SelectorHeader>
+            }
+            options={{placement: "left"}}
+            isOpen={isOpen}
+            toggling={toggling}
+            setIsOpen={setIsOpen}
+          >
+            <CustomSubItem onClick={() => handleItemClick(0)} >1</CustomSubItem>
+            <CustomSubItem onClick={() => handleItemClick(1)}>0.01</CustomSubItem>
+            <CustomSubItem onClick={() => handleItemClick(2)}>0.001</CustomSubItem>
+            <CustomSubItem onClick={() => handleItemClick(3)}>0.0001</CustomSubItem>
+          </Selector>
+        </SelectorWrapper>
         <ClassicView>
           <ClassicViewIcon />
           <p className="classic-view-text">Classic View</p>
@@ -172,14 +199,27 @@ const HistoryFooter = styled(Flex)`
   margin-top: 24px;
   width: 100%;
 `
-const Selector = styled(Flex)`
-  color: #FFFFFF;
+const SelectorHeader = styled(Flex)`
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 4px;
+`
+const SelectorWrapper = styled.div`
   width: 60%;
   background: linear-gradient(91.04deg, #222929 -17.29%, rgba(34, 41, 41, 0) 93.97%);
   border-radius: 0px 15px;
+  border: none;
+  margin-right: 10px;
+  text-align: center;
 `
-const Dropdown = styled.div`
-  padding: 10px;
+const Selector = styled(SubMenu)`
+  color: #FFFFFF;
+  width: 100%;
+`
+const CustomSubItem = styled(SubMenuItem)`
+  width: 100%;
+  padding: 5px;
 `
 const ClassicView = styled(Flex)`
   flex-direction: column;

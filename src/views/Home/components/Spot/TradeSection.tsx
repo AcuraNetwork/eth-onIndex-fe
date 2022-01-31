@@ -77,7 +77,7 @@ const TabContainer = styled.div`
   margin: 10px 0 20px;
 `
 const ButtonItem = styled.button<{active?: boolean; tabIndex?: number}>`
-  background-color: ${({active}) => active? '#CF203C' : 'transparent'};
+  background-color: ${({active}) => active? 'green' : 'transparent'};
   height: 40px;
   border: none;
   width: 100%;
@@ -126,7 +126,7 @@ const PercentItem = styled.div<{ active?: boolean; }>`
   border-radius: 5px 0 10px;
 `
 const SellButton = styled.button`
-  background-color: #CF203C;
+  background-color: green;
   height: 40px;
   border: none;
   width: 100%;

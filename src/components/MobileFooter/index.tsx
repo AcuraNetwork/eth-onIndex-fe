@@ -33,13 +33,13 @@ const MobileFooter = () => {
 
 const Containter = styled.div`
   width: calc(100% + 16px);
-  height: 50px;
+  height: 70px;
   position: -webkit-sticky;
   position: sticky;
-  bottom: 0;
+  bottom: 0px;
   margin-left: -8px;
   background-color: #111;
-  box-shadow: 0px 0px 8px 1px rgba(40, 189, 235, 0.5);
+  /* box-shadow: 0px 0px 8px 1px rgba(40, 189, 235, 0.5); */
   display: none;
   z-index: 99999;
   @media screen and (max-width: 768px) {
