@@ -73,7 +73,6 @@ const Container = styled.div`
     width: 100%;
   }
 `
-;
 const Content = styled(Flex)`
   width: 100%;
   padding: 20px 20px 5px 20px;

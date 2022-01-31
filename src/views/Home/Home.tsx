@@ -28,7 +28,7 @@ import TradingCard from './components/TradingCard';
 import TradeSection from './components/Spot/TradeSection';
 import HistorySection from './components/Spot/HistorySection';
 import BottomSection from './components/Spot/BottomSection';
-import { SupportedNetwork } from '../../constants/networks'
+import HomeFooter from './components/HomeFooter'
 
 const StyledPage = styled(Page)`
   padding: 8px;
@@ -239,9 +239,6 @@ const Home: React.FC = () => {
                   </div>
                   {/* <HomeBgContainer /> */}
                   <Flex mt='8px' justifyContent='space-between'>
-                    {/* {transactions.length > 0 && 
-                      <TransactionsTable _columns={columns} _data={transactions} />
-                    } */}
                     <TradingCard />
                   </Flex>
                 </TokenDetails>
@@ -249,6 +246,7 @@ const Home: React.FC = () => {
               </ChartFlex>
             </ChartContent>
           </PageFlex>
+          <HomeFooter />
         </WebPage>
       }
       {selectedCurrency && 
