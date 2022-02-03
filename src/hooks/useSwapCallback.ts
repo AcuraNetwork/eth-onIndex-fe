@@ -54,52 +54,7 @@ function useSwapCallArguments(
   allowedSlippage: number = INITIAL_ALLOWED_SLIPPAGE, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): SwapCall[] {
-  // const { account, chainId, library } = useActiveWeb3React()
-
-  // const { address: recipientAddress } = useENS(recipientAddressOrName)
-  // const recipient = recipientAddressOrName === null ? account : recipientAddress
-  // const deadline = useTransactionDeadline();
-
-  // const v1Exchange = undefined;
-
-  // return useMemo(() => {
-  //   const tradeVersion = Version.v2;
-  //   if (!trade || !recipient || !library || !account || !tradeVersion || !chainId) return []
-
-  //   const contract: Contract | null = getRouterContract(chainId, library, account);
-  //   if (!contract) {
-  //     return []
-  //   }
-
-  //   const swapMethods = []
-
-  //   switch (tradeVersion) {
-  //     case Version.v2:
-  //       swapMethods.push(
-  //         Router.swapCallParameters(trade, {
-  //           feeOnTransfer: false,
-  //           allowedSlippage: new Percent(JSBI.BigInt(allowedSlippage), BIPS_BASE),
-  //           recipient,
-  //           ttl: deadline? deadline.toNumber() : DEFAULT_DEADLINE_FROM_NOW
-  //         })
-  //       )
-
-  //       if (trade.tradeType === TradeType.EXACT_INPUT) {
-  //         swapMethods.push(
-  //           Router.swapCallParameters(trade, {
-  //             feeOnTransfer: true,
-  //             allowedSlippage: new Percent(JSBI.BigInt(allowedSlippage), BIPS_BASE),
-  //             recipient,
-  //             ttl: deadline? deadline.toNumber() : DEFAULT_DEADLINE_FROM_NOW
-  //           })
-  //         )
-  //       }
-  //       break
-  //     default:
-  //       break;
-  //   }
-  //   return swapMethods.map(parameters => ({ parameters, contract }))
-  // }, [account, allowedSlippage, chainId, deadline, library, recipient, trade])
+  
   const { account, chainId, library } = useActiveWeb3React()
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress

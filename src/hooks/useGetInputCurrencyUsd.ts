@@ -14,7 +14,7 @@ const useGetInputCurrencyUsd = (input) => {
       
       axios.get(endpoint).then((response) => {
         if (response.status === 200) {
-          setUsdPrice(input.symbol === 'ETH' ? response.data.ethereum.usd : response.data[`${input.address.toLowerCase()}`].usd)
+          setUsdPrice(input?.symbol === 'ETH' ? response.data.ethereum?.usd : response.data[`${input.address.toLowerCase()}`]?.usd)
         }
       })
     }

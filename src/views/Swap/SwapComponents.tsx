@@ -251,7 +251,7 @@ export const SwapButton = styled(Button)`
   font-weight: 400;
   width: 100%;
   margin: 8px 0;
-  color: ${({ theme }) => theme.colors.primary};
+  color: white; // ${({ theme }) => theme.colors.primary};
   background: linear-gradient(83.26deg, #FA5368 -15.09%, #CF203C 31.7%);
   border: none;
 

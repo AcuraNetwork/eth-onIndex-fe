@@ -25,7 +25,7 @@ import { useEthPrices } from 'hooks/useEthPrices';
 import { ApprovalState, useApproveCallbackFromTrade } from 'hooks/useApproveCallback'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
 import useToggledVersion, { Version } from 'hooks/useToggledVersion'
-import { useSwapCallback } from 'hooks/useSwapCallback';
+import { useSwapCallback, useSwapCallback2 } from 'hooks/useSwapCallback';
 import { useExpertModeManager, useUserSlippageTolerance } from 'state/user/hooks'
 import { warningSeverity, computeTradePriceBreakdown } from 'utils/prices';
 import { maxAmountSpend } from 'utils/maxAmountSpend';

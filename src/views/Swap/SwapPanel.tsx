@@ -25,6 +25,8 @@ import { warningSeverity, computeTradePriceBreakdown } from 'utils/prices'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import Loader from 'components/Loader'
 import multicall from 'utils/multicall'
+import useGetInputCurrencyUsd from 'hooks/useGetInputCurrencyUsd'
+import { useEthPrices } from 'hooks/useEthPrices'
 import confirmPriceImpactWithoutFee from './confirmPriceImpactWithoutFee'
 import AdvancedSwapDetails from './AdvancedSwapDetails'
 import LimitOrders from './LimitOrders/LimitOrders'
@@ -131,6 +133,13 @@ const SwapPanel: FC<{bigPanel?: boolean}> = ({ bigPanel }) => {
   const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
   const isValid = !swapInputError
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
+
+  const inputCurrencyUsd = useGetInputCurrencyUsd(currencies[Field.INPUT])
+  const ethPriceUsd = useEthPrices();
+  const outputCurrencyUsd = useGetInputCurrencyUsd(currencies[Field.OUTPUT])
+
+  const inputCurrencyInUsd = currencies[Field.INPUT]?.symbol === 'ETH' ? ethPriceUsd?.current : inputCurrencyUsd
+  const outputCurrencyInUsd = currencies[Field.OUTPUT]?.symbol === 'ETH' ? ethPriceUsd?.current : outputCurrencyUsd
 
   // modal and loading
   const [{ showConfirm, tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
@@ -274,6 +283,10 @@ const SwapPanel: FC<{bigPanel?: boolean}> = ({ bigPanel }) => {
   const handleOutputChange = (event) => {
     onUserInput(Field.OUTPUT, event.target.value)
   }
+  const intRealOutputValue = formattedAmounts[Field.OUTPUT] === '' ? 0 : formattedAmounts[Field.OUTPUT]
+  const txFeeCost = intRealOutputValue === 0 ? 0 : 0.0318
+
+  const outputBalance = currencyBalances[Field.OUTPUT]
 
   return (
     <FCard bigPanel={bigPanel}>
@@ -326,7 +339,7 @@ const SwapPanel: FC<{bigPanel?: boolean}> = ({ bigPanel }) => {
               value={formattedAmounts[Field.INPUT]}
               onChange={handleInputChange}
               endAdornment={
-                <p>~$4,817</p>
+                <p>~${inputCurrencyInUsd?.toFixed(3)}</p>
               }
             />
           </InputWrapper>
@@ -349,7 +362,7 @@ const SwapPanel: FC<{bigPanel?: boolean}> = ({ bigPanel }) => {
               <Label fontSize="14px">{`Receive ${
                 independentField === Field.INPUT && !showWrap && trade ? '(estimated)' : ''
               }`}</Label>
-              <BanaceWrapper>Balance: 0.00</BanaceWrapper>
+              <BanaceWrapper>Balance: {outputBalance?.toFixed(2)}</BanaceWrapper>
             </Flex>
             <InputWrapper>
               <Input
@@ -404,22 +417,22 @@ const SwapPanel: FC<{bigPanel?: boolean}> = ({ bigPanel }) => {
           <div className="token_info_wrapper">
             <Flex justifyContent='space-between'>
               <p className="name_text">Onidex</p>
-              <p className="price_text">160.025</p>
+              <p className="price_text">{intRealOutputValue}</p>
             </Flex>
             <Flex justifyContent='space-between'>
-              <p className="name_text">Tx cost 0.0318(~$105.88)</p>
-              <p className="name_text">~$4,817</p>
+              <p className="name_text">Tx cost {txFeeCost}(~${(txFeeCost * ethPriceUsd?.current).toFixed(2)})</p>
+              <p className="name_text">~${(intRealOutputValue * outputCurrencyInUsd).toFixed(2)}</p>
             </Flex>
           </div>
         </div>
         <div className="token_info_wrapper_bottom">
           <Flex justifyContent='space-between'>
             <p className="name_text">Onidex</p>
-            <p className="price_text">160.025</p>
+            <p className="price_text">{intRealOutputValue}</p>
           </Flex>
           <Flex justifyContent='space-between'>
-            <p className="name_text">Tx cost 0.0318(~$105.88)</p>
-            <p className="name_text">~$4,817</p>
+            <p className="name_text">Tx cost {txFeeCost}(~${(txFeeCost * ethPriceUsd?.current).toFixed(2)})</p>
+            <p className="name_text">~${(intRealOutputValue * outputCurrencyInUsd).toFixed(2)}</p>
           </Flex>
         </div>
         <Flex mt="24px" mb="0px">
