@@ -30,6 +30,7 @@
     ]
   },
   "dependencies": {
+    "@1inch/limit-order-protocol": "^2.0.3",
     "@binance-chain/bsc-use-wallet": "^0.8.1",
     "@crowdin/crowdin-api-client": "^1.10.1",
     "@evercreative-libs/onidex-sdk": "^0.0.1",

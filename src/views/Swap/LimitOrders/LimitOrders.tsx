@@ -15,11 +15,13 @@ import {
   useDefaultsFromURLSearch,
   useDerivedLimitOrdersInfo,
   useLimitOrdersActionHandlers,
-  useLimitOrdersState
+  useLimitOrdersState,
 } from 'state/limitOrders/hooks';
 import { Field } from 'state/limitOrders/actions'
 import { useCurrency } from 'hooks/useTokens';
 import useENSAddress from 'hooks/useENSAddress'
+import useGetInputCurrencyUsd from 'hooks/useGetInputCurrencyUsd'
+import { useEthPrices } from 'hooks/useEthPrices';
 import { ApprovalState, useApproveCallbackFromTrade } from 'hooks/useApproveCallback'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
 import useToggledVersion, { Version } from 'hooks/useToggledVersion'
@@ -75,6 +77,7 @@ const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, s
     inputError: swapInputError
   } = useDerivedLimitOrdersInfo();
 
+
   const { wrapType, execute: onWrap, inputError: wrapInputError } = useWrapCallback(
     currencies[Field.INPUT],
     currencies[Field.OUTPUT],
@@ -110,8 +113,16 @@ const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, s
         return (Number(outputMinAmount) - Number(marketOutput)) * 100 / Number(marketOutput);
     }
     return 0;
-}, [trade, outputMinAmount])
+  }, [trade, outputMinAmount])
 
+
+  const inputCurrencyUsd = useGetInputCurrencyUsd(currencies[Field.INPUT])
+  const ethPriceUsd = useEthPrices();
+
+  const outputCurrencyUsd = useGetInputCurrencyUsd(currencies[Field.OUTPUT])
+
+  const inputCurrencyInUsd = currencies[Field.INPUT]?.symbol === 'ETH' ? ethPriceUsd?.current : inputCurrencyUsd
+  const outputCurrencyInUsd = currencies[Field.OUTPUT]?.symbol === 'ETH' ? ethPriceUsd?.current : outputCurrencyUsd
 
   const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useLimitOrdersActionHandlers()
   const isValid = !swapInputError
@@ -209,7 +220,7 @@ const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, s
   }, [tradeToConfirm, account, priceImpactWithoutFee, recipient, recipientAddress, showConfirm, swapCallback, trade])
 
   // errors
-  const [showInverted, setShowInverted] = useState<boolean>(false)
+  // const [showInverted, setShowInverted] = useState<boolean>(false)
 
   // warnings on slippage
   const priceImpactSeverity = warningSeverity(priceImpactWithoutFee)
@@ -223,17 +234,17 @@ const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, s
       (approvalSubmitted && approval === ApprovalState.APPROVED)) &&
     !(priceImpactSeverity > 3 && !isExpertMode)
 
-  const handleConfirmDismiss = useCallback(() => {
-    setSwapState({ showConfirm: false, tradeToConfirm, attemptingTxn, swapErrorMessage, txHash })
-    // if there was a tx hash, we want to clear the input
-    if (txHash) {
-      onUserInput(Field.INPUT, '')
-    }
-  }, [attemptingTxn, onUserInput, swapErrorMessage, tradeToConfirm, txHash])
+  // const handleConfirmDismiss = useCallback(() => {
+  //   setSwapState({ showConfirm: false, tradeToConfirm, attemptingTxn, swapErrorMessage, txHash })
+  //   // if there was a tx hash, we want to clear the input
+  //   if (txHash) {
+  //     onUserInput(Field.INPUT, '')
+  //   }
+  // }, [attemptingTxn, onUserInput, swapErrorMessage, tradeToConfirm, txHash])
 
-  const handleAcceptChanges = useCallback(() => {
-    setSwapState({ tradeToConfirm: trade, swapErrorMessage, txHash, attemptingTxn, showConfirm })
-  }, [attemptingTxn, showConfirm, swapErrorMessage, trade, txHash])
+  // const handleAcceptChanges = useCallback(() => {
+  //   setSwapState({ tradeToConfirm: trade, swapErrorMessage, txHash, attemptingTxn, showConfirm })
+  // }, [attemptingTxn, showConfirm, swapErrorMessage, trade, txHash])
 
   const handleInputSelect = useCallback(
     inputCurrency => {
@@ -243,10 +254,10 @@ const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, s
     [onCurrencySelection]
   )
 
-  const handleMaxInput = useCallback(() => {
-    // eslint-disable-next-line no-unused-expressions
-    maxAmountInput && onUserInput(Field.INPUT, maxAmountInput.toExact())
-  }, [maxAmountInput, onUserInput])
+  // const handleMaxInput = useCallback(() => {
+  //   // eslint-disable-next-line no-unused-expressions
+  //   maxAmountInput && onUserInput(Field.INPUT, maxAmountInput.toExact())
+  // }, [maxAmountInput, onUserInput])
 
   const handleOutputSelect = useCallback(outputCurrency => onCurrencySelection(Field.OUTPUT, outputCurrency), [
     onCurrencySelection
@@ -267,9 +278,9 @@ const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, s
     [onUserInput, setInputFocused]
 )
 
-  const handleOutputChange = event => {
-    onUserInput(Field.OUTPUT, event.target.value);
-  };
+  // const handleOutputChange = event => {
+  //   onUserInput(Field.OUTPUT, event.target.value);
+  // };
 
   const onLimitOrderValuesChange = (source: string, value: string) => {
     setInputFocused(false)
@@ -299,6 +310,9 @@ const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, s
 
   const realOutputValue = useMemo(() => inputFocused ? formattedAmounts[Field.OUTPUT] : outputMinAmount
   ,[inputFocused, formattedAmounts, outputMinAmount])
+
+  const intRealOutputValue = realPriceValue ? parseInt(realPriceValue, 10) : 0
+  const txFeeCost = intRealOutputValue === 0 ? 0 : 0.0318
 
 	return (
     // <div>
@@ -353,7 +367,7 @@ const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, s
             // onChange={handleInputChange}
             onChange={event => handleTypeInput(event.target.value)}
             endAdornment={
-              <p>~$4,817</p>
+              <p>~${inputCurrencyInUsd?.toFixed(3)}</p>
             }
           />
         </InputWrapper>
@@ -469,16 +483,16 @@ const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, s
           />
         </InputWrapper>
       </div>
-      <div className="token_info_wrapper">
+      {currencies[Field.OUTPUT] && <div className="token_info_wrapper">
         <Flex justifyContent='space-between'>
           <p className="name_text">Onidex</p>
-          <p className="price_text">160.025</p>
+          <p className="price_text">{realOutputValue}</p>
         </Flex>
         <Flex justifyContent='space-between'>
-          <p className="name_text">Tx cost 0.0318(~$105.88)</p>
-          <p className="name_text">~$4,817</p>
+          <p className="name_text">Tx cost {txFeeCost}(~${(txFeeCost * ethPriceUsd?.current).toFixed(2)})</p>
+          <p className="name_text">~${(intRealOutputValue * outputCurrencyInUsd).toFixed(2)}</p>
         </Flex>
-      </div>
+      </div>}
     </div>
     <Flex mt='24px' mb='0' style={{ width: '100%' }}>
       {account ? 

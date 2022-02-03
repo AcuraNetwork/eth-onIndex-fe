@@ -37,4 +37,8 @@ export default {
     56: '0xce0f314013dc814f2da9d58160c54231fb2ddae2',
     97: '0xE6B4D6B7adfa9F6916985842989f5654Fcc41Bd1',
   },
+  limitOrder: {
+    1: '0x119c71D3BbAC22029622cbaEc24854d3D32D2828',
+    4: '',
+  }
 }

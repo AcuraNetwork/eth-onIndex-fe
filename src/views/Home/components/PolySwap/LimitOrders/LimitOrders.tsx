@@ -41,17 +41,17 @@ const LimitOrders = () => {
     useCurrency(loadedUrlParams?.inputCurrencyId),
     useCurrency(loadedUrlParams?.outputCurrencyId)
   ]
-  const [dismissTokenWarning, setDismissTokenWarning] = useState<boolean>(false)
-  const urlLoadedTokens: Token[] = useMemo(
-    () => [loadedInputCurrency, loadedOutputCurrency]?.filter((c): c is Token => c instanceof Token) ?? [],
-    [loadedInputCurrency, loadedOutputCurrency]
-  )
-  const handleConfirmTokenWarning = useCallback(() => {
-    setDismissTokenWarning(true)
-  }, [])
+  // const [dismissTokenWarning, setDismissTokenWarning] = useState<boolean>(false)
+  // const urlLoadedTokens: Token[] = useMemo(
+  //   () => [loadedInputCurrency, loadedOutputCurrency]?.filter((c): c is Token => c instanceof Token) ?? [],
+  //   [loadedInputCurrency, loadedOutputCurrency]
+  // )
+  // const handleConfirmTokenWarning = useCallback(() => {
+  //   setDismissTokenWarning(true)
+  // }, [])
 
   const { account } = useActiveWeb3React()
-  const { ethereum } = window;
+  // const { ethereum } = window;
 
   // toggle wallet when disconnected
   // const toggleWalletModal = useWalletModalToggle() // ANT TOUCH
@@ -110,7 +110,6 @@ const LimitOrders = () => {
     }
     return 0;
 }, [trade, outputMinAmount])
-
 
   const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useLimitOrdersActionHandlers()
   const isValid = !swapInputError
