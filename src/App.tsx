@@ -4,11 +4,11 @@ import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { ResetCSS } from '@evercreative/onidex-uikit'
 import BigNumber from 'bignumber.js'
 import { useFetchPublicData } from 'state/hooks'
-import Interceptor from 'Interceptors'
+// import Interceptor from 'Interceptors'
 import MobileFooter from 'components/MobileFooter'
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
-import PageLoader from './components/PageLoader'
+// import PageLoader from './components/PageLoader'
 // eslint-disable-next-line import/extensions
 import Web3ReactManager from './components/Web3ReactManager';
 // import NftGlobalNotification from './views/Nft/components/NftGlobalNotification'
@@ -48,7 +48,7 @@ const App: React.FC = () => {
       <ResetCSS />
       <GlobalStyle />
       <Menu>
-        <Suspense fallback={<PageLoader />}>
+        <Suspense fallback={null}>
           <Web3ReactManager>
             <Switch>
               <Route path="/" exact>

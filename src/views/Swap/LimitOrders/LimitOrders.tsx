@@ -554,24 +554,24 @@ const LimitOrders: FC<{bigPanel?: boolean, swapPage?: boolean}> = ({ bigPanel, s
       )
       : 
       <SwapButton
-          variant='secondary' 
-          size='sm'
-          onClick={() => {
+        variant='secondary' 
+        size='sm'
+        onClick={() => {
           if (isExpertMode) {
               handleSwap()
           } else {
-              setSwapState({
+            setSwapState({
               tradeToConfirm: trade,
               attemptingTxn: false,
               swapErrorMessage: undefined,
               showConfirm: true,
               txHash: undefined,
-              })
+            })
           }
-          }}
-          id="swap-button"
-          disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
-          // variant={isValid && priceImpactSeverity > 2 && !swapCallbackError ? 'danger' : 'primary'}
+        }}
+        id="swap-button"
+        disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
+        // variant={isValid && priceImpactSeverity > 2 && !swapCallbackError ? 'danger' : 'primary'}
       >
           {swapInputError ||
           (priceImpactSeverity > 3 && !isExpertMode

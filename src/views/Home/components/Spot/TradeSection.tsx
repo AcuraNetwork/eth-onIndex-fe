@@ -57,7 +57,7 @@ const TradeSection = () => {
       <InputContainer
         placeholder={`Total (${pairData.quoteToken.symbol})`}
       />
-      <SellButton >{tabIndex === 0 ? 'Buy' : 'Sell'} {pairData.token.symbol}</SellButton>
+      <SellButton tabIndex={tabIndex}>{tabIndex === 0 ? 'Buy' : 'Sell'} {pairData.token.symbol}</SellButton>
     </Container>
   )
 }
@@ -77,7 +77,7 @@ const TabContainer = styled.div`
   margin: 10px 0 20px;
 `
 const ButtonItem = styled.button<{active?: boolean; tabIndex?: number}>`
-  background-color: ${({active}) => active? 'green' : 'transparent'};
+  background-color: ${({active, tabIndex}) => active? tabIndex === 0 ? 'green' : '#CF203C' : 'transparent'};
   height: 40px;
   border: none;
   width: 100%;
@@ -125,8 +125,8 @@ const PercentItem = styled.div<{ active?: boolean; }>`
   width: 100%;
   border-radius: 5px 0 10px;
 `
-const SellButton = styled.button`
-  background-color: green;
+const SellButton = styled.button<{ tabIndex: number }>`
+  background-color: ${({tabIndex}) => tabIndex === 0 ? 'green' : '#CF203C'};
   height: 40px;
   border: none;
   width: 100%;
