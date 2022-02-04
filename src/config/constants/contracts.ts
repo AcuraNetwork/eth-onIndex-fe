@@ -4,6 +4,8 @@ export default {
     97: '0xE5104E44ddAb73075Fe22F71CAad2584cF7a6D56',
   },
   masterChef: {
+    1: '0xc2EdaD668740f1aA35E4D8f227fB8E17dcA888Cd',
+    4: '0x80C7DD17B01855a6D2347444a0FCC36136a314de',
     56: '0x708776916c81e467d879afafe8a416a11240d58e',
     97: '0x7fdFc9246d0c4576D2B46DcDb40125b8755C9c5d',
   },
@@ -37,8 +39,18 @@ export default {
     56: '0xce0f314013dc814f2da9d58160c54231fb2ddae2',
     97: '0xE6B4D6B7adfa9F6916985842989f5654Fcc41Bd1',
   },
+
+
   limitOrder: {
     1: '0x119c71D3BbAC22029622cbaEc24854d3D32D2828',
     4: '',
+  },
+  usdt: {
+    1: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+    4: '',
+  },
+  weth: {
+    1: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    4: '0xc778417E063141139Fce010982780140Aa0cD5Ab'
   }
 }

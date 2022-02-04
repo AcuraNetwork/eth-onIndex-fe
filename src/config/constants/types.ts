@@ -23,7 +23,6 @@ export enum QuoteToken {
   'BNB' = 'BNB',
   'CAKE' = 'CAKE',
   'SYRUP' = 'SYRUP',
-  'BUSD' = 'BUSD',
   'TWT' = 'TWT',
   'UST' = 'UST',
   'TBAKE' = 'TBAKE',
@@ -31,7 +30,9 @@ export enum QuoteToken {
   'MATIC' = 'MATIC',
   'USDT' = 'USDT',
   'USDC' = 'USDC',
-  'QUICK' = 'QUICK'
+  'QUICK' = 'QUICK',
+  'ETH' = 'ETH',
+  'ONI' = 'ONI'
 }
 
 export enum PoolCategory {
@@ -44,7 +45,7 @@ export interface Address {
   1?: string
   4?: string
   97?: string
-  56: string
+  56?: string
 }
 
 export interface FarmConfig {

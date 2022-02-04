@@ -57,6 +57,7 @@ const Farms: React.FC<FarmsProps> = (farmsProps) => {
 
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
+  
   useEffect(() => {
     if (account) {
       dispatch(fetchFarmUserDataAsync(account))
