@@ -53,7 +53,7 @@ const NETWORK_URLS = {
 }
 
 export const network = new NetworkConnector({
-  urls: NETWORK_URLS,
+  urls: { 1: NETWORK_URL },
   defaultChainId: 1
 })
 
@@ -64,10 +64,10 @@ export function getNetworkLibrary(): Web3Provider {
 }
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [1, 4, 42, 56, 97],
+  supportedChainIds: [1, 4, 42, 56, 97, 137, 80001],
 })
 
-export const bsc = new BscConnector({ supportedChainIds: [1, 4, 42, 56, 97] })
+export const bsc = new BscConnector({ supportedChainIds: [1, 4, 42, 56, 97, 137, 80001] })
 
 // mainnet only
 export const walletconnect = new WalletConnectConnector({

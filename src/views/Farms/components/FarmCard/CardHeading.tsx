@@ -46,9 +46,9 @@ const CardHeading: React.FC<ExpandableSectionProps> = ({
   return (
     <Wrapper justifyContent="space-between" alignItems="center" mb="24px">
       <FarmImageWrapper isTokenOnly={farm.isTokenOnly}>
-        <Image src={farm.tokenSymbol === 'ONI' ? `/images/farms/ONI.svg` : `/images/farms/${farm.tokenSymbol}.png`} alt={farm.tokenSymbol} width={36} height={36} />
+        <Image src={farm.tokenSymbol === 'ONI' ? `images/farms/ONI.svg` : `images/farms/${farm.tokenSymbol.toLowerCase()}.png`} alt={farm.tokenSymbol} width={36} height={36} />
         {!farm.isTokenOnly && 
-          <Image src={`/images/farms/${farm.quoteTokenSymbol}.png`} alt={farm.quoteTokenSymbol} width={36} height={36} />
+          <Image src={`images/farms/${farm.quoteTokenSymbol.toLowerCase()}.png`} alt={farm.quoteTokenSymbol} width={36} height={36} />
         }
       </FarmImageWrapper>
       <Flex flexDirection="column" alignItems="flex-end">

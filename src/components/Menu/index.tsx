@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import BigNumber from 'bignumber.js';
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { allLanguages } from 'config/localisation/languageCodes'
@@ -9,11 +9,13 @@ import useTheme from 'hooks/useTheme'
 // import { getCakeAddress } from 'utils/addressHelpers'
 import { Menu as UikitMenu } from '@evercreative/onidex-uikit'
 import config, { socials } from './config'
+import { ONIDEX_LINKS } from '../../constants';
 
 const Menu = (props) => {
   const { account, connect, reset } = useWallet()
   const { selectedLanguage, setSelectedLanguage } = useContext(LanguageContext)
   const { isDark, toggleTheme } = useTheme()
+  const [networkIndex, setNetworkIndex] = useState(0)
   const cakePriceUsd = new BigNumber(0);
   // usePriceCakeBusd()
   const bnbPriceUSD = new BigNumber(0);
@@ -28,6 +30,12 @@ const Menu = (props) => {
   const circSupply = totalSupply ? totalSupply.minus(burnedBalance) : new BigNumber(0);
   // const farm = farmsLP.find(farmItem => farmItem.lpSymbol === 'TBAKE-BNB LP');
 
+  const handleTabClick = (index) => {
+    setNetworkIndex(index)
+    const link = ONIDEX_LINKS[index]
+    window.open(link, "_self")
+  }
+
   return (
     <UikitMenu
       account={account}
@@ -40,6 +48,8 @@ const Menu = (props) => {
       setLang={setSelectedLanguage}
       cakePriceUsd={cakePriceUsd.toNumber()}
       totalValue={totalValue}
+      networkIndex={networkIndex}
+      handleTabClick={handleTabClick}
       // lpTotalSupply={farm.lpTotalSupply || 0}
       lpTotalSupply={0}
       circSupply={circSupply}
