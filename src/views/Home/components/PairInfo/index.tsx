@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
-import { ButtonMenu, Text, Flex, ArrowBackIcon, ArrowForwardIcon } from '@evercreative/onidex-uikit'
+import { ButtonMenu, Text, Flex, ArrowBackIcon, ArrowForwardIcon } from '@onidex-libs/uikit'
 // import { useEthPrices } from 'hooks/useEthPrices'
 import { useAllPoolData } from 'state/info/hooks'
 import { PoolUpdater } from 'state/info/updaters'

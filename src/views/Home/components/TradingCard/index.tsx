@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { ButtonMenu, Flex } from '@evercreative/onidex-uikit'
+import { ButtonMenu, Flex } from '@onidex-libs/uikit'
 import SwapPanel from 'views/Swap/SwapPanel';
 import LimitOrderPanel from 'views/Swap/LimitOrders/LimitOrders';
 import AdvancedSwapDetailsInfo from 'views/Swap/AdvancedSwapDetailsInfo';

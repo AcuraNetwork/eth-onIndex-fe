@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Flex, Button, Spinner } from '@evercreative/onidex-uikit';
+import { Flex, Button, Spinner } from '@onidex-libs/uikit';
 import Page from 'components/layout/Page'
 import getPools from 'subgraph/utils/pools';
 

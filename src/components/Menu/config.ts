@@ -1,4 +1,4 @@
-import { MenuEntry } from '@evercreative/onidex-uikit'
+import { MenuEntry } from '@onidex-libs/uikit'
 
 const config: MenuEntry[] = [
   {

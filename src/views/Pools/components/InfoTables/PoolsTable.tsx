@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { Text, Flex, Skeleton, ArrowBackIcon, ArrowForwardIcon } from '@evercreative/onidex-uikit'
+import { Text, Flex, Skeleton, ArrowBackIcon, ArrowForwardIcon } from '@onidex-libs/uikit'
 import { formatAmount } from 'views/Pools/utils/formatInfoNumbers'
 import { PoolData } from 'state/info/types'
 import { ITEMS_PER_INFO_TABLE_PAGE } from 'config/constants/info'

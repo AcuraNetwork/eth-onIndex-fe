@@ -1,6 +1,6 @@
 import React from 'react'
 import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
-import { ModalProvider } from '@evercreative/onidex-uikit'
+import { ModalProvider } from '@onidex-libs/uikit'
 import * as bsc from '@binance-chain/bsc-use-wallet'
 import { Provider } from 'react-redux'
 import getRpcUrl from 'utils/getRpcUrl'

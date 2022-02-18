@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Flex } from '@evercreative/onidex-uikit';
+import { Flex } from '@onidex-libs/uikit';
 import { TradeType } from '@evercreative-libs/onidex-sdk';
 import { useLastTruthy } from 'hooks/useLast';
 import { useUserSlippageTolerance } from 'state/user/hooks';

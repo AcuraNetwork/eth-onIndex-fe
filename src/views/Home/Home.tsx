@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import axios from 'axios';
 import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom';
-import { Flex } from '@evercreative/onidex-uikit';
+import { Flex } from '@onidex-libs/uikit';
 import Page from 'components/layout/Page'
 
 import { useProtocolTransactions, useLimitOrders, useLimitOrdersParam } from 'state/protocol/hooks'

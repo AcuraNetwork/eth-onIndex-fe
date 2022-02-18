@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { HomeIcon, SwapIcon, PoolsIcon, DexExpIcon, PriceBot } from '@evercreative/onidex-uikit'
+import { HomeIcon, SwapIcon, PoolsIcon, DexExpIcon, PriceBot } from '@onidex-libs/uikit'
 import { BASE_URL } from 'config'
 
 const MobileFooter = () => {

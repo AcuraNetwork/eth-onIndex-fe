@@ -2,7 +2,7 @@
 // @ts-nocheck
 import { CurrencyAmount, currencyEquals, ETHER, Token, Currency } from '@evercreative-libs/onidex-sdk'
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
-import { Button, Text, Flex } from '@evercreative/onidex-uikit';
+import { Button, Text, Flex } from '@onidex-libs/uikit';
 import { FixedSizeList } from 'react-window'
 import styled from 'styled-components'
 import { useSelectedTokenList, WrappedTokenInfo } from 'state/tokens/hooks'

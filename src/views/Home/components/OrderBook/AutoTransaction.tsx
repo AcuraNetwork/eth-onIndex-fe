@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { ethers } from 'ethers'
 import { Token } from '@evercreative-libs/onidex-sdk'
 import styled from 'styled-components'
-import { Button, Flex } from '@evercreative/onidex-uikit'
+import { Button, Flex } from '@onidex-libs/uikit'
 import { useRegistryContract } from 'hooks/useContracts'
 import CurrencyLogo from 'components/CurrencyLogo';
 import { Transaction } from './AutoHistoryStyles'

@@ -1,6 +1,6 @@
 import { Currency, ETHER, Token } from '@evercreative-libs/onidex-sdk'
 import React, { KeyboardEvent, RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { Button, Text, Flex } from '@evercreative/onidex-uikit';
+import { Button, Text, Flex } from '@onidex-libs/uikit';
 import ReactGA from 'react-ga'
 import { FixedSizeList } from 'react-window'
 import { useDispatch } from 'react-redux'

@@ -1,6 +1,6 @@
 
 import styled from 'styled-components';
-import { Text, Button, Flex, ButtonMenuItem } from '@evercreative/onidex-uikit';
+import { Text, Button, Flex, ButtonMenuItem } from '@onidex-libs/uikit';
 import UnlockButton from 'components/UnlockButton';
 
 export const FCard = styled.div<{ isMobile?: boolean }>`

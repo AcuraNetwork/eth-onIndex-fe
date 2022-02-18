@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, Text } from '@evercreative/onidex-uikit'
+import { Flex, Text } from '@onidex-libs/uikit'
 
 const OTCPanel = () => {
   return (

@@ -3,7 +3,7 @@ import { ArrowLeft } from 'react-feather'
 import ReactGA from 'react-ga'
 import { usePopper } from 'react-popper'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Flex, Text } from '@evercreative/onidex-uikit';
+import { Button, Flex, Text } from '@onidex-libs/uikit';
 import styled from 'styled-components'
 import { useSelectedListUrl } from 'state/tokens/hooks'
 import { acceptListUpdate, removeList, selectList } from 'state/tokens/actions'

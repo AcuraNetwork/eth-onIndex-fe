@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { ButtonMenu, Flex } from '@evercreative/onidex-uikit'
+import { ButtonMenu, Flex } from '@onidex-libs/uikit'
 import { OrderTypesWrapper, TradeTypeItem } from './AutoHistoryStyles';
 
 const HomeFooter = () => {

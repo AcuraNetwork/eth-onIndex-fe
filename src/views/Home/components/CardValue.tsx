@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useCountUp } from 'react-countup'
-import { Text } from '@evercreative/onidex-uikit'
+import { Text } from '@onidex-libs/uikit'
 
 interface CardValueProps {
   value: number

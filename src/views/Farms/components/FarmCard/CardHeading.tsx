@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
-import { Flex, Image, Text } from '@evercreative/onidex-uikit'
+import { Flex, Image, Text } from '@onidex-libs/uikit'
 import { Farm } from 'state/types'
 
 interface FarmWithStakedValue extends Farm {

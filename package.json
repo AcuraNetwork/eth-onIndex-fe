@@ -34,7 +34,7 @@
     "@binance-chain/bsc-use-wallet": "^0.8.1",
     "@crowdin/crowdin-api-client": "^1.10.1",
     "@evercreative-libs/onidex-sdk": "^0.0.1",
-    "@evercreative/onidex-uikit": "^1.0.16",
+    "@onidex-libs/uikit": "^1.0.3",
     "@popperjs/core": "^2.9.2",
     "@reach/portal": "^0.15.3",
     "@reduxjs/toolkit": "^1.5.0",

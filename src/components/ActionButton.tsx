@@ -1,6 +1,6 @@
 
 import styled from 'styled-components';
-import { Button } from '@evercreative/onidex-uikit'
+import { Button } from '@onidex-libs/uikit'
 
 const ActionButton = styled(Button)`
   color: ${({ theme }) => theme.isDark && '#ffffff' };

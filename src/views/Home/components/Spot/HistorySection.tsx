@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Flex, ArrowDropDownIcon, Text } from '@evercreative/onidex-uikit';
+import { Flex, ArrowDropDownIcon, Text } from '@onidex-libs/uikit';
 import { SubMenu, SubMenuItem } from 'components/SubMenu';
 import { ReactComponent as ClassicViewIcon } from 'assets/images/classicView.svg';
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Flex, ButtonMenu, ButtonMenuItem } from '@evercreative/onidex-uikit';
+import { Flex, ButtonMenu, ButtonMenuItem } from '@onidex-libs/uikit';
 import LimitOrderPanel from 'views/Swap/LimitOrders/LimitOrders';
 import redDots from 'assets/images/reddots.svg';
 import blackDots from 'assets/images/blackdots.svg';

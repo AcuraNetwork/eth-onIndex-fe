@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Flex, ButtonMenuItem } from '@evercreative/onidex-uikit';
+import { Flex, ButtonMenuItem } from '@onidex-libs/uikit';
 
 export const Container = styled.div`
   position: relative;

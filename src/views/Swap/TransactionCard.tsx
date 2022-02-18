@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Text } from '@evercreative/onidex-uikit'
+import { Text } from '@onidex-libs/uikit'
 import { TransactionContainer } from './SwapComponents'
 
 const TransactionCard = () => {

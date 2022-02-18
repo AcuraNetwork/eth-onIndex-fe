@@ -7,7 +7,7 @@ import useTheme from 'hooks/useTheme'
 // import { usePriceCakeBusd, useTotalValue, usePriceBnbBusd, useFarms } from 'state/hooks'
 // import { useTotalSupply, useBurnedBalance } from 'hooks/useTokenBalance'
 // import { getCakeAddress } from 'utils/addressHelpers'
-import { Menu as UikitMenu } from '@evercreative/onidex-uikit'
+import { Menu as UikitMenu } from '@onidex-libs/uikit'
 import config, { socials } from './config'
 import { ONIDEX_LINKS } from '../../constants';
 

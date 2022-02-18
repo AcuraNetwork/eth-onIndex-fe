@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Text, Flex, Button, ChevronDownIcon, ChevronUpIcon } from '@evercreative/onidex-uikit';
+import { Text, Flex, Button, ChevronDownIcon, ChevronUpIcon } from '@onidex-libs/uikit';
 import RadioInput from 'components/RadioInput';
 import axios from 'axios';
 import { PRICE_BOT_URL } from 'config';

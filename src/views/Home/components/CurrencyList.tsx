@@ -3,7 +3,7 @@ import { Currency, CurrencyAmount, currencyEquals, ETHER, Token } from '@evercre
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
 import { FixedSizeList } from 'react-window'
 import styled from 'styled-components'
-import { Text } from '@evercreative/onidex-uikit'
+import { Text } from '@onidex-libs/uikit'
 import Loader from 'components/Loader'
 import { useActiveWeb3React } from 'hooks'
 import { WrappedTokenInfo } from 'state/tokens/hooks'

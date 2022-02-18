@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import { Button, useWalletModal } from '@evercreative/onidex-uikit'
+import { Button, useWalletModal } from '@onidex-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 
 const StyledButton = styled(Button)`

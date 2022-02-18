@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Spinner } from '@evercreative/onidex-uikit'
+import { Spinner } from '@onidex-libs/uikit'
 import Page from './layout/Page'
 
 const Wrapper = styled(Page)`

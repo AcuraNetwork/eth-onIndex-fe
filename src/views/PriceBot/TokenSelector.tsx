@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, RefObject, useCallback, useRef, useMemo, useState, useEffect } from 'react';
 import { ETHER, Token, currencyEquals } from '@evercreative-libs/onidex-sdk'
-import { Flex, Text } from '@evercreative/onidex-uikit';
+import { Flex, Text } from '@onidex-libs/uikit';
 import styled from 'styled-components';
 import { FixedSizeList } from 'react-window'
 

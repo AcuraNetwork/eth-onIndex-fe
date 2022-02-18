@@ -1,7 +1,7 @@
 import React from 'react'
 import BigNumber from 'bignumber.js'
 import Countdown from 'react-countdown'
-import { Flex, Text } from '@evercreative/onidex-uikit'
+import { Flex, Text } from '@onidex-libs/uikit'
 import isEmpty from '../../../../utils/utility';
 
 interface FarmCardActionsProps {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { getAddress } from '@ethersproject/address'
-import { Text, Button, Flex, ButtonMenuItem } from '@evercreative/onidex-uikit';
+import { Text, Button, Flex, ButtonMenuItem } from '@onidex-libs/uikit';
 import { useAllTokens } from 'hooks/useTokens'
 import useTransactionHistory from 'hooks/useAutonomyHistory'
 import { Container, Tabs, TabContent } from './AutoHistoryStyles'

@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
-import { Flex, Text, ArrowDownIcon, ArrowUpIcon } from '@evercreative/onidex-uikit'
+import { Flex, Text, ArrowDownIcon, ArrowUpIcon } from '@onidex-libs/uikit'
 import { useEthPrices } from 'hooks/useEthPrices'
 import { useUniUsdPrice } from 'hooks/useUSDCPrice'
 import { useToken } from 'hooks/useTokens'

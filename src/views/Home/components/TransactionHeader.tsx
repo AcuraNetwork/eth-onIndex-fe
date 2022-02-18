@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Text, Button, SunIcon, MoonIcon } from '@evercreative/onidex-uikit';
+import { Flex, Text, Button, SunIcon, MoonIcon } from '@onidex-libs/uikit';
 import styled from 'styled-components';
 // import BigNumber from 'bignumber.js';
 // import moment from 'moment';

@@ -5,7 +5,7 @@
 // @ts-nocheck
 import { useState } from 'react'
 import styled from 'styled-components'
-import { Flex, ButtonMenu, ButtonMenuItem, Text } from '@evercreative/onidex-uikit'
+import { Flex, ButtonMenu, ButtonMenuItem, Text } from '@onidex-libs/uikit'
 import { SwapDetailsContainer } from './SwapComponents'
 import OTCPanel from './Components/OTCPanel'
 

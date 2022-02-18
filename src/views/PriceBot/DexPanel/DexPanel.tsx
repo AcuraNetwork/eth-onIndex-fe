@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Text, Flex, ButtonMenu, ButtonMenuItem, ChevronDownIcon, ChevronUpIcon } from '@evercreative/onidex-uikit';
+import { Text, Flex, ButtonMenu, ButtonMenuItem, ChevronDownIcon, ChevronUpIcon } from '@onidex-libs/uikit';
 import RadioInput from 'components/RadioInput';
 
 const Panel = styled.div`

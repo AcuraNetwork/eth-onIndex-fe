@@ -2,7 +2,7 @@
 import { Currency, CurrencyAmount, ETHER, Token } from '@evercreative-libs/onidex-sdk'
 import React from 'react'
 import styled from 'styled-components'
-import { Text } from '@evercreative/onidex-uikit'
+import { Text } from '@onidex-libs/uikit'
 import Loader from 'components/Loader'
 import { useActiveWeb3React } from 'hooks'
 import { WrappedTokenInfo } from 'state/tokens/hooks'

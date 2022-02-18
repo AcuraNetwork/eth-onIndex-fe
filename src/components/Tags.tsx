@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tag, VerifiedIcon, CommunityIcon, BinanceIcon } from '@evercreative/onidex-uikit'
+import { Tag, VerifiedIcon, CommunityIcon, BinanceIcon } from '@onidex-libs/uikit'
 
 const NoFeeTag = () => (
   <Tag variant="success" outline startIcon={<VerifiedIcon />}>

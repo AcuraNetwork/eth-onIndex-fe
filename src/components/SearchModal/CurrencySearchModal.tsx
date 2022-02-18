@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Modal } from '@evercreative/onidex-uikit'
+import { Modal } from '@onidex-libs/uikit'
 import ReactGA from 'react-ga'
 import { Currency } from '@evercreative-libs/onidex-sdk'
 import useLast from 'hooks/useLast'

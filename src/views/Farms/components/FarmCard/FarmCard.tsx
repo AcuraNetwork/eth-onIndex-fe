@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { Flex, Text, Skeleton } from '@evercreative/onidex-uikit'
+import { Flex, Text, Skeleton } from '@onidex-libs/uikit'
 import { Farm } from 'state/types'
 import { provider } from 'web3-core'
 import useI18n from 'hooks/useI18n'

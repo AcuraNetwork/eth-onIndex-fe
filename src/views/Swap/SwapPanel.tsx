@@ -4,7 +4,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 // @ts-nocheck
 import { useState, useMemo, useCallback, useEffect } from 'react'
-import { Flex, ButtonMenu, useModal } from '@evercreative/onidex-uikit'
+import { Flex, ButtonMenu, useModal } from '@onidex-libs/uikit'
 import { CurrencyAmount, JSBI, Token, Trade } from '@evercreative-libs/onidex-sdk'
 import ReactGA from 'react-ga'
 import { useActiveWeb3React } from 'hooks'

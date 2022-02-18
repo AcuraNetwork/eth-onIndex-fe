@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import BigNumber from 'bignumber.js'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
-import { Input } from '@evercreative/onidex-uikit'
+import { Input } from '@onidex-libs/uikit'
 import { BLOCKS_PER_YEAR } from 'config'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
