@@ -206,6 +206,7 @@ const Home: React.FC = () => {
     history.push(`/token/${currency.address}`);
   }
 
+  console.log(selectedCurrency, "<===== selected currency")
   return (
     <StyledPage> 
       {selectedCurrency && 
