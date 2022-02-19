@@ -26,7 +26,7 @@ function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & { chain
 }
 
 function useAllTokens(): { [address: string]: Token } {
-  const { chainId } = useActiveWeb3React()
+  const chainId = parseInt(process.env.REACT_APP_CHAIN_ID) // useActiveWeb3React()
   const userAddedTokens = useUserAddedTokens()
   const allTokens = useSelectedTokenList()
 
@@ -93,7 +93,6 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
   const symbolBytes32 = useSingleCallResult(token ? undefined : tokenContractBytes32, 'symbol', undefined, NEVER_RELOAD)
   const decimals = { result: [18], loading: false};
   
-
   return useMemo(() => {
     if (token) return token
     if (!chainId || !address) return undefined

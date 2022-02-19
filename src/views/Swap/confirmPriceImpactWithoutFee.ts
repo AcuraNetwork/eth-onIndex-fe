@@ -9,6 +9,7 @@ import { ALLOWED_PRICE_IMPACT_HIGH, PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN } from 
 export default function confirmPriceImpactWithoutFee(priceImpactWithoutFee: Percent): boolean {
   if (!priceImpactWithoutFee.lessThan(PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN)) {
     return (
+      // eslint-disable-next-line no-alert
       window.prompt(
         `This swap has a price impact of at least ${PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN.toFixed(
           0
@@ -17,6 +18,7 @@ export default function confirmPriceImpactWithoutFee(priceImpactWithoutFee: Perc
     )
   } 
   if (!priceImpactWithoutFee.lessThan(ALLOWED_PRICE_IMPACT_HIGH)) {
+    // eslint-disable-next-line no-alert
     return window.confirm(
       `This swap has a price impact of at least ${ALLOWED_PRICE_IMPACT_HIGH.toFixed(
         0

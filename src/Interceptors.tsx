@@ -19,6 +19,7 @@ const Interceptor = () => {
   useEffect(() => {
     axios.interceptors.response.use((response) => {
       return response.data;
+    // eslint-disable-next-line func-names
     }, function (error) {
       return Promise.reject(error);
     });

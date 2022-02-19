@@ -4,12 +4,12 @@
 /* eslint-disable react/react-in-jsx-scope */
 // @ts-nocheck
 import { useState, useMemo, useCallback, useEffect } from 'react'
-import { Flex, ButtonMenu, useModal } from '@onidex-libs/uikit'
+import { Flex, useModal } from '@onidex-libs/uikit'
 import { CurrencyAmount, JSBI, Token, Trade } from '@evercreative-libs/onidex-sdk'
 import ReactGA from 'react-ga'
 import { useActiveWeb3React } from 'hooks'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
-import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
+// import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import Input from 'components/Input/Input'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { useDefaultsFromURLSearch, useDerivedSwapInfo, useSwapActionHandlers, useSwapState } from 'state/swap/hooks'
@@ -24,31 +24,31 @@ import { useExpertModeManager, useUserSlippageTolerance } from 'state/user/hooks
 import { warningSeverity, computeTradePriceBreakdown } from 'utils/prices'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import Loader from 'components/Loader'
-import multicall from 'utils/multicall'
+// import multicall from 'utils/multicall'
 import useGetInputCurrencyUsd from 'hooks/useGetInputCurrencyUsd'
 import { useEthPrices } from 'hooks/useEthPrices'
 import confirmPriceImpactWithoutFee from './confirmPriceImpactWithoutFee'
-import AdvancedSwapDetails from './AdvancedSwapDetails'
-import LimitOrders from './LimitOrders/LimitOrders'
+// import AdvancedSwapDetails from './AdvancedSwapDetails'
+// import LimitOrders from './LimitOrders/LimitOrders'
 import {
   SwapButton,
   SwitchTokenHandler,
   FCard,
   Label,
-  CopyRightLabel,
-  PriceListCard,
-  PlaceOrderButton,
-  OrderCard,
+  // CopyRightLabel,
+  // PriceListCard,
+  // PlaceOrderButton,
+  // OrderCard,
   Form,
-  ButtonMenuWrapper,
-  StyledButtonMenuItem,
-  OrderTypesWrapper,
-  OrderTypeItem,
+  // ButtonMenuWrapper,
+  // StyledButtonMenuItem,
+  // OrderTypesWrapper,
+  // OrderTypeItem,
   Dropdown,
   InputWrapper,
   StyledUnlockButton,
-  SocialLinks,
-  HeaderText,
+  // SocialLinks,
+  // HeaderText,
   SaveWrapper,
   BanaceWrapper,
 } from './SwapComponents'

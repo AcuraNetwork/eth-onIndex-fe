@@ -9,14 +9,12 @@ import MulticallUpdater from './state/multicall/updater'
 import ProtocolUpdater from './state/protocol/updater'
 
 ReactDOM.render(
-  // <React.StrictMode>
-    <Providers>
-      <ListsUpdater />
-      <ApplicationUpdater />
-      <MulticallUpdater />
-      <ProtocolUpdater />
-      <App />
-    </Providers>,
-  // </React.StrictMode>,
+  <Providers>
+    <ListsUpdater />
+    <ApplicationUpdater />
+    <MulticallUpdater />
+    <ProtocolUpdater />
+    <App />
+  </Providers>,
   document.getElementById('root'),
 )
