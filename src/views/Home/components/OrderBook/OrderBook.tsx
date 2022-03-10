@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import styled from 'styled-components'
+import styled, {useTheme} from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { Flex, Text, ArrowDownIcon, ArrowUpIcon } from '@onidex-libs/uikit'
 import { useEthPrices } from 'hooks/useEthPrices'
@@ -83,6 +83,7 @@ const ContentContainer = styled.div`
 
 const OrderBook = ({ selectedTokenInfo, orderLimitData, selectedCurrency }) => {
   const uniPriceUsd = useUniUsdPrice();
+  const theme = useTheme()
 
   const ethPriceUsd = useEthPrices();
 
@@ -103,6 +104,9 @@ const OrderBook = ({ selectedTokenInfo, orderLimitData, selectedCurrency }) => {
     :
     []
 
+  const maxSellAmount = Math.max(...makerData.map(function (o) { return parseInt(o.data.makingAmount) }));
+  const maxBuyAmount = Math.max(...takerData.map(function (o) { return parseInt(o.data.takingAmount) }));
+  
   return (
     <OrderBookCard>
       <Flex justifyContent="space-between" alignItems="flex-end" mb="10px">
@@ -125,7 +129,7 @@ const OrderBook = ({ selectedTokenInfo, orderLimitData, selectedCurrency }) => {
               makerData.map((item, index) => {
                 const amount = getBalanceNumber(new BigNumber(item.data.makingAmount), selectedToken?.decimals)
                 return (
-                  <tr className="order_book_table_body" key={index.toString()}>
+                  <tr className="order_book_table_body" style={{ background: `linear-gradient(to right, #422641 ${parseInt(item.data.makingAmount) / maxSellAmount * 100}%, ${theme.isDark ? '#070707' : '#fff'} 1%)` }} key={index.toString()}>
                     <td  className="left" style={{ color: '#ef5350' }}>{quoteTokenPrice.toFixed(2)}</td>
                     <td>{amount.toFixed(2)}</td>
                     <td className="right">{(amount * quoteTokenPrice).toFixed(2)}</td>
@@ -158,7 +162,7 @@ const OrderBook = ({ selectedTokenInfo, orderLimitData, selectedCurrency }) => {
               takerData.map((item, index) => {
                 const amount = getBalanceNumber(new BigNumber(item.data.takingAmount), selectedToken?.decimals)
                 return (
-                  <tr className="order_book_table_body" key={index.toString()}>
+                  <tr className="order_book_table_body" style={{ background: `linear-gradient(to right, #1F4344 ${parseInt(item.data.takingAmount) / maxBuyAmount * 100}%, ${theme.isDark ? '#070707' : '#fff'} 1%)` }} key={index.toString()}>
                     <td className="left" style={{ color: '#1bc870' }}>{quoteTokenPrice.toFixed(2)}</td>
                     <td>{amount.toFixed(2)}</td>
                     <td className="right">{(amount * quoteTokenPrice).toFixed(2)}</td>

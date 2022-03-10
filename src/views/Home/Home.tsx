@@ -183,23 +183,23 @@ const Home: React.FC = () => {
     dispatch(updateLimitOrderTokenAddress(params.tokenAddress ? params.tokenAddress : UNITOKEN))
   }, [dispatch, params.tokenAddress]);
 
-  const transactionsForToken = 
-  selectedTokenInfo && latestTrades ? latestTrades.map(trade => {
-    const date = new Date(trade.date.date);
-    const timeDate = new Date(Date.UTC(
-      date.getFullYear(), date.getMonth(), date.getDate(), trade.block.timestamp.hour, trade.block.timestamp.minute, trade.block.timestamp.second
-    ));
-    return {
-      time: timeDate.toLocaleTimeString(),
-      traded: trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol ? `${trade.buyAmount.toFixed(3)} ETH` : `${trade.sellAmount.toFixed(3)} ETH`,
-      tokenPrice: (trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol ? (trade.buyAmountInUsd / trade.buyAmount).toFixed(3) : (trade.sellAmountInUsd / trade.sellAmount).toFixed(3))
-        || selectedTokenInfo ? (selectedTokenInfo.quotePrice * ethPriceUsd?.current).toFixed(3) : 0,
-      value: trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol ? `$${trade.buyAmountInUsd.toFixed(3)}/${trade.sellAmount.toFixed(3)} ETH`
-        :  `$${trade.sellAmountInUsd.toFixed(3)}/${trade.buyAmount.toFixed(3)} ETH`,
-      dex: 'UniSwap V3',
-      buy: trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol
-    }
-  }) : []
+  // const transactionsForToken = 
+  // selectedTokenInfo && latestTrades ? latestTrades.map(trade => {
+  //   const date = new Date(trade.date.date);
+  //   const timeDate = new Date(Date.UTC(
+  //     date.getFullYear(), date.getMonth(), date.getDate(), trade.block.timestamp.hour, trade.block.timestamp.minute, trade.block.timestamp.second
+  //   ));
+  //   return {
+  //     time: timeDate.toLocaleTimeString(),
+  //     traded: trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol ? `${trade.buyAmount.toFixed(3)} ETH` : `${trade.sellAmount.toFixed(3)} ETH`,
+  //     tokenPrice: (trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol ? (trade.buyAmountInUsd / trade.buyAmount).toFixed(3) : (trade.sellAmountInUsd / trade.sellAmount).toFixed(3))
+  //       || selectedTokenInfo ? (selectedTokenInfo.quotePrice * ethPriceUsd?.current).toFixed(3) : 0,
+  //     value: trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol ? `$${trade.buyAmountInUsd.toFixed(3)}/${trade.sellAmount.toFixed(3)} ETH`
+  //       :  `$${trade.sellAmountInUsd.toFixed(3)}/${trade.buyAmount.toFixed(3)} ETH`,
+  //     dex: 'UniSwap V3',
+  //     buy: trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol
+  //   }
+  // }) : []
 
   const handleSetCurrency = currency => {
     dispatch(updateLimitOrderTokenAddress(currency.address))

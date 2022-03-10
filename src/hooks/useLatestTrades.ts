@@ -16,7 +16,7 @@ const useLatestTrades = (tokenAddress, jwtToken) => {
           }
         });
         const dexTrades = [...result.data.tokenLastTrades.data.ethereum.dexTrades];
-        setLatestTrades(dexTrades.slice(0, 5));
+        setLatestTrades(dexTrades.slice(0, 20));
       // eslint-disable-next-line no-empty
       } catch (error) {
       }
