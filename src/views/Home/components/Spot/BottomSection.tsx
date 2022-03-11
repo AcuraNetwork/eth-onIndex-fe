@@ -3,12 +3,24 @@ import styled from 'styled-components'
 import { Flex } from '@onidex-libs/uikit'
 import NoDataSection from './NoDataSection'
 import TVChartContainer from '../TVChartContainer'
+import OrderBook from '../OrderBook/OrderBook';
+import MarketTrades from './MarketTrades'
 
 const BottomSection: React.FC<{
   jwtToken: string;
   containerId: string;
   selectedCurrency: any;
-}> = ({ jwtToken, containerId, selectedCurrency }) => {
+  selectedTokenInfo: any;
+  orderLimitData: any;
+  transactions: any;
+}> = ({
+  jwtToken,
+  containerId,
+  selectedCurrency,
+  selectedTokenInfo,
+  orderLimitData,
+  transactions,
+}) => {
   const [headerIndex, setHeaderIndex] = useState(0)
 
   const handleHeaderTabClick = (idx) => {
@@ -24,10 +36,18 @@ const BottomSection: React.FC<{
         <HeaderItem active={headerIndex === 3} onClick = {() => handleHeaderTabClick(3)}>Charts</HeaderItem>
       </HeaderContainer>
       {
-        headerIndex === 0 && <NoDataSection text="No open orders" />
+        headerIndex === 0 && (
+          !orderLimitData
+          ? <NoDataSection text="No open orders" />
+          : <OrderBook selectedTokenInfo={selectedTokenInfo} orderLimitData = {orderLimitData} selectedCurrency={selectedCurrency}/>
+        )
       }
       {
-        headerIndex === 1 && <NoDataSection text="No market trades data" />
+        headerIndex === 1 && (
+          transactions
+          ? <MarketTrades transactions = {transactions} />
+          : <NoDataSection text="No market trades data" />
+        )
       }
       {
         headerIndex === 2 && <NoDataSection text="No info data" />

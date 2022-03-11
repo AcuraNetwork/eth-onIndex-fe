@@ -253,9 +253,16 @@ const Home: React.FC = () => {
         <MobilePage>
           <Flex>
             <TradeSection />
-            <HistorySection />
+            <HistorySection selectedTokenInfo={selectedTokenInfo} orderLimitData = {limitOrders === undefined ? null : limitOrders} selectedCurrency={selectedCurrency}/>
           </Flex>
-          <BottomSection jwtToken={jwtToken} containerId='tv_chart_container_mobile' selectedCurrency={selectedCurrency}/>
+          <BottomSection
+            jwtToken={jwtToken}
+            containerId='tv_chart_container_mobile'
+            selectedCurrency={selectedCurrency}
+            orderLimitData = {limitOrders === undefined ? null : limitOrders}
+            selectedTokenInfo={selectedTokenInfo}
+            transactions={transactions === undefined ? null : transactions}
+          />
         </MobilePage>
       }
     </StyledPage>

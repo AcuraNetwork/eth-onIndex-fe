@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, {useTheme} from 'styled-components'
+import BigNumber from 'bignumber.js'
 import { Flex, ArrowDropDownIcon, Text } from '@onidex-libs/uikit';
 import { SubMenu, SubMenuItem } from 'components/SubMenu';
+import { useUniUsdPrice } from 'hooks/useUSDCPrice'
+import { useEthPrices } from 'hooks/useEthPrices'
+import { useToken } from 'hooks/useTokens'
+import { getBalanceNumber } from 'utils/formatBalance'
 import { ReactComponent as ClassicViewIcon } from 'assets/images/classicView.svg';
+import { UNITOKEN } from '../../../../constants';
 
 const pairData = {
   token: {
@@ -58,9 +64,14 @@ const historyData = [
 
 const selectValues = [1, 0.01, 0.001, 0.0001]
 
-const HistorySection = () => {
+const HistorySection = ({ selectedTokenInfo, orderLimitData, selectedCurrency }) => {
   const [tabIndex, setTabIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
+
+  const uniPriceUsd = useUniUsdPrice();
+  const ethPriceUsd = useEthPrices();
+  const theme = useTheme()
+
   const toggling = (event: React.MouseEvent<HTMLDivElement>) => {
     setIsOpen(!isOpen);
     event.stopPropagation();
@@ -70,41 +81,65 @@ const HistorySection = () => {
     setTabIndex(index)
     setIsOpen(false)
   }
+
+  const selectedToken = useToken(selectedCurrency ? selectedCurrency.address.toLowerCase() : UNITOKEN.toLowerCase());
+
+  const quoteTokenPrice = selectedTokenInfo ? selectedTokenInfo.quotePrice * ethPriceUsd?.current : selectedCurrency.symbol === 'WETH' ? ethPriceUsd?.current : uniPriceUsd;
+
+  const makerData = orderLimitData?
+    orderLimitData.filter((_, index) => _.type === 'maker' )
+    :
+    []
+  const takerData = orderLimitData?
+    orderLimitData.filter((_, index) => _.type === 'taker')
+    :
+    []
+
+  const maxSellAmount = Math.max(...makerData.map(function (o) { return parseInt(o.data.makingAmount) }));
+  const maxBuyAmount = Math.max(...takerData.map(function (o) { return parseInt(o.data.takingAmount) }));
   
   return (
     <Container>
       <HeaderContainer>
         <div>
           <p>Price</p>
-          <p>{`(${pairData.quoteToken.symbol})`}</p>
+          <p>(USD)</p>
         </div>
         <div>
           <p>Amount</p>
-          <p className = "align_right">{`(${pairData.token.symbol})`}</p>
+          <p className = "align_right">{`(${selectedToken?.symbol})`}</p>
         </div>
       </HeaderContainer>
       {
-        historyData.map((history) => {
+        makerData.map((history, index) => {
+          if (index >= 7) {
+            return null;
+          }
+          const amount = getBalanceNumber(new BigNumber(history.data.makingAmount), selectedToken?.decimals)
           return (
-            <ItemContainer key={history.id}>
-              <PercentDiv percent={history.percent} color='rgba(24, 40,37, .5)'/>
-              <p className = "price_text-top">{history.price}</p>
-              <p className = "amount_text-top">{history.amount}</p>
+            <ItemContainer key={index.toString()}>
+              <PercentDiv percent={parseInt(history.data.makingAmount) / maxSellAmount * 100} color='rgba(24, 40,37, .5)'/>
+              <p className = "price_text-top">{quoteTokenPrice.toFixed(2)}</p>
+              <p className = "amount_text-top">{amount.toFixed(2)}</p>
             </ItemContainer>
           )
         })
       }
       <MidHeader>
-        <p className = "price-top">5.306</p>
-        <p className = "price-bottom">= 5.306$</p>
+        <p className = "price-top">${quoteTokenPrice.toFixed(3)}</p>
+        {/* <p className = "price-bottom">= 5.306$</p> */}
       </MidHeader>
       {
-        historyData.map((history) => {
+        takerData.map((history, index) => {
+          if (index >= 6) {
+            return null;
+          }
+          const amount = getBalanceNumber(new BigNumber(history.data.takingAmount), selectedToken?.decimals)
           return (
-            <ItemContainer key={history.id}>
-              <PercentDiv percent={history.percent} color='rgba(30, 11, 14, 1)'/>
-              <p className = "price_text-top">{history.price}</p>
-              <p className = "amount_text-top">{history.amount}</p>
+            <ItemContainer key={index.toString()}>
+              <PercentDiv percent={parseInt(history.data.takingAmount) / maxBuyAmount * 100} color='rgba(30, 11, 14, 1)'/>
+              <p className = "price_text-top">{quoteTokenPrice.toFixed(2)}</p>
+              <p className = "amount_text-top">{amount.toFixed(2)}</p>
             </ItemContainer>
           )
         })
