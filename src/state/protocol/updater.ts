@@ -6,6 +6,7 @@ import { Transaction, TransactionType } from 'types'
 import { useClients } from 'state/application/hooks'
 import { formatTokenSymbol } from 'utils/tokens'
 import { LIMIT_ORDER_API_BASE_URL } from 'config'
+import useRefresh from 'hooks/useRefresh'
 import { useProtocolTransactions, useLimitOrders, useLimitOrdersParam } from './hooks'
 import { LIMIT_ORDER_PAGE } from '../../constants'
 
@@ -133,7 +134,7 @@ export async function fetchTopTransactions(
   try {
     const { data, error, loading } = await client.query<TransactionResults>({
       query: GLOBAL_TRANSACTIONS,
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
     })
 
     if (error || loading || !data) {
@@ -190,7 +191,6 @@ export async function fetchTopTransactions(
       accum = [...accum, ...mintEntries, ...burnEntries, ...swapEntries]
       return accum
     }, [])
-
     return formatted
   } catch {
     return undefined
@@ -237,8 +237,8 @@ export async function fetchLimitOrders(
 export default function Updater(): null {
   // client for data fetching
   const { dataClient } = useClients()
-
-  const [transactions, updateTransactions] = useProtocolTransactions()
+  const { fastRefresh } = useRefresh()
+  const [, updateTransactions] = useProtocolTransactions()
   const [limitOrders, updateLimitOrders] = useLimitOrders()
   const [page, tokenAddress] = useLimitOrdersParam()
 
@@ -249,10 +249,10 @@ export default function Updater(): null {
         updateTransactions(data)
       }
     }
-    if (!transactions) {
+    // if (!transactions) {
       fetch()
-    }
-  }, [transactions, updateTransactions, dataClient])
+    // }
+  }, [updateTransactions, dataClient, fastRefresh])
 
   useEffect(() => {
     async function fetch() {
@@ -264,7 +264,7 @@ export default function Updater(): null {
     if (tokenAddress) {
       fetch()
     }
-  }, [limitOrders, page, tokenAddress, updateLimitOrders])
+  }, [limitOrders, page, tokenAddress, updateLimitOrders, fastRefresh])
 
   return null
 }

@@ -19,7 +19,7 @@ const percentData = [
   25, 50, 75, 100
 ]
 
-const TradeSection = () => {
+const TradeSection = ({ selectedTokenInfo }) => {
   const [tabIndex, setTabIndex] = useState(1);
   const [percentIndex, setPercentIndex] = useState(0);
 
@@ -30,7 +30,7 @@ const TradeSection = () => {
   const handleClickPercentage = (idx) => {
     setPercentIndex(idx);
   }
-
+  
   return (
     <Container>
       <TabContainer>

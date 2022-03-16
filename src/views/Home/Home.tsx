@@ -132,13 +132,13 @@ const MobilePage = styled.div`
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const [page,] = useLimitOrdersParam()
+  // const [page,] = useLimitOrdersParam()
 
   const params = useParams();
   const history = useHistory();
   const address = params.tokenAddress ? params.tokenAddress : UNITOKEN;
   const [jwtToken, setJwtToken] = useLocalStorageState('jwtToken');
-  const latestTrades = useLatestTrades(address, jwtToken);
+  // const latestTrades = useLatestTrades(address, jwtToken);
   const selectedTokenInfo = useTokenInfo(address, jwtToken);
 
   const [transactions] = useProtocolTransactions()
@@ -146,7 +146,7 @@ const Home: React.FC = () => {
 
   // const bnbPriceUsd = new BigNumber(0);
   // usePriceBnbBusd();
-  const ethPriceUsd = useEthPrices();
+  // const ethPriceUsd = useEthPrices();
   // const bnbPriceUsd = usePriceBnbBusd();
   // const selectedCurrency = {
   //   name: 'QUICK',
@@ -252,7 +252,7 @@ const Home: React.FC = () => {
       {selectedCurrency && 
         <MobilePage>
           <Flex>
-            <TradeSection />
+            <TradeSection selectedTokenInfo={selectedCurrency}/>
             <HistorySection selectedTokenInfo={selectedTokenInfo} orderLimitData = {limitOrders === undefined ? null : limitOrders} selectedCurrency={selectedCurrency}/>
           </Flex>
           <BottomSection
