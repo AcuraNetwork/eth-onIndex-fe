@@ -249,9 +249,7 @@ export default function Updater(): null {
         updateTransactions(data)
       }
     }
-    // if (!transactions) {
-      fetch()
-    // }
+    fetch()
   }, [updateTransactions, dataClient, fastRefresh])
 
   useEffect(() => {

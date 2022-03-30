@@ -179,7 +179,7 @@ export const BLOCKED_PRICE_IMPACT_NON_EXPERT: Percent = new Percent(JSBI.BigInt(
 export const MIN_ETH: JSBI = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(16)) // .01 ETH
 export const BETTER_TRADE_LINK_THRESHOLD = new Percent(JSBI.BigInt(75), JSBI.BigInt(10000))
 
-export const UNITOKEN = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+export const UNITOKEN = "0xdAC17F958D2ee523a2206206994597C13D831ec7"
 export const USDTTOKEN = "0xdAC17F958D2ee523a2206206994597C13D831ec7"
 
 export const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'

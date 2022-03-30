@@ -8,19 +8,15 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Flex } from '@onidex-libs/uikit';
 import Page from 'components/layout/Page'
 
-import { useProtocolTransactions, useLimitOrders, useLimitOrdersParam } from 'state/protocol/hooks'
+import { useProtocolTransactions, useLimitOrders } from 'state/protocol/hooks'
 import { updateLimitOrderTokenAddress } from 'state/protocol/actions';
 import { AppDispatch } from 'state'
-import useLatestTrades from 'hooks/useLatestTrades';
 import useTokenInfo from 'hooks/useTokenInfo';
 import { useToken } from 'hooks/useTokens';
-import { useEthPrices } from 'hooks/useEthPrices';
 import useLocalStorageState from 'hooks/useLocalStorageState';
-// import TransactionsTable from './components/TransactionsTable';
 import CurrencySelector from './components/CurrencySelector';
 import TransactionHeader from './components/TransactionHeader';
 import TVChartContainer from './components/TVChartContainer';
-// import PolySwap from './components/PolySwap/PolySwap';
 import OrderBook from './components/OrderBook/OrderBook';
 import { UNITOKEN } from '../../constants';
 import PairInfo from './components/PairInfo';
@@ -84,12 +80,6 @@ const ChartContent = styled(Flex)`
   width: 100%;
 `;
 
-// const PriceBotChartContainer = styled.div`
-//   position: absolute;
-//   opacity: 0;
-//   display: none;
-// `;
-
 const WebPage = styled.div`
   display: flex;
   flex-direction: column;
@@ -106,52 +96,18 @@ const MobilePage = styled.div`
   }
 `
 
-// const columns = [
-//   {
-//     name: "time",
-//     label: "Time",
-//     render: ({ value }: { value: React.ReactNode }): React.ReactNode => value,
-//   },
-//   {
-//     name: "traded",
-//     label: "Traded",
-//   },
-//   {
-//     name: "tokenPrice",
-//     label: 'Token Price'
-//   },
-//   {
-//     name: "value",
-//     label: 'Value'
-//   },
-//   {
-//     name: "dex",
-//     label: 'Dex'
-//   }
-// ];
-
 const Home: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
-  // const [page,] = useLimitOrdersParam()
 
   const params = useParams();
   const history = useHistory();
   const address = params.tokenAddress ? params.tokenAddress : UNITOKEN;
   const [jwtToken, setJwtToken] = useLocalStorageState('jwtToken');
-  // const latestTrades = useLatestTrades(address, jwtToken);
   const selectedTokenInfo = useTokenInfo(address, jwtToken);
 
   const [transactions] = useProtocolTransactions()
   const [limitOrders] = useLimitOrders()
 
-  // const bnbPriceUsd = new BigNumber(0);
-  // usePriceBnbBusd();
-  // const ethPriceUsd = useEthPrices();
-  // const bnbPriceUsd = usePriceBnbBusd();
-  // const selectedCurrency = {
-  //   name: 'QUICK',
-  //   address: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13'
-  // }
   const selectedCurrency = useToken(params.tokenAddress ? params.tokenAddress : UNITOKEN);
 
   useEffect(() => {
@@ -183,24 +139,6 @@ const Home: React.FC = () => {
     dispatch(updateLimitOrderTokenAddress(params.tokenAddress ? params.tokenAddress : UNITOKEN))
   }, [dispatch, params.tokenAddress]);
 
-  // const transactionsForToken = 
-  // selectedTokenInfo && latestTrades ? latestTrades.map(trade => {
-  //   const date = new Date(trade.date.date);
-  //   const timeDate = new Date(Date.UTC(
-  //     date.getFullYear(), date.getMonth(), date.getDate(), trade.block.timestamp.hour, trade.block.timestamp.minute, trade.block.timestamp.second
-  //   ));
-  //   return {
-  //     time: timeDate.toLocaleTimeString(),
-  //     traded: trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol ? `${trade.buyAmount.toFixed(3)} ETH` : `${trade.sellAmount.toFixed(3)} ETH`,
-  //     tokenPrice: (trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol ? (trade.buyAmountInUsd / trade.buyAmount).toFixed(3) : (trade.sellAmountInUsd / trade.sellAmount).toFixed(3))
-  //       || selectedTokenInfo ? (selectedTokenInfo.quotePrice * ethPriceUsd?.current).toFixed(3) : 0,
-  //     value: trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol ? `$${trade.buyAmountInUsd.toFixed(3)}/${trade.sellAmount.toFixed(3)} ETH`
-  //       :  `$${trade.sellAmountInUsd.toFixed(3)}/${trade.buyAmount.toFixed(3)} ETH`,
-  //     dex: 'UniSwap V3',
-  //     buy: trade.buyCurrency.symbol === selectedTokenInfo.baseCurrency.symbol
-  //   }
-  // }) : []
-
   const handleSetCurrency = currency => {
     dispatch(updateLimitOrderTokenAddress(currency.address))
     history.push(`/token/${currency.address}`);
@@ -224,7 +162,7 @@ const Home: React.FC = () => {
               <ChartFlex>
                 <TokenDetails>
                   <div className='currency-selector'>
-                    <CurrencySelector isMobile onSetCurrency={handleSetCurrency} />
+                    <CurrencySelector onSetCurrency={handleSetCurrency} />
                   </div>
                   <TVChartContainer jwtToken={jwtToken} containerId='tv_chart_container' selectedCurrency={selectedCurrency} />
                   {/* <PriceBotChartContainer>
@@ -251,9 +189,13 @@ const Home: React.FC = () => {
       }
       {selectedCurrency && 
         <MobilePage>
+          <div className='currency-selector'>
+            <CurrencySelector isMobile onSetCurrency={handleSetCurrency} />
+          </div>
           <Flex>
             <TradeSection selectedTokenInfo={selectedCurrency}/>
             <HistorySection selectedTokenInfo={selectedTokenInfo} orderLimitData = {limitOrders === undefined ? null : limitOrders} selectedCurrency={selectedCurrency}/>
+            {/* <OrderBook selectedTokenInfo={selectedTokenInfo} orderLimitData = {limitOrders === undefined ? null : limitOrders} selectedCurrency={selectedCurrency}/> */}
           </Flex>
           <BottomSection
             jwtToken={jwtToken}
